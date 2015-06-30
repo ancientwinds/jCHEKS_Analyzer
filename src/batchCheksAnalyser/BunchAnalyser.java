@@ -19,8 +19,6 @@ public class BunchAnalyser {
             int min = booleanAnalyser.getEvolutionCount();
             int middle = bytesAnalyser.getEvolutionCount();
             int max = bytesPerBytesAnalyser.getEvolutionCount();
-            
-            
         }
         
     }
