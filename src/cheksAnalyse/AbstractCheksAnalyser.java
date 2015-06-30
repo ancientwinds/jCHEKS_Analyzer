@@ -19,7 +19,7 @@ public abstract class AbstractCheksAnalyser {
     public AbstractCheksAnalyser(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         this.logEnabled = enableLog;
         this.chaoticSystem = chaoticSystem;
-        this.keyAndIV = Utils.concatByteArrays(this.chaoticSystem.getKey(), this.chaoticSystem.getIV());
+        this.keyAndIV = Utils.concatByteArrays(this.chaoticSystem.getKey(), this.chaoticSystem.getKey());
     }
 
     public int getEvolutionCount() {
@@ -44,12 +44,12 @@ public abstract class AbstractCheksAnalyser {
     }
     
     protected byte[] getIV() {
-        return this.chaoticSystem.getIV();
+        return this.chaoticSystem.getKey();
     }
 
     protected void update() {
         chaoticSystem.evolveSystem();
-        this.keyAndIV = Utils.concatByteArrays(this.chaoticSystem.getKey(), this.chaoticSystem.getIV());
+        this.keyAndIV = Utils.concatByteArrays(this.chaoticSystem.getKey(), this.chaoticSystem.getKey());
         evolutionCount++;
     }
 

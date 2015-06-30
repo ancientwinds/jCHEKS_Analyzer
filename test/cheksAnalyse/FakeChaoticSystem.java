@@ -11,19 +11,16 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
 
     private int evolution;
     private final ArrayList<byte[]> keyList;
-    private final ArrayList<byte[]> ivList;
 
     /**
      *
      * @param keyList
-     * @param ivList
      * @throws java.lang.Exception
      */
-    public FakeChaoticSystem(ArrayList<byte[]> keyList, ArrayList<byte[]> ivList) throws Exception {
+    public FakeChaoticSystem(ArrayList<byte[]> keyList) throws Exception {
         super(0);
         this.evolution = 0;
         this.keyList = keyList;
-        this.ivList = ivList;
     }
 
     @Override
@@ -37,15 +34,6 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
             return this.keyList.get(this.evolution);
         } catch (IndexOutOfBoundsException ex) {
             return this.keyList.get(0);
-        }
-    }
-
-    @Override
-    public byte[] getIV() {
-        try {
-            return this.ivList.get(this.evolution);
-        } catch (IndexOutOfBoundsException ex) {
-            return this.ivList.get(0);
         }
     }
 
@@ -64,11 +52,11 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
 
     @Override
     public AbstractChaoticSystem cloneSystem() throws Exception {
-        return new FakeChaoticSystem(this.keyList, this.ivList);
+        return new FakeChaoticSystem(this.keyList);
     }
 
     @Override
-    public String Serialize() {
+    public String serialize() {
         return null;
     }
 

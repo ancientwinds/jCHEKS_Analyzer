@@ -16,20 +16,18 @@ public class CheksAnalyserBooleansTest {
     @Test
     public void testCheksAnalyserBooleans1() throws Exception {
         ArrayList<byte[]> keys = new ArrayList();
-        ArrayList<byte[]> ivs = new ArrayList();
         byte i = -128;
         boolean completed = false;
         while(!completed) {
             System.out.println(i);
             keys.add(new byte[]{i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i});
-            ivs.add(new byte[]{i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i});
             if(i == 127){
                 completed = true;
             }
             i++;
         }
         System.out.println(keys.size());
-        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, new FakeChaoticSystem(keys, ivs));
+        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, new FakeChaoticSystem(keys));
         assertEquals(analyser.getEvolutionCount(), 128);
     }
     
@@ -39,13 +37,10 @@ public class CheksAnalyserBooleansTest {
     @Test
     public void testCheksAnalyserBooleans2() throws Exception {
         ArrayList<byte[]> keys = new ArrayList();
-        ArrayList<byte[]> ivs = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});
-        ivs.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});
         keys.add(new byte[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
-        ivs.add(new byte[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
         System.out.println(keys.size());
-        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, new FakeChaoticSystem(keys, ivs));
+        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, new FakeChaoticSystem(keys));
         assertEquals(1, analyser.getEvolutionCount());
     }
 }
