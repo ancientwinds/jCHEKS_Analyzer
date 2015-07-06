@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         //brent(100000);
         //for (int i = 0; i < 1000; i++) {
-        new BatchAnalyser(10);
+        brent();
         //AbstractChaoticSystem CS = new ChaoticSystem(128);
         //AbstractCheksAnalyser booleanAnalyser = new CheksAnalyserBooleans(false, CS);
         //booleanAnalyser.getEvolutionCount();
@@ -34,7 +34,7 @@ public class Main {
         //keyStorage.main(new String[0]);
     }
 
-    private static int brent(int max) throws KeyLenghtException, CloneNotSupportedException {
+    private static int brent() throws KeyLenghtException, CloneNotSupportedException {
         ChaoticSystem turtle = new ChaoticSystem(128);
         ChaoticSystem rabbit = turtle.clone();
         int rabbitState = 0;
