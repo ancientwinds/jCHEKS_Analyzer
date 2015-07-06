@@ -39,12 +39,12 @@ public abstract class AbstractCheksAnalyser {
         return keyAndIV;
     }
     
-    protected byte[] getKey() {
-        return this.chaoticSystem.getKey();
+    protected byte[] getKey() throws Exception {
+        return this.chaoticSystem.getKey(128);
     }
     
-    protected byte[] getIV() {
-        return this.chaoticSystem.getKey();
+    protected byte[] getIV() throws Exception {
+        return this.chaoticSystem.getKey(128);
     }
 
     protected void update() {
