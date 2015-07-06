@@ -18,7 +18,6 @@ public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
         super(enableLog, chaoticSystem);
         this.falsesSaw = new boolean[AMMOUNT_OF_BOOLEANS];
         this.truesSaw = new boolean[AMMOUNT_OF_BOOLEANS];
-        analyse();
     }
 
     

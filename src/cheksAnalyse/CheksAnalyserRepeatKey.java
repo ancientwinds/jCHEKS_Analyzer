@@ -15,7 +15,6 @@ public class CheksAnalyserRepeatKey extends AbstractCheksAnalyser{
     public CheksAnalyserRepeatKey(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
         this.keys = new HashSet();
-        analyse();
     }
 
     @Override

@@ -25,6 +25,7 @@ public class CheksAnalyserBytesPerBytesTest {
         }
         System.out.println(keys.size());
         CheksAnalyserBytesPerBytes analyser = new CheksAnalyserBytesPerBytes(true, new FakeChaoticSystem(keys));
+        analyser.analyse();
         assertEquals(255, analyser.getEvolutionCount());
     }
 
@@ -44,6 +45,7 @@ public class CheksAnalyserBytesPerBytesTest {
         }
         System.out.println(keys.size());
         CheksAnalyserBytesPerBytes analyser = new CheksAnalyserBytesPerBytes(true, new FakeChaoticSystem(keys));
+        analyser.analyse();
         assertEquals(510, analyser.getEvolutionCount());
     }
 }

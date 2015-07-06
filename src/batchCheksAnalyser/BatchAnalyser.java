@@ -13,7 +13,19 @@ import java.util.logging.Logger;
  */
 public class BatchAnalyser {
 
+    private final int iterations;
+    private double sum;
+    private double avg;
+    private double min;
+    private double max;
+    private double median;
+    private double stdDev;
+    
     public BatchAnalyser(int iterations) {
+        this.iterations = iterations;
+    }
+    
+    public  void analyse(){
         double[] values = new double[iterations];
         for (int i = 0; i < iterations; i++) {
             try {
@@ -25,26 +37,28 @@ public class BatchAnalyser {
             }
         }
         Arrays.sort(values);
-        double sum = 0;
-        double max = 0;
-        double min = Integer.MAX_VALUE;
+        sum = 0;
+        max = 0;
+        min = Integer.MAX_VALUE;
         for (int i = 0; i < iterations; i++) {
             double value = values[i];
             sum += value;
             max = (max>value) ? max:value;
             min = (min<value) ? min:value;
         }
-        double avg = sum / iterations;
+        avg = sum / iterations;
         
         double stdDevSquared = 0;
         for (int i = 0; i < iterations; i++) {
             double value = values[i];
             stdDevSquared += (value - avg) * (value - avg)/iterations;
         } 
-        double stdDev = Math.sqrt(stdDevSquared);
+        stdDev = Math.sqrt(stdDevSquared);
         int half = iterations/2;
-        double median = (iterations % 2 == 0)?(values[half] + values[half-1]) / 2:values[half + 1];
-        
+        median = (iterations % 2 == 0)?(values[half] + values[half-1]) / 2:values[half + 1];
+    }
+    
+    public void displayResult(){
         System.out.println("|-----------STATS-----------|");
         System.out.println("| Sum: " + sum);
         System.out.println("| Average: " + avg);
@@ -53,5 +67,29 @@ public class BatchAnalyser {
         System.out.println("| Median: " + median);
         System.out.println("| Standart deviation: " + stdDev);
         System.out.println("|---------------------------|");
+    }
+    
+    public double getSum() {
+        return sum;
+    }
+
+    public double getAvg() {
+        return avg;
+    }
+
+    public double getMin() {
+        return min;
+    }
+
+    public double getMax() {
+        return max;
+    }
+
+    public double getMedian() {
+        return median;
+    }
+
+    public double getStdDev() {
+        return stdDev;
     }
 }

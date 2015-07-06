@@ -18,7 +18,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         //brent(100000);
         //for (int i = 0; i < 1000; i++) {
-        brent();
+        //brent();
         //AbstractChaoticSystem CS = new ChaoticSystem(128);
         //AbstractCheksAnalyser booleanAnalyser = new CheksAnalyserBooleans(false, CS);
         //booleanAnalyser.getEvolutionCount();
@@ -31,6 +31,9 @@ public class Main {
         //int middle = bytesAnalyser.getEvolutionCount();
         //int max = bytesPerBytesAnalyser.getEvolutionCount();
         //}
+        BatchAnalyser a = new BatchAnalyser(10);
+        a.analyse();
+        a.displayResult();
         //keyStorage.main(new String[0]);
     }
 

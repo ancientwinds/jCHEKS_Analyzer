@@ -25,7 +25,6 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
         for (int i = 0; i < this.bytesSaw.length; i++) {
             this.bytesSaw[i] = new HashSet();
         }
-        analyse();
     }
     
     @Override

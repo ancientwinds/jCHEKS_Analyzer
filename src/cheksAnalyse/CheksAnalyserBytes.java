@@ -14,7 +14,6 @@ public class CheksAnalyserBytes extends AbstractCheksAnalyser{
     public CheksAnalyserBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
         super(enableLog, chaoticSystem);
         this.bytesSaw = new HashSet();
-        analyse();
     }
     
     @Override

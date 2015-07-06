@@ -2,6 +2,7 @@ package cheksAnalyse;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
+import java.util.logging.*;
 
 /**
  *
@@ -17,7 +18,7 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
      * @param keyList
      * @throws java.lang.Exception
      */
-    public FakeChaoticSystem(ArrayList<byte[]> keyList) throws Exception {
+    public FakeChaoticSystem(ArrayList<byte[]> keyList) {
         super(0);
         this.evolution = 0;
         this.keyList = keyList;
@@ -38,7 +39,7 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     }
 
     @Override
-    public byte[] getKey(int requiredLength) throws Exception {
+    public byte[] getKey(int requiredLength) {
         try {
             return this.keyList.get(this.evolution);
         } catch (IndexOutOfBoundsException ex) {
@@ -51,8 +52,9 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     }
 
     @Override
-    public AbstractChaoticSystem cloneSystem() throws Exception {
+    public AbstractChaoticSystem cloneSystem() {
         return new FakeChaoticSystem(this.keyList);
+
     }
 
     @Override
@@ -65,7 +67,7 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     }
 
     @Override
-    protected void generateSystem(int keyLength) throws Exception {
+    protected void generateSystem(int keyLength) {
     }
 
 }

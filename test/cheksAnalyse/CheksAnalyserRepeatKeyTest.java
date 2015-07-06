@@ -16,6 +16,7 @@ public class CheksAnalyserRepeatKeyTest {
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});
         CheksAnalyserRepeatKey analyser = new CheksAnalyserRepeatKey(true, new FakeChaoticSystem(keys));
+        analyser.analyse();
         assertEquals(1, analyser.getEvolutionCount());
     }
     
@@ -26,6 +27,7 @@ public class CheksAnalyserRepeatKeyTest {
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});
         keys.add(new byte[]{0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});
         CheksAnalyserRepeatKey analyser = new CheksAnalyserRepeatKey(true, new FakeChaoticSystem(keys));
+        analyser.analyse();
         assertEquals(2, analyser.getEvolutionCount());
     }
     @Test
@@ -40,6 +42,7 @@ public class CheksAnalyserRepeatKeyTest {
         keys.add(new byte[]{0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});
         keys.add(new byte[]{0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1});
         CheksAnalyserRepeatKey analyser = new CheksAnalyserRepeatKey(true, new FakeChaoticSystem(keys));
+        analyser.analyse();
         assertEquals(8, analyser.getEvolutionCount());
     }
     

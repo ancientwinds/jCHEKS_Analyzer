@@ -28,6 +28,7 @@ public class CheksAnalyserBooleansTest {
         }
         System.out.println(keys.size());
         CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, new FakeChaoticSystem(keys));
+        analyser.analyse();
         assertEquals(analyser.getEvolutionCount(), 128);
     }
     
@@ -41,6 +42,7 @@ public class CheksAnalyserBooleansTest {
         keys.add(new byte[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
         System.out.println(keys.size());
         CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, new FakeChaoticSystem(keys));
+        analyser.analyse();
         assertEquals(1, analyser.getEvolutionCount());
     }
 }
