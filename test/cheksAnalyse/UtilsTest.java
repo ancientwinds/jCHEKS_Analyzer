@@ -1,5 +1,6 @@
 package cheksAnalyse;
 
+import Utils.Utils;
 import java.util.Arrays;
 import org.junit.Test;
 import static org.junit.Assert.*;

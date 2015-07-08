@@ -16,7 +16,6 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     /**
      *
      * @param keyList
-     * @throws java.lang.Exception
      */
     public FakeChaoticSystem(ArrayList<byte[]> keyList) {
         super(0);
@@ -24,6 +23,11 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
         this.keyList = keyList;
     }
 
+    @Override
+    public void deserialize(String serialization) {
+        this.evolution = Integer.valueOf(serialization);
+    }
+    
     @Override
     public void evolveSystem(int factor) {
         this.evolution++;
@@ -59,11 +63,7 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
 
     @Override
     public String serialize() {
-        return null;
-    }
-
-    @Override
-    public void Deserialize(String serialization) {
+        return String.valueOf(this.evolution);
     }
 
     @Override

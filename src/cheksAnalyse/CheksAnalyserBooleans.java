@@ -1,5 +1,6 @@
 package cheksAnalyse;
 
+import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
 

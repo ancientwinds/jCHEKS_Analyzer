@@ -1,6 +1,6 @@
 package cheksAnalyse;
 
-import com.archosResearch.jCHEKS.chaoticSystem.ChaoticSystem;
+import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.Arrays;
 
@@ -53,7 +53,7 @@ public abstract class AbstractCheksAnalyser {
         evolutionCount++;
     }
 
-    protected void analyse() {
+    public void analyse() {
         while (!this.analyseCompleted) {
             scan();
             if (this.logEnabled) {

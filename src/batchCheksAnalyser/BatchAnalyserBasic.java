@@ -1,5 +1,6 @@
 package batchCheksAnalyser;
 
+import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.CheksAnalyserBooleans;
 import com.archosResearch.jCHEKS.chaoticSystem.ChaoticSystem;
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author Michael Roussel <rousselm4@gmail.com>
  */
-public class BatchAnalyser {
+public class BatchAnalyserBasic extends AbstractBatchCheksAnalyser {
 
     private final int iterations;
     private double sum;
@@ -20,45 +21,39 @@ public class BatchAnalyser {
     private double max;
     private double median;
     private double stdDev;
-    
-    public BatchAnalyser(int iterations) {
+    private Class analyser;
+
+    public BatchAnalyserBasic(int iterations, Class analyser) throws Exception {
         this.iterations = iterations;
+        if (analyser.getGenericSuperclass() == AbstractCheksAnalyser.class) {
+            this.analyser = analyser;
+        } else {
+            // TODO Create an exception type.
+            throw new Exception("Invalid class in parameters.");
+        }
     }
-    
-    public  void analyse(){
+
+    public void analyse() {
         double[] values = new double[iterations];
         for (int i = 0; i < iterations; i++) {
             try {
                 ChaoticSystem system = new ChaoticSystem(256);
                 AbstractCheksAnalyser analyser = new CheksAnalyserBooleans(false, system);
+                analyser.analyse();
                 values[i] = analyser.getEvolutionCount();
             } catch (Exception ex) {
-                Logger.getLogger(BatchAnalyser.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(BatchAnalyserBasic.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        Arrays.sort(values);
-        sum = 0;
-        max = 0;
-        min = Integer.MAX_VALUE;
-        for (int i = 0; i < iterations; i++) {
-            double value = values[i];
-            sum += value;
-            max = (max>value) ? max:value;
-            min = (min<value) ? min:value;
-        }
-        avg = sum / iterations;
-        
-        double stdDevSquared = 0;
-        for (int i = 0; i < iterations; i++) {
-            double value = values[i];
-            stdDevSquared += (value - avg) * (value - avg)/iterations;
-        } 
-        stdDev = Math.sqrt(stdDevSquared);
-        int half = iterations/2;
-        median = (iterations % 2 == 0)?(values[half] + values[half-1]) / 2:values[half + 1];
+        sum = Utils.getSumInArray(values);
+        max = Utils.getMaximumInArray(values);
+        min = Utils.getMinimumInArray(values);
+        avg = Utils.getAverageInArray(values);
+        stdDev = Utils.getStandartDeviationInArray(values);
+        median = Utils.getMedianInArray(values);
     }
-    
-    public void displayResult(){
+
+    public void displayResult() {
         System.out.println("|-----------STATS-----------|");
         System.out.println("| Sum: " + sum);
         System.out.println("| Average: " + avg);
@@ -68,28 +63,17 @@ public class BatchAnalyser {
         System.out.println("| Standart deviation: " + stdDev);
         System.out.println("|---------------------------|");
     }
-    
-    public double getSum() {
-        return sum;
+
+    public String[] getStats() {
+        return new String[]{String.valueOf(sum), String.valueOf(avg), String.valueOf(min),
+            String.valueOf(max), String.valueOf(median), String.valueOf(stdDev)};
     }
 
-    public double getAvg() {
-        return avg;
+    public String[] getTypes() {
+        return new String[]{"REAL", "REAL", "REAL", "REAL", "REAL", "REAL"};
     }
 
-    public double getMin() {
-        return min;
-    }
-
-    public double getMax() {
-        return max;
-    }
-
-    public double getMedian() {
-        return median;
-    }
-
-    public double getStdDev() {
-        return stdDev;
+    public String[] getNames() {
+        return new String[]{"sum", "avg", "min", "max", "median", "stddev"};
     }
 }

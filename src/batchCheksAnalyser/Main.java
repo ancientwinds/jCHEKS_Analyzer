@@ -1,5 +1,6 @@
 package batchCheksAnalyser;
 
+import Saver.Saver;
 import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.CheksAnalyserBooleans;
 import cheksAnalyse.CheksAnalyserBytes;
@@ -31,13 +32,25 @@ public class Main {
         //int middle = bytesAnalyser.getEvolutionCount();
         //int max = bytesPerBytesAnalyser.getEvolutionCount();
         //}
-        BatchAnalyser a = new BatchAnalyser(10);
+        BatchAnalyserBasic a = new BatchAnalyserBasic(10, CheksAnalyserBooleans.class);
         a.analyse();
         a.displayResult();
+        Saver saver = new Saver("bytesAnalyse", a.getNames(), a.getTypes());
+        saver.save(a.getStats());
+        a = new BatchAnalyserBasic(10, CheksAnalyserBytes.class);
+        a.analyse();
+        a.displayResult();
+        saver = new Saver("bytesAnalyse", a.getNames(), a.getTypes());
+        saver.save(a.getStats());
+        a = new BatchAnalyserBasic(10, CheksAnalyserBytesPerBytes.class);
+        a.analyse();
+        a.displayResult();
+        saver = new Saver("bytesAnalyse", a.getNames(), a.getTypes());
+        saver.save(a.getStats());
         //keyStorage.main(new String[0]);
     }
 
-    private static int brent() throws KeyLenghtException, CloneNotSupportedException {
+    private static int brent() throws KeyLenghtException, CloneNotSupportedException, Exception {
         ChaoticSystem turtle = new ChaoticSystem(128);
         ChaoticSystem rabbit = turtle.clone();
         int rabbitState = 0;
