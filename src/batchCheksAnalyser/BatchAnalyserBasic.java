@@ -4,12 +4,11 @@ import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.CheksAnalyserBooleans;
 import com.archosResearch.jCHEKS.chaoticSystem.ChaoticSystem;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * @deprecated 
  * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class BatchAnalyserBasic extends AbstractBatchCheksAnalyser {
@@ -38,9 +37,9 @@ public class BatchAnalyserBasic extends AbstractBatchCheksAnalyser {
         for (int i = 0; i < iterations; i++) {
             try {
                 ChaoticSystem system = new ChaoticSystem(256);
-                AbstractCheksAnalyser analyser = new CheksAnalyserBooleans(false, system);
-                analyser.analyse();
-                values[i] = analyser.getEvolutionCount();
+                //AbstractCheksAnalyser analyser = new CheksAnalyserBooleans(false, system);
+                //analyser.analyse();
+                //values[i] = analyser.getEvolutionCount();
             } catch (Exception ex) {
                 Logger.getLogger(BatchAnalyserBasic.class.getName()).log(Level.SEVERE, null, ex);
             }

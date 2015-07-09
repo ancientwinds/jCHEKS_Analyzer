@@ -13,12 +13,13 @@ public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
     
     private final boolean[] falsesSaw;
     private final boolean[] truesSaw;
-    private static final int AMMOUNT_OF_BOOLEANS = 256;
+    private final int ammountOfBit;
     
-    public CheksAnalyserBooleans(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
+    public CheksAnalyserBooleans(boolean enableLog, AbstractChaoticSystem chaoticSystem, int ammountOfBit) throws Exception{
         super(enableLog, chaoticSystem);
-        this.falsesSaw = new boolean[AMMOUNT_OF_BOOLEANS];
-        this.truesSaw = new boolean[AMMOUNT_OF_BOOLEANS];
+        this.falsesSaw = new boolean[ammountOfBit];
+        this.truesSaw = new boolean[ammountOfBit];
+        this.ammountOfBit = ammountOfBit;
     }
 
     
@@ -26,7 +27,7 @@ public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
     protected void scan() {
         byte[] array = this.getKeyAndIV();
         boolean[] booleans = Utils.bytesToBooleanArray(array);
-        for (int i = 0; i < AMMOUNT_OF_BOOLEANS; i++) {
+        for (int i = 0; i < ammountOfBit; i++) {
             if(booleans[i]){
                 truesSaw[i] = true;
             }else{
@@ -54,7 +55,9 @@ public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
     @Override
     protected void log(){
         super.log();
-        System.out.println("Falses: " + Arrays.toString(falsesSaw));
-        System.out.println("Trues: " + Arrays.toString(truesSaw));
+        if(logEnabled){
+            System.out.println("Falses: " + Arrays.toString(falsesSaw));
+            System.out.println("Trues: " + Arrays.toString(truesSaw));
+        }
     }
 }

@@ -10,7 +10,7 @@ import java.util.Arrays;
  */
 public abstract class AbstractCheksAnalyser {
 
-    private boolean logEnabled = false;
+    protected final boolean logEnabled;
     private byte[] keyAndIV;
     private final AbstractChaoticSystem chaoticSystem;
     private int evolutionCount;
@@ -25,52 +25,52 @@ public abstract class AbstractCheksAnalyser {
     public int getEvolutionCount() {
         return evolutionCount;
     }
-    
-    protected void complete(){
+
+    protected void complete() {
         this.analyseCompleted = true;
     }
-    
+
     protected abstract void scan();
 
     protected abstract void verify();
 
-    
     protected byte[] getKeyAndIV() {
         return keyAndIV;
     }
-    
+
     protected byte[] getKey() throws Exception {
         return this.chaoticSystem.getKey(128);
     }
-    
+
     protected byte[] getIV() throws Exception {
         return this.chaoticSystem.getKey(128);
     }
 
-    protected void update() {
-        chaoticSystem.evolveSystem();
+    public void updateKey() {
         this.keyAndIV = Utils.concatByteArrays(this.chaoticSystem.getKey(), this.chaoticSystem.getKey());
-        evolutionCount++;
     }
 
     public void analyse() {
-        while (!this.analyseCompleted) {
-            scan();
-            if (this.logEnabled) {
-                log();
-            }
-            verify();
-            if(!this.analyseCompleted){
-                update();
-            }
+        updateKey();
+        scan();
+        log();
+        verify();
+        incrementEvolutionIfNotCompleted();
+    }
+    private void incrementEvolutionIfNotCompleted(){
+        if (!this.analyseCompleted) {
+            evolutionCount++;
         }
-        System.out.println("Iterations: " + this.evolutionCount);
     }
     
     protected void log() {
-        System.out.println("\nIteration: " + this.evolutionCount);
-        System.out.println(Arrays.toString(this.keyAndIV));
+        if (this.logEnabled) {
+            System.out.println("\nIteration: " + this.evolutionCount);
+            System.out.println(Arrays.toString(this.keyAndIV));
+        }
     }
 
-    
+    public boolean isComplete() {
+        return this.analyseCompleted;
+    }
 }

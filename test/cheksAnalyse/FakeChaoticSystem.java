@@ -1,8 +1,8 @@
 package cheksAnalyse;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.util.*;
-import java.util.logging.*;
 
 /**
  *
@@ -67,7 +67,7 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     }
 
     @Override
-    protected void generateSystem(int keyLength) {
+    protected void generateSystem(int keyLength, Random random) throws ChaoticSystemException {
     }
 
 }

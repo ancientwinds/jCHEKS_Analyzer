@@ -1,5 +1,6 @@
 package cheksAnalyse;
 
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -27,8 +28,13 @@ public class CheksAnalyserBooleansTest {
             i++;
         }
         System.out.println(keys.size());
-        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, new FakeChaoticSystem(keys));
-        analyser.analyse();
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys);
+        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, sys, 128);
+        while(!analyser.isComplete()){
+            analyser.analyse();
+            sys.evolveSystem();
+        }
+        
         assertEquals(analyser.getEvolutionCount(), 128);
     }
     
@@ -41,8 +47,13 @@ public class CheksAnalyserBooleansTest {
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});
         keys.add(new byte[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
         System.out.println(keys.size());
-        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, new FakeChaoticSystem(keys));
-        analyser.analyse();
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys);
+        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, sys, 128);
+        while(!analyser.isComplete()){
+            analyser.analyse();
+            sys.evolveSystem();
+        }
+        
         assertEquals(1, analyser.getEvolutionCount());
     }
 }

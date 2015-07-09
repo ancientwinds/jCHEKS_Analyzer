@@ -1,7 +1,7 @@
 package batchCheksAnalyser;
 
 /**
- *
+ *  @deprecated 
  * @author Michael Roussel <rousselm4@gmail.com>
  */
 public abstract class AbstractBatchCheksAnalyser {

@@ -11,7 +11,7 @@ import java.util.*;
 public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
     
     private HashSet<Byte>[] bytesSaw;
-    private static final int AMMOUNT_OF_BYTES = 32;
+    private final int ammountOfByte;
 
     /**
      *
@@ -19,18 +19,20 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
      * @param chaoticSystem
      * @throws Exception
      */
-    public CheksAnalyserBytesPerBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
+    public CheksAnalyserBytesPerBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem, int ammountOfByte) throws Exception{
         super(enableLog, chaoticSystem);
-        this.bytesSaw = new HashSet[AMMOUNT_OF_BYTES];
+        this.ammountOfByte = ammountOfByte;
+        this.bytesSaw = new HashSet[ammountOfByte];
         for (int i = 0; i < this.bytesSaw.length; i++) {
             this.bytesSaw[i] = new HashSet();
         }
+        
     }
     
     @Override
     protected void scan() {
         byte[] array = this.getKeyAndIV();
-        for (int i = 0; i < AMMOUNT_OF_BYTES; i++) {
+        for (int i = 0; i < ammountOfByte; i++) {
             this.bytesSaw[i].add(array[i]);
         }
     }
@@ -54,6 +56,8 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
     @Override
     protected void log(){
         super.log();
-        System.out.println("Bytes saw: " + Arrays.toString(this.bytesSaw));
+        if(logEnabled){
+            System.out.println("Bytes saw: " + Arrays.toString(this.bytesSaw));
+        }
     }
 }

@@ -7,11 +7,17 @@ import java.util.Arrays;
 import java.util.logging.*;
 
 /**
- *
+ * @deprecated 
  * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class keyStorage {
 
+    /**
+     *
+     * @param args
+     * @throws Exceptio
+     * @deprecated 
+     */
     public static void main(String args[]) throws Exception {
         try {
             Connection c = null;

@@ -4,7 +4,7 @@ import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
 
 /**
- *
+ * @deprecated 
  * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class CheksAnalyserRepeatKey extends AbstractCheksAnalyser{

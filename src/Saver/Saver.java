@@ -4,7 +4,7 @@ import Saver.exception.*;
 import java.sql.*;
 
 /**
- *
+ * @deprecated 
  * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class Saver {
