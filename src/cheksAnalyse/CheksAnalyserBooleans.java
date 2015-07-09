@@ -25,7 +25,7 @@ public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
     
     @Override
     protected void scan() {
-        byte[] array = this.getKeyAndIV();
+        byte[] array = this.getKey();
         boolean[] booleans = Utils.bytesToBooleanArray(array);
         for (int i = 0; i < ammountOfBit; i++) {
             if(booleans[i]){

@@ -31,7 +31,7 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
     
     @Override
     protected void scan() {
-        byte[] array = this.getKeyAndIV();
+        byte[] array = this.getKey();
         for (int i = 0; i < ammountOfByte; i++) {
             this.bytesSaw[i].add(array[i]);
         }

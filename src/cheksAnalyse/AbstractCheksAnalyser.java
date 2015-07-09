@@ -11,7 +11,7 @@ import java.util.Arrays;
 public abstract class AbstractCheksAnalyser {
 
     protected final boolean logEnabled;
-    private byte[] keyAndIV;
+    private byte[] key;
     private final AbstractChaoticSystem chaoticSystem;
     private int evolutionCount;
     private boolean analyseCompleted;
@@ -19,7 +19,7 @@ public abstract class AbstractCheksAnalyser {
     public AbstractCheksAnalyser(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         this.logEnabled = enableLog;
         this.chaoticSystem = chaoticSystem;
-        this.keyAndIV = Utils.concatByteArrays(this.chaoticSystem.getKey(), this.chaoticSystem.getKey());
+        this.key = Utils.concatByteArrays(this.chaoticSystem.getKey(), this.chaoticSystem.getKey());
     }
 
     public int getEvolutionCount() {
@@ -34,20 +34,12 @@ public abstract class AbstractCheksAnalyser {
 
     protected abstract void verify();
 
-    protected byte[] getKeyAndIV() {
-        return keyAndIV;
-    }
-
-    protected byte[] getKey() throws Exception {
-        return this.chaoticSystem.getKey(128);
-    }
-
-    protected byte[] getIV() throws Exception {
-        return this.chaoticSystem.getKey(128);
+    protected byte[] getKey() {
+        return key;
     }
 
     public void updateKey() {
-        this.keyAndIV = Utils.concatByteArrays(this.chaoticSystem.getKey(), this.chaoticSystem.getKey());
+        this.key = this.chaoticSystem.getKey();
     }
 
     public void analyse() {
@@ -66,7 +58,7 @@ public abstract class AbstractCheksAnalyser {
     protected void log() {
         if (this.logEnabled) {
             System.out.println("\nIteration: " + this.evolutionCount);
-            System.out.println(Arrays.toString(this.keyAndIV));
+            System.out.println(Arrays.toString(this.key));
         }
     }
 

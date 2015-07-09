@@ -10,16 +10,17 @@ import java.util.*;
 public class CheksAnalyserBytes extends AbstractCheksAnalyser{
     
     HashSet<Byte> bytesSaw;
-    private static final int AMMOUNT_OF_BYTES = 32;
-    public CheksAnalyserBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
+    private final int ammountOfBytes;
+    public CheksAnalyserBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem, int ammountOfBytes) throws Exception{
         super(enableLog, chaoticSystem);
+        this.ammountOfBytes = ammountOfBytes;
         this.bytesSaw = new HashSet();
     }
     
     @Override
     protected void scan() {
-        byte[] array = this.getKeyAndIV();
-        for (int i = 0; i < AMMOUNT_OF_BYTES; i++) {
+        byte[] array = this.getKey();
+        for (int i = 0; i < ammountOfBytes; i++) {
             this.bytesSaw.add(array[i]);
         }
     }
