@@ -1,4 +1,4 @@
-package MainAnalyser;
+package mainAnalyser;
 
 import Utils.Utils;
 import cheksAnalyse.*;
