@@ -4,7 +4,9 @@ import Utils.Utils;
 import cheksAnalyse.*;
 import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.chaoticSystem.exception.CloningException;
+import com.archosResearch.jCHEKS.chaoticSystem.exception.KeyLenghtException;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.logging.*;
@@ -145,7 +147,7 @@ public class MainAnalyser {
     }
 
     private static int brent() throws Exception {
-        ChaoticSystem turtle = new ChaoticSystem(128);
+        ChaoticSystem turtle = new CryptoChaoticSystem(128, "test");
         ChaoticSystem rabbit = turtle.clone();
         int rabbitState = 0;
         int steps_taken = 0;
@@ -168,7 +170,7 @@ public class MainAnalyser {
     }
 
     private void setCurrentSystemAndAnalyser() throws Exception {
-        currentChaoticSystem = new ChaoticSystem(numberOfAgent * Byte.SIZE);
+        currentChaoticSystem = new CryptoChaoticSystem(numberOfAgent * Byte.SIZE, "test");
         currentBoolAnalyser = new CheksAnalyserBooleans(false, currentChaoticSystem, this.numberOfAgent * Byte.SIZE);
         currentBytesAnalyser = new CheksAnalyserBytesPerBytes(false, currentChaoticSystem, this.numberOfAgent);
         backupChaoticSystem = currentChaoticSystem.cloneSystem();
@@ -181,13 +183,13 @@ public class MainAnalyser {
         }
     }
 
-    private void analyseAgentLevelOccurenceBetweenSystem(int agentCount) throws ChaoticSystemException {
+    private void analyseAgentLevelOccurenceBetweenSystem(int agentCount) throws ChaoticSystemException, KeyLenghtException, NoSuchAlgorithmException {
         Distribution[] distributions = new Distribution[agentCount];
         for (int j = 0; j < agentCount; j++) {
             distributions[j] = new Distribution();
         }
         for (int i = 0; i < 1000; i++) {
-            ChaoticSystem system = new ChaoticSystem(agentCount * Byte.SIZE);
+            ChaoticSystem system = new CryptoChaoticSystem(agentCount * Byte.SIZE, "test");
             byte[] key = system.getKey();
             for (int k = 0; k < agentCount; k++) {
                 distributions[k].registerValue(key[k]);
