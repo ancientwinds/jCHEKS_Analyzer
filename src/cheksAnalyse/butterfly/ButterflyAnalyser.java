@@ -1,6 +1,9 @@
-package cheksAnalyse;
+package cheksAnalyse.butterfly;
 
+import cheksAnalyse.butterfly.TempAgent;
+import cheksAnalyse.butterfly.TempChaoticSystem;
 import Utils.Utils;
+import cheksAnalyse.AbstractCheksAnalyser;
 import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;

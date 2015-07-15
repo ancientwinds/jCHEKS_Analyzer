@@ -1,5 +1,6 @@
 package mainAnalyser;
 
+import cheksAnalyse.butterfly.ButterflyAnalyser;
 import Utils.Utils;
 import cheksAnalyse.*;
 import com.archosResearch.jCHEKS.chaoticSystem.*;

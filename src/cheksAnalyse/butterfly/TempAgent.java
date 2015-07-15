@@ -1,4 +1,4 @@
-package cheksAnalyse;
+package cheksAnalyse.butterfly;
 
 import com.archosResearch.jCHEKS.chaoticSystem.Agent;
 
