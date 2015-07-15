@@ -80,7 +80,6 @@ public class Saver {
                 stringBuilder.append(")");
             }
         }
-        System.out.println(stringBuilder.toString());
         try {
             this.statement.executeUpdate(stringBuilder.toString());
         } catch (SQLException ex) {
@@ -96,6 +95,29 @@ public class Saver {
             evolutions[i] = ruleSet.getInt("evolutions");
         }
         return evolutions;
+    }
+/*
+    public int[][][] getDistributionsOf(String tableName, int iterations) throws SQLException {
+        ResultSet ruleSet = statement.executeQuery("SELECT * FROM " + tableName + ";");
+        int[][][] systems = new int[iterations][numberOfAgent][numberOfAgent * Byte.SIZE];
+        for (int i = 0; i < iterations; i++) {
+            ruleSet.next();
+            int[][] system = systems[i];
+            for (int j = 0; j < numberOfAgent; j++) {
+                system[j] = ;
+                String[] stringValues = getArrayFromString(ruleSet.getString("agent" + j));
+                for (String stringValue : stringValues) {
+                    int value = Integer.parseInt(stringValue);
+                    
+                }
+
+            }
+        }
+        return systems;
+    }*/
+
+    private String[] getArrayFromString(String serializedArray) {
+        return serializedArray.replace("[", "").replace("]", "").split(", ");
     }
 
     private void createDistributionTable(String tableName) {
