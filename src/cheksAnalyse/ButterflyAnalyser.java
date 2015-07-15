@@ -1,13 +1,10 @@
 package cheksAnalyse;
 
 import Utils.Utils;
-import com.archosResearch.jCHEKS.chaoticSystem.Agent;
-import com.archosResearch.jCHEKS.chaoticSystem.ChaoticSystem;
+import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.*;
+import java.util.logging.*;
 
 /**
  *
@@ -16,21 +13,20 @@ import java.util.logging.Logger;
 public class ButterflyAnalyser extends AbstractCheksAnalyser {
 
     private final HashMap<Integer, AbstractChaoticSystem> clones = new HashMap();
-    private final int iteration = 1000;
+    private int iteration = 1000;
     private final int[][] distances;
     
-    public ButterflyAnalyser(boolean enableLog, ChaoticSystem chaoticSystem) throws Exception {
+    public ButterflyAnalyser(boolean enableLog, ChaoticSystem chaoticSystem, int iteration) throws Exception {
         super(enableLog, chaoticSystem);
-                
-        this.distances = new int[chaoticSystem.getAgents().size()][this.iteration];
-               
-        this.generateClones();
+        this.iteration = 1000;
+        this.distances = new int[chaoticSystem.getAgents().size()][this.iteration];               
+        this.generateClones(chaoticSystem);        
     }
     
-    private void generateClones() {
+    private void generateClones(AbstractChaoticSystem system) {
         for(int i = 0; i < this.distances.length; i++) {
             TempChaoticSystem clone = new TempChaoticSystem();
-            clone.deserialize(this.chaoticSystem.serialize());
+            clone.deserialize(system.serialize());
             HashMap<Integer, Agent> agents = clone.getAgents();
             TempAgent agent = new TempAgent(agents.get(i));            
             agent.setKeyPart(Utils.isPair((int)agent.getKeyPart())?(int)agent.getKeyPart() + 1:(int)agent.getKeyPart() - 1);

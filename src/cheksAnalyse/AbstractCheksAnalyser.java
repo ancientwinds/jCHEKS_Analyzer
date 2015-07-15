@@ -12,7 +12,7 @@ public abstract class AbstractCheksAnalyser {
 
     protected final boolean logEnabled;
     private byte[] key;
-    protected final AbstractChaoticSystem chaoticSystem;
+    private final AbstractChaoticSystem chaoticSystem;
     private int evolutionCount;
     private boolean analyseCompleted;
 

@@ -19,7 +19,7 @@ public class MainAnalyser {
 
     public static void main(String[] args) throws Exception {
         ChaoticSystem system = new CryptoChaoticSystem(256, "temp");
-        ButterflyAnalyser analyser = new ButterflyAnalyser(false, system);
+        ButterflyAnalyser analyser = new ButterflyAnalyser(false, system, 1000);
         
         for(int i = 0; i < 1000; i++) {
             if (!analyser.isComplete()) {
