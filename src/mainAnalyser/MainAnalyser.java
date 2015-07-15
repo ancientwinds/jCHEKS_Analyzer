@@ -7,6 +7,7 @@ import com.archosResearch.jCHEKS.chaoticSystem.exception.CloningException;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.sql.*;
 import java.util.Arrays;
+import java.util.logging.*;
 
 /**
  *
@@ -15,26 +16,14 @@ import java.util.Arrays;
 public class MainAnalyser {
 
     public static void main(String[] args) throws Exception {
-        brent();
-        brent();
-        brent();
-        brent();
-        brent();
-        brent();
-        brent();
-        brent();
-        brent();
-        brent();
-        brent();
-        //MainAnalyser analyser = new MainAnalyser(10, 32);
-        //analyser.analyse();
+        MainAnalyser analyser = new MainAnalyser(10, 32);
+        analyser.analyse();
     }
-    private Distribution[] agentsLevelsOccurencesDistributions;
+    private final Distribution[] agentsLevelsOccurencesDistributions;
     private final Distribution[] agentsLevelsVariationsDistributions;
-    private Connection connection;
-    private Statement statement;
+    private final Saver saver;
     private final int iterations;
-    private final int byteCount;
+    private final int numberOfAgent;
     private ChaoticSystem currentChaoticSystem;
     private ChaoticSystem backupChaoticSystem;
     private CheksAnalyserBooleans currentBoolAnalyser;
@@ -42,55 +31,35 @@ public class MainAnalyser {
     private byte[] lastKey;
     private byte[] currentKey;
 
-    public MainAnalyser(int iterations, int byteCount) {
-        this.connection = null;
-        this.statement = null;
+    public MainAnalyser(int iterations, int numberOfAgent) {
+
         this.iterations = iterations;
-        this.byteCount = byteCount;
-        agentsLevelsOccurencesDistributions = new Distribution[byteCount];
-        agentsLevelsVariationsDistributions = new Distribution[byteCount];
+        this.numberOfAgent = numberOfAgent;
+        this.saver = new Saver(numberOfAgent);
+        saver.initDatabase();
+        agentsLevelsOccurencesDistributions = new Distribution[numberOfAgent];
+        agentsLevelsVariationsDistributions = new Distribution[numberOfAgent];
         reinitDistributions();
     }
 
     public void analyse() throws Exception {
-        this.initDatabase();
+
         for (int i = 0; i < iterations; i++) {
             setCurrentSystemAndAnalyser();
             performEvolutionDependantAnalyse();
-            saveEvolutionDependantAnalyse();
+            saveRelativeEvolutionResults();
             reinitChaoticSystem();
-
-            lastKey = currentChaoticSystem.getKey();
-
-            for (int j = 0; j <= 100000; j++) {
-                currentChaoticSystem.evolveSystem();
-                currentKey = currentChaoticSystem.getKey();
-                for (int k = 0; k < byteCount; k++) {
-                    int modifier = 1;
-            
-                 
-                    //if(
-                    //currentKey[k] +  lastKey[k]);
-                    //System.out.println("    result: " + x +"    result: " + y +"    key: " +lastKey[k] + "     lk: " + currentKey[k]);
-                    
-                    
-                    //agentsLevelsVariationsDistributions[k].registerValue(Math.abs(x)<Math.abs(y)?Math.abs(x):Math.abs(y));
-                    agentsLevelsOccurencesDistributions[k].registerValue(currentKey[k]);
-                }
-                lastKey = currentKey;
-            }
-            saveOccurences();
-            saveVariations();
+            performDistributionAnalyse();
+            saveDistributionsResults();
             reinitDistributions();
-
         }
         displayStatsOfATable("keybits");
         displayStatsOfATable("agentLevels");
     }
 
     private void displayStatsOfATable(String tableName) throws SQLException {
-        double[] evolutions = getEvolutionsOf(tableName);
-        System.out.println("|------STATS-OF-AGENTLEVELS----|");
+        double[] evolutions = saver.getEvolutionsOf(tableName, iterations);
+        System.out.println("|------STATS-OF-" + tableName.toUpperCase() + "----|");
         System.out.println("| Sum: " + Utils.getSumInArray(evolutions));
         System.out.println("| Average: " + Utils.getAverageInArray(evolutions));
         System.out.println("| Minimum: " + Utils.getMinimumInArray(evolutions));
@@ -100,40 +69,38 @@ public class MainAnalyser {
         System.out.println("|------------------------------|");
     }
 
-    private void initDatabase(){
-        openDatabase();
-        createTableKeyBits();
-        createTableAgentLevel();
-        createDistributionTable("variations");
-        createDistributionTable("occurences");
-    }
-
-    private void openDatabase(){
-        try {
-            Class.forName("org.sqlite.JDBC");
-            this.connection = DriverManager.getConnection("jdbc:sqlite:keys.db");
-            this.statement = connection.createStatement();
-        } catch (ClassNotFoundException ex) {
-            System.err.println("Error while trying to find class.");
-        } catch (SQLException ex) {
-            System.err.println("Error while connecting to database.");
+    private int getVariationByAgent(int agent) {
+        int currentLevel = currentKey[agent] + 128;
+        int lastLevel = lastKey[agent] + 128;
+        int variation = currentLevel - lastLevel;
+        if (variation < -128 || variation > 127) {
+            return (256 - Math.abs(variation)) * ((variation < 0) ? 1 : -1);
+        } else {
+            return variation;
         }
     }
 
-    private void createTableKeyBits(){
-        try {
-            this.statement.executeUpdate("CREATE TABLE keybits (evolutions NUMERIC)");
-        } catch (SQLException ex) {
-            System.err.println("Error while creating keybits table.");
+    private void performDistributionAnalyse() {
+        lastKey = currentChaoticSystem.getKey();
+        for (int j = 0; j <= 100000; j++) {
+            currentChaoticSystem.evolveSystem();
+            currentKey = currentChaoticSystem.getKey();
+            for (int k = 0; k < numberOfAgent; k++) {
+                agentsLevelsVariationsDistributions[k].registerValue(getVariationByAgent(k));
+                agentsLevelsOccurencesDistributions[k].registerValue(currentKey[k]);
+            }
+            lastKey = currentKey;
         }
     }
 
-    private void createTableAgentLevel(){
-        try {
-            this.statement.executeUpdate("CREATE TABLE agentlevels (evolutions NUMERIC)");
-        } catch (SQLException ex) {
-            System.err.println("Error while creating agentlevels table.");
-        }
+    private void saveRelativeEvolutionResults() {
+        saver.saveValueInTable("keybits", currentBoolAnalyser.getEvolutionCount());
+        saver.saveValueInTable("agentlevels", currentBytesAnalyser.getEvolutionCount());
+    }
+
+    private void saveDistributionsResults() {
+        saver.saveDistributionInTable("occurences", agentsLevelsOccurencesDistributions);
+        saver.saveDistributionInTable("variations", agentsLevelsVariationsDistributions);
     }
 
     private void performEvolutionDependantAnalyse() {
@@ -156,103 +123,7 @@ public class MainAnalyser {
         try {
             this.currentChaoticSystem = this.backupChaoticSystem.cloneSystem();
         } catch (CloningException ex) {
-            System.err.println("Error while cloning system.");
-        }
-    }
-
-    private void saveEvolutionDependantAnalyse() {
-        saveKeyBits();
-        saveAgentLevel();
-    }
-
-    private void saveKeyBits() {
-        try {
-            this.statement.executeUpdate("INSERT INTO keybits (evolutions) VALUES (" + currentBoolAnalyser.getEvolutionCount() + ")");
-        } catch (SQLException ex) {
-            System.err.println("Error while saving to keybits.");
-        }
-    }
-
-    private void saveAgentLevel() {
-        try {
-            this.statement.executeUpdate("INSERT INTO agentlevels (evolutions) VALUES (" + currentBytesAnalyser.getEvolutionCount() + ")");
-        } catch (SQLException ex) {
-            System.err.println("Error while saving to agentlevel.");
-        }
-    }
-
-    private void saveOccurences() {
-        try {
-            saveDistribution("occurences", agentsLevelsOccurencesDistributions);
-        } catch (SQLException ex) {
-            System.err.println("Error while saving to occurences.");
-        }
-    }
-
-    private void saveVariations() {
-        try {
-            saveDistribution("variations", agentsLevelsVariationsDistributions);
-        } catch (SQLException ex) {
-            System.err.println("Error while saving to variations.");
-        }
-    }
-
-    private void saveDistribution(String tableName, Distribution[] distributions) throws SQLException {
-        StringBuilder stringBuilder = new StringBuilder("INSERT INTO ");
-        stringBuilder.append(tableName);
-        stringBuilder.append(" )");
-        for (int i = 0; i < byteCount; i++) {
-            stringBuilder.append("agent");
-            stringBuilder.append(i);
-            if (i < byteCount - 1) {
-                stringBuilder.append(",");
-            } else {
-                stringBuilder.append(")");
-            }
-        }
-        stringBuilder.append(" VALUES (");
-        for (int i = 0; i < byteCount; i++) {
-            stringBuilder.append("\"");
-            stringBuilder.append(distributions[i].toString());
-            stringBuilder.append("\"");
-            if (i < byteCount - 1) {
-                stringBuilder.append(",");
-            } else {
-                stringBuilder.append(")");
-            }
-        }
-        System.out.println(stringBuilder.toString());
-        this.statement.executeUpdate(stringBuilder.toString());
-    }
-
-    private double[] getEvolutionsOf(String tableName) throws SQLException {
-        ResultSet ruleSet = statement.executeQuery("SELECT * FROM " + tableName + ";");
-        double[] evolutions = new double[iterations];
-        for (int i = 0; i < iterations; i++) {
-            ruleSet.next();
-            evolutions[i] = ruleSet.getInt("evolutions");
-        }
-        return evolutions;
-    }
-
-    private void createDistributionTable(String tableName){
-        StringBuilder stringBuilder = new StringBuilder("CREATE TABLE ");
-        stringBuilder.append(tableName);
-        stringBuilder.append(" (");
-        for (int i = 0; i < byteCount; i++) {
-            stringBuilder.append("agent");
-            stringBuilder.append(i);
-            stringBuilder.append(" TEXT");
-            if (i < byteCount - 1) {
-                stringBuilder.append(",");
-            } else {
-                stringBuilder.append(")");
-            }
-        }
-        try {
-            this.statement.executeUpdate(stringBuilder.toString());
-        } catch (SQLException ex) {
-            System.err.println("Error while creating the distribution table for " + tableName);
+            Logger.getLogger(MainAnalyser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -280,23 +151,23 @@ public class MainAnalyser {
     }
 
     private void setCurrentSystemAndAnalyser() throws Exception {
-        currentChaoticSystem = new ChaoticSystem(byteCount * Byte.SIZE);
-        currentBoolAnalyser = new CheksAnalyserBooleans(false, currentChaoticSystem, this.byteCount * Byte.SIZE);
-        currentBytesAnalyser = new CheksAnalyserBytesPerBytes(false, currentChaoticSystem, this.byteCount);
+        currentChaoticSystem = new ChaoticSystem(numberOfAgent * Byte.SIZE);
+        currentBoolAnalyser = new CheksAnalyserBooleans(false, currentChaoticSystem, this.numberOfAgent * Byte.SIZE);
+        currentBytesAnalyser = new CheksAnalyserBytesPerBytes(false, currentChaoticSystem, this.numberOfAgent);
         backupChaoticSystem = currentChaoticSystem.cloneSystem();
     }
 
     private void reinitDistributions() {
-        for (int j = 0; j < byteCount; j++) {
-            agentsLevelsOccurencesDistributions[j] = new Distribution(256);
-            agentsLevelsVariationsDistributions[j] = new Distribution(128);
+        for (int j = 0; j < numberOfAgent; j++) {
+            agentsLevelsOccurencesDistributions[j] = new Distribution();
+            agentsLevelsVariationsDistributions[j] = new Distribution();
         }
     }
 
     private void analyseAgentLevelOccurenceBetweenSystem(int agentCount) throws ChaoticSystemException {
         Distribution[] distributions = new Distribution[agentCount];
         for (int j = 0; j < agentCount; j++) {
-            distributions[j] = new Distribution(256);
+            distributions[j] = new Distribution();
         }
         for (int i = 0; i < 1000; i++) {
             ChaoticSystem system = new ChaoticSystem(agentCount * Byte.SIZE);
@@ -308,6 +179,6 @@ public class MainAnalyser {
                 System.out.println(Arrays.toString(distributions));
             }
         }
-        System.out.println(Arrays.toString(Distribution.getSum(distributions, 256)));
+        System.out.println(Arrays.toString(Distribution.getSum(distributions)));
     }
 }

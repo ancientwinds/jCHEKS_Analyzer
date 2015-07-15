@@ -8,8 +8,8 @@ import java.util.Arrays;
  */
 public class Distribution {
 
-    public static int[] getSum(Distribution[] distributions, int size) {
-        int[] sum = new int[size];
+    public static int[] getSum(Distribution[] distributions) {
+        int[] sum = new int[256];
         for (Distribution distribution : distributions) {
             for (int i = 0; i < distribution.getAgentLevels().length; i++) {
                 sum[i] += distribution.getAgentLevels()[i];
@@ -20,8 +20,8 @@ public class Distribution {
     
     private final int[] agentValues;
     
-    public Distribution(int size) {
-        this.agentValues = new int[size];
+    public Distribution() {
+        this.agentValues = new int[256];
     }
 
     public int[] getAgentLevels() {
@@ -38,7 +38,7 @@ public class Distribution {
     }
     
     private int adjustLevel(int valueToAdjust) {
-        return valueToAdjust + agentValues.length/2;
+        return valueToAdjust + Math.abs(Byte.MIN_VALUE);
     }
     
 }

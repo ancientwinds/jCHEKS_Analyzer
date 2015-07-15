@@ -20,6 +20,7 @@ public class CheksAnalyserBytes extends AbstractCheksAnalyser{
     @Override
     protected void scan() {
         byte[] array = this.getKey();
+        
         for (int i = 0; i < ammountOfBytes; i++) {
             this.bytesSaw.add(array[i]);
         }
