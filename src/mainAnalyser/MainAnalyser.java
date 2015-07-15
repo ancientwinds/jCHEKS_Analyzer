@@ -53,9 +53,26 @@ public class MainAnalyser {
             saveDistributionsResults();
             reinitDistributions();
         }
+        //displayStatsOfADistributionTable("variations");
+        //displayStatsOfADistributionTable("occurences");
         displayStatsOfATable("keybits");
         displayStatsOfATable("agentLevels");
     }
+/*
+    private void displayStatsOfADistributionTable(String tableName) {
+        try {
+            
+            Distribution[][] systems = saver.getDistributionsOf(tableName, iterations);
+            int[] sums[] = new int[systems.length][numberOfAgent];
+            for (int i = 0; i < systems.length; i++) {
+                sums[i] = Distribution.getSum(systems[i]);
+            }
+            System.out.println(Arrays.toString(sums));
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(MainAnalyser.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
 
     private void displayStatsOfATable(String tableName) throws SQLException {
         double[] evolutions = saver.getEvolutionsOf(tableName, iterations);
