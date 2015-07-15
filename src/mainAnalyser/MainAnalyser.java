@@ -18,8 +18,17 @@ import java.util.logging.*;
 public class MainAnalyser {
 
     public static void main(String[] args) throws Exception {
-        MainAnalyser analyser = new MainAnalyser(10, 32);
-        analyser.analyse();
+        ChaoticSystem system = new CryptoChaoticSystem(256, "temp");
+        ButterflyAnalyser analyser = new ButterflyAnalyser(false, system);
+        
+        for(int i = 0; i < 1000; i++) {
+            if (!analyser.isComplete()) {
+                analyser.analyse();
+                system.evolveSystem();
+            }
+        }
+        /*MainAnalyser analyser = new MainAnalyser(10, 32);
+        analyser.analyse();*/
     }
     private final Distribution[] agentsLevelsOccurencesDistributions;
     private final Distribution[] agentsLevelsVariationsDistributions;
@@ -55,6 +64,9 @@ public class MainAnalyser {
             saveDistributionsResults();
             reinitDistributions();
         }
+        //Butterfly effect test
+        
+        
         //displayStatsOfADistributionTable("variations");
         //displayStatsOfADistributionTable("occurences");
         displayStatsOfATable("keybits");

@@ -1,6 +1,7 @@
 package Utils;
 
 import java.util.Arrays;
+import java.util.BitSet;
 
 /**
  *
@@ -67,5 +68,20 @@ public class Utils {
             stdDevSquared += (array[i] - avg) * (array[i] - avg)/array.length;
         }
         return Math.sqrt(stdDevSquared);
+    }
+    
+    public static BitSet getBitSet(byte b) {
+        BitSet bits = new BitSet(8);
+        for(int i = 0; i < 8; i++) {
+            bits.set(i, (b & 1) == 1);
+            b >>= 1;
+        }
+        return bits;
+    }
+    
+    public static boolean isPair(int number) {
+        if(number % 2 == 0)
+            return true;
+        return false;
     }
 }
