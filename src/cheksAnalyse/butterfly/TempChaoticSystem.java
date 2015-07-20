@@ -21,5 +21,6 @@ public class TempChaoticSystem extends CryptoChaoticSystem{
 
     public void setAgents(HashMap<Integer, Agent> agents) {
         this.agents = agents;
+        this.buildKey();
     }
 }
