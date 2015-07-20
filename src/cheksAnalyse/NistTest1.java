@@ -1,6 +1,5 @@
 package cheksAnalyse;
 
-import java.util.BitSet;
 import static org.apache.commons.math3.special.Erf.erfc;
 
 /**
@@ -22,21 +21,20 @@ public class NistTest1 extends AbstractNistTest{
     }
     
     @Override
-    public void executeTest(BitSet bits) {
+    public void executeTest(boolean[] bits) {
         int Sn = this.calculateSn(bits);
         double Sobs = this.calculateSobs(bits, Sn);
         double pValue = this.calculatePValue(Sobs, Sn);
         
-        if(pValue >= 0.01) {
-            this.passed = true;
-        }
+        this.passed = pValue > 0.01;
+        
     }
     
-    public int calculateSn(BitSet bits) {
+    public int calculateSn(boolean[] bits) {
         int count = 0;
                 
-        for(int i = 0; i < bits.length(); i++) {
-            if(bits.get(i) == true) {
+        for(int i = 0; i < bits.length; i++) {
+            if(bits[i] == true) {
                 count++;
             } else {
                 count--;
@@ -46,8 +44,8 @@ public class NistTest1 extends AbstractNistTest{
         return count;
     }
     
-    public double calculateSobs(BitSet bit, int Sn) {
-        return Sn / Math.sqrt(bit.length());
+    public double calculateSobs(boolean[] bit, int Sn) {
+        return Sn / Math.sqrt(bit.length);
     }
     
     public double calculatePValue(double Sobs, int Sn) {
