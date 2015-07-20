@@ -1,8 +1,9 @@
 package cheksAnalyse;
 
-import com.archosResearch.jCHEKS.chaoticSystem.ChaoticSystem;
+import com.archosResearch.jCHEKS.chaoticSystem.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  *
@@ -17,6 +18,7 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
      *
      * @param enableLog
      * @param chaoticSystem
+     * @param ammountOfByte
      * @throws Exception
      */
     public CheksAnalyserBytesPerBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem, int ammountOfByte) throws Exception{
@@ -25,8 +27,7 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
         this.bytesSaw = new HashSet[ammountOfByte];
         for (int i = 0; i < this.bytesSaw.length; i++) {
             this.bytesSaw[i] = new HashSet();
-        }
-        
+        }        
     }
     
     @Override
@@ -56,8 +57,14 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
     @Override
     protected void log(){
         super.log();
-        if(logEnabled){
-            System.out.println("Bytes saw: " + Arrays.toString(this.bytesSaw));
+        if(this.getEvolutionCount() % 1000 == 0) {
+            if(logEnabled){
+                for(int i = 0; i < this.bytesSaw.length; i++) {
+                    System.out.print(this.bytesSaw[i].size() + ",");
+                }
+                System.out.print("\n");
+                System.out.println("Bytes saw: " + Arrays.toString(this.bytesSaw));
+            }
         }
     }
 }

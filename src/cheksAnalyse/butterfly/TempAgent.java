@@ -10,10 +10,10 @@ public class TempAgent extends Agent{
     
     public TempAgent(Agent a) {
         this.agentId = a.getAgentId();
+        this.keyPart = a.getKeyPart();
+        this.keyPartRange = a.getKeyPartRange();
         this.pendingImpacts = a.getPendingImpacts();
         this.ruleSets = a.getRuleSets();
-        this.keyPartRange = a.getKeyPartRange();
-        this.keyPart = a.getKeyPart();
     }
     
     public void setKeyPart(int keyPart) {

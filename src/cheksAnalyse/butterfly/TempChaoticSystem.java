@@ -17,7 +17,7 @@ public class TempChaoticSystem extends CryptoChaoticSystem{
         super(keyLength, systemId);
     }
     
-    public TempChaoticSystem() { }   
+    public TempChaoticSystem() { }
 
     public void setAgents(HashMap<Integer, Agent> agents) {
         this.agents = agents;

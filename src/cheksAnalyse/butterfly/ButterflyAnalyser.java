@@ -1,7 +1,5 @@
 package cheksAnalyse.butterfly;
 
-import cheksAnalyse.butterfly.TempAgent;
-import cheksAnalyse.butterfly.TempChaoticSystem;
 import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
 import com.archosResearch.jCHEKS.chaoticSystem.*;
@@ -15,7 +13,7 @@ import java.util.logging.*;
  */
 public class ButterflyAnalyser extends AbstractCheksAnalyser {
 
-    private final HashMap<Integer, AbstractChaoticSystem> clones = new HashMap();
+    private final HashMap<Integer, CryptoChaoticSystem> clones = new HashMap();
     private int iteration = 1000;
     private final int[][] distances;
     
@@ -41,16 +39,15 @@ public class ButterflyAnalyser extends AbstractCheksAnalyser {
     }
 
     @Override
-    protected void scan() {
-        byte[] baseKey = this.getKey();
-        
+    protected void scan() {       
         for(int i = 0; i < this.clones.size(); i++) {
-            AbstractChaoticSystem clone = this.clones.get(i);
+            CryptoChaoticSystem clone = this.clones.get(i);
             try {
-                this.distances[i][this.getEvolutionCount()] = this.getDistance(baseKey, clone.getKey());
+                this.distances[i][this.getEvolutionCount()] = this.getDistance(this.getKey(), clone.getKey());
             } catch (Exception ex) {
                 Logger.getLogger(ButterflyAnalyser.class.getName()).log(Level.SEVERE, null, ex);
             }
+
             clone.evolveSystem();
         }
     }
@@ -78,15 +75,29 @@ public class ButterflyAnalyser extends AbstractCheksAnalyser {
     protected void verify() {
         if(this.getEvolutionCount() == this.iteration - 1) {
             this.complete();
-            
-            for (int[] distance : distances) {
-                int total = 0;
-                for (int j = 0; j < distance.length; j++) {
-                    total += distance[j];
-                }
-                System.out.println("Average: " + total/1000);
-            }
         }
+    }
+    
+    public HashMap<Integer, String> getResults() {
+        HashMap<Integer, String> results = new HashMap();
+        
+        for (int i = 0; i < this.distances.length; i ++) {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("[");
+
+            for (int j = 0; j < this.distances[i].length; j++) {
+                stringBuilder.append(this.distances[i][j]);
+                if(j == this.distances[i].length - 1) {
+                    stringBuilder.append("]");
+                } else {
+                    stringBuilder.append(", ");
+                }            
+            }
+            
+            results.put(i, stringBuilder.toString());
+        }
+        
+        return results;
     }
     
 }

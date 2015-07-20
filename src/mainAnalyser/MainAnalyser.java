@@ -10,6 +10,7 @@ import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.logging.*;
 
 /**
@@ -19,17 +20,17 @@ import java.util.logging.*;
 public class MainAnalyser {
 
     public static void main(String[] args) throws Exception {
-        ChaoticSystem system = new CryptoChaoticSystem(256, "temp");
-        ButterflyAnalyser analyser = new ButterflyAnalyser(false, system, 1000);
+        MainAnalyser analyser = new MainAnalyser(10, 32);
+        analyser.analyse();
+        /*ChaoticSystem system = new CryptoChaoticSystem(256, new Random());
+        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, system, 256);
+        while(!analyser.isComplete()) {
+            analyser.analyse();
+            system.evolveSystem();
+            
+        }*/
         
-        for(int i = 0; i < 1000; i++) {
-            if (!analyser.isComplete()) {
-                analyser.analyse();
-                system.evolveSystem();
-            }
-        }
-        /*MainAnalyser analyser = new MainAnalyser(10, 32);
-        analyser.analyse();*/
+        //FileReader.saveChaoticSystem("temp.xml", system);
     }
     private final Distribution[] agentsLevelsOccurencesDistributions;
     private final Distribution[] agentsLevelsVariationsDistributions;
@@ -40,6 +41,7 @@ public class MainAnalyser {
     private ChaoticSystem backupChaoticSystem;
     private CheksAnalyserBooleans currentBoolAnalyser;
     private CheksAnalyserBytesPerBytes currentBytesAnalyser;
+    private ButterflyAnalyser butterflyAnalyser;
     private byte[] lastKey;
     private byte[] currentKey;
 
@@ -61,10 +63,12 @@ public class MainAnalyser {
             performEvolutionDependantAnalyse();
             saveRelativeEvolutionResults();
             reinitChaoticSystem();
-            performDistributionAnalyse();
+            /*performDistributionAnalyse();
             saveDistributionsResults();
-            reinitDistributions();
+            reinitDistributions();*/
         }
+        
+        saver.saveButterflyEffect(this.butterflyAnalyser.getResults());
         //Butterfly effect test
         
         
@@ -114,7 +118,7 @@ public class MainAnalyser {
 
     private void performDistributionAnalyse() {
         lastKey = currentChaoticSystem.getKey();
-        for (int j = 0; j <= 100000; j++) {
+        for (int j = 0; j <= 1; j++) {
             currentChaoticSystem.evolveSystem();
             currentKey = currentChaoticSystem.getKey();
             for (int k = 0; k < numberOfAgent; k++) {
@@ -135,15 +139,19 @@ public class MainAnalyser {
         saver.saveDistributionInTable("variations", agentsLevelsVariationsDistributions);
     }
 
+
     private void performEvolutionDependantAnalyse() {
         while (true) {
-            if (!currentBoolAnalyser.isComplete()) {
+            /*if (!currentBoolAnalyser.isComplete()) {
                 currentBoolAnalyser.analyse();
             }
             if (!currentBytesAnalyser.isComplete()) {
                 currentBytesAnalyser.analyse();
+            }*/
+            if (!butterflyAnalyser.isComplete()) {
+                butterflyAnalyser.analyse();
             }
-            if (currentBoolAnalyser.isComplete() && currentBytesAnalyser.isComplete()) {
+            if (/*currentBoolAnalyser.isComplete() && currentBytesAnalyser.isComplete() &&*/ butterflyAnalyser.isComplete()) {
                 break;
             } else {
                 currentChaoticSystem.evolveSystem();
@@ -186,6 +194,7 @@ public class MainAnalyser {
         currentChaoticSystem = new CryptoChaoticSystem(numberOfAgent * Byte.SIZE, "test");
         currentBoolAnalyser = new CheksAnalyserBooleans(false, currentChaoticSystem, this.numberOfAgent * Byte.SIZE);
         currentBytesAnalyser = new CheksAnalyserBytesPerBytes(false, currentChaoticSystem, this.numberOfAgent);
+        butterflyAnalyser = new ButterflyAnalyser(false, currentChaoticSystem, 1000);
         backupChaoticSystem = currentChaoticSystem.cloneSystem();
     }
 
