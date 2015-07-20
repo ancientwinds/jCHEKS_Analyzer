@@ -1,6 +1,7 @@
 package mainAnalyser;
 
 import java.sql.*;
+import java.util.HashMap;
 import java.util.logging.*;
 
 /**
@@ -25,6 +26,7 @@ public class Saver {
         createEvolutionTable("agentlevels");
         createDistributionTable("variations");
         createDistributionTable("occurences");
+        createButterflyEffectTable();
     }
 
     private void openDatabase() {
@@ -43,6 +45,15 @@ public class Saver {
         try {
             this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
             this.statement.executeUpdate("CREATE TABLE " + tableName + " (evolutions NUMERIC)");
+        } catch (SQLException ex) {
+            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void createButterflyEffectTable() {
+        try {
+            this.statement.executeUpdate("DROP TABLE IF EXISTS butterflyEffect");
+            this.statement.executeUpdate("CREATE TABLE butterflyEffect (agent NUMERIC, result TEXT)");
         } catch (SQLException ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,6 +95,26 @@ public class Saver {
             this.statement.executeUpdate(stringBuilder.toString());
         } catch (SQLException ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void saveButterflyEffect(HashMap<Integer, String> results) {
+
+        for (int i = 0; i < numberOfAgent; i++) {
+            StringBuilder stringBuilder = new StringBuilder("INSERT INTO ");
+            stringBuilder.append("butterflyEffect");
+            stringBuilder.append(" (");stringBuilder.append("agent");
+            stringBuilder.append(", result)");
+            stringBuilder.append(" VALUES (");
+            stringBuilder.append(i);
+            stringBuilder.append(", \"");
+            stringBuilder.append(results.get(i));
+            stringBuilder.append("\")");
+            try {
+                this.statement.executeUpdate(stringBuilder.toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
