@@ -63,9 +63,9 @@ public class MainAnalyser {
             performEvolutionDependantAnalyse();
             saveRelativeEvolutionResults();
             reinitChaoticSystem();
-            /*performDistributionAnalyse();
+            performDistributionAnalyse();
             saveDistributionsResults();
-            reinitDistributions();*/
+            reinitDistributions();
         }
         
         saver.saveButterflyEffect(this.butterflyAnalyser.getResults());
@@ -142,16 +142,16 @@ public class MainAnalyser {
 
     private void performEvolutionDependantAnalyse() {
         while (true) {
-            /*if (!currentBoolAnalyser.isComplete()) {
+            if (!currentBoolAnalyser.isComplete()) {
                 currentBoolAnalyser.analyse();
             }
             if (!currentBytesAnalyser.isComplete()) {
                 currentBytesAnalyser.analyse();
-            }*/
+            }
             if (!butterflyAnalyser.isComplete()) {
                 butterflyAnalyser.analyse();
             }
-            if (/*currentBoolAnalyser.isComplete() && currentBytesAnalyser.isComplete() &&*/ butterflyAnalyser.isComplete()) {
+            if (currentBoolAnalyser.isComplete() && currentBytesAnalyser.isComplete() && butterflyAnalyser.isComplete()) {
                 break;
             } else {
                 currentChaoticSystem.evolveSystem();
