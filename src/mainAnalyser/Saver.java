@@ -1,7 +1,7 @@
 package mainAnalyser;
 
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.sql.*;
-import java.util.HashMap;
 import java.util.logging.*;
 
 /**
@@ -21,44 +21,62 @@ public class Saver {
     }
 
     public void initDatabase() {
-        openDatabase();
-        createEvolutionTable("keybits");
-        createEvolutionTable("agentlevels");
-        createDistributionTable("variations");
-        createDistributionTable("occurences");
-        createButterflyEffectTable();
-    }
-
-    private void openDatabase() {
-
         try {
-            Class.forName("org.sqlite.JDBC");
-            this.connection = DriverManager.getConnection("jdbc:sqlite:keys.db");
-            this.statement = connection.createStatement();
-        } catch (ClassNotFoundException | SQLException ex) {
+            openDatabase();
+            this.createNistTables();
+            createEvolutionTable("KEY_BITS");
+            createEvolutionTable("AGENT_LEVELS");
+            createOccurenceTable("VARIATIONS");
+            createOccurenceTable("OCCURENCES");
+            createButterflyEffectTable();
+            this.connection.commit();
+        } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
-    private void createEvolutionTable(String tableName) {
-        try {
-            this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
-            this.statement.executeUpdate("CREATE TABLE " + tableName + " (evolutions NUMERIC)");
-        } catch (SQLException ex) {
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void openDatabase() throws Exception {
+        Class.forName("org.sqlite.JDBC");
+        this.connection = DriverManager.getConnection("jdbc:sqlite:keys.db");
+        this.connection.setAutoCommit(false);
+        this.statement = connection.createStatement();
     }
     
-    private void createButterflyEffectTable() {
-        try {
-            this.statement.executeUpdate("DROP TABLE IF EXISTS butterflyEffect");
-            this.statement.executeUpdate("CREATE TABLE butterflyEffect (agent NUMERIC, result TEXT)");
-        } catch (SQLException ex) {
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+    private void createNistTables() throws Exception {
+        for(int i = 1; i <= 15; i++) {
+
+            this.statement.executeUpdate("DROP TABLE IF EXISTS NIST_" + i);
+            this.statement.executeUpdate("CREATE TABLE NIST_" + i + " (chaotic_system_id TEXT PRIMARY KEY, p_value NUMERIC)");
+
         }
     }
 
+    private void createEvolutionTable(String tableName) throws Exception {        
+        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
+        this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, evolution_count DOUBLE)");
+    }
+    
+    private void createButterflyEffectTable() throws Exception {
+        this.statement.executeUpdate("DROP TABLE IF EXISTS BUTTERFLY_EFFECT");
+        this.statement.executeUpdate("CREATE TABLE BUTTERFLY_EFFECT (chaotic_system_id TEXT, clone_id INTEGER, evolution_count INTEGER, distance INTEGER, PRIMARY KEY (chaotic_system_id, clone_id, evolution_count))");
+    }
+
+    private void createOccurenceTable(String tableName) throws Exception {
+        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
+        this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT, agent_id INTEGER, variation INTEGER, occurence_count INTEGER, PRIMARY KEY(chaotic_system_id, agent_id, variation))");
+    }
+    
+    public void saveNistResults(AbstractChaoticSystem system, int testId, double pValue) {
+        try {
+            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO TABLE NIST_" + testId + " (chaotic_system_id, p_value) VALUES (?,?)");
+            insertStatement.setString(1, system.getSystemId());
+            insertStatement.setDouble(2, pValue);
+            insertStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }
+    
     public void saveValueInTable(String tableName, int valueToSave) {
         try {
             this.statement.executeUpdate("INSERT INTO " + tableName + " (evolutions) VALUES (" + valueToSave + ")");
@@ -66,55 +84,56 @@ public class Saver {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void saveDistributionInTable(String tableName, Distribution[] distributions) {
-        StringBuilder stringBuilder = new StringBuilder("INSERT INTO ");
-        stringBuilder.append(tableName);
-        stringBuilder.append(" (");
-        for (int i = 0; i < numberOfAgent; i++) {
-            stringBuilder.append("agent");
-            stringBuilder.append(i);
-            if (i < numberOfAgent - 1) {
-                stringBuilder.append(",");
-            } else {
-                stringBuilder.append(")");
-            }
-        }
-        stringBuilder.append(" VALUES (");
-        for (int i = 0; i < numberOfAgent; i++) {
-            stringBuilder.append("\"");
-            stringBuilder.append(distributions[i].toString());
-            stringBuilder.append("\"");
-            if (i < numberOfAgent - 1) {
-                stringBuilder.append(",");
-            } else {
-                stringBuilder.append(")");
-            }
-        }
+    
+    public void saveEvolutionCount(String tableName, String chaoticSystemId, int evolutionCount) {
         try {
-            this.statement.executeUpdate(stringBuilder.toString());
+            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, evolution_count) VALUES (?,?)");
+            insertStatement.setString(1, chaoticSystemId);
+            insertStatement.setInt(2, evolutionCount);            
+            insertStatement.executeUpdate();
+            this.connection.commit();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void saveDistributionInTable(String chaoticSystemId, String tableName, Distribution[] distributions) {
+        try {            
+            for(int i = 0; i < distributions.length; i++) {
+                for(int j = 0; j < distributions[i].getAgentLevels().length; j++) {
+                    PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, agent_id, variation, occurence_count) VALUES (?,?,?,?)");
+                    insertStatement.setString(1, chaoticSystemId);
+                    insertStatement.setInt(2, i);
+                    insertStatement.setInt(3, j);
+                    insertStatement.setInt(4, distributions[i].getAgentLevels()[j]);
+                    insertStatement.executeUpdate();
+                }
+            }
+            this.connection.commit();
+            
         } catch (SQLException ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public void saveButterflyEffect(HashMap<Integer, String> results) {
+    public void saveButterflyEffect(String systemId, int[][] results) {
 
-        for (int i = 0; i < numberOfAgent; i++) {
-            StringBuilder stringBuilder = new StringBuilder("INSERT INTO ");
-            stringBuilder.append("butterflyEffect");
-            stringBuilder.append(" (");stringBuilder.append("agent");
-            stringBuilder.append(", result)");
-            stringBuilder.append(" VALUES (");
-            stringBuilder.append(i);
-            stringBuilder.append(", \"");
-            stringBuilder.append(results.get(i));
-            stringBuilder.append("\")");
-            try {
-                this.statement.executeUpdate(stringBuilder.toString());
-            } catch (SQLException ex) {
-                Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO BUTTERFLY_EFFECT (chaotic_system_id, clone_id, evolution_count, distance) VALUES (?,?,?,?)");
+            for (int i = 0; i < results.length; i ++) { 
+                for (int j = 0; j < results[i].length; j++) {
+                    insertStatement.setString(1, systemId);
+                    insertStatement.setInt(2, i);
+                    insertStatement.setInt(3, j);
+                    insertStatement.setInt(4, results[i][j]);
+                    insertStatement.executeUpdate(); 
+                }
             }
+            this.connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -151,27 +170,4 @@ public class Saver {
         return serializedArray.replace("[", "").replace("]", "").split(", ");
     }
 
-    private void createDistributionTable(String tableName) {
-        try {
-            this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
-            StringBuilder stringBuilder = new StringBuilder("CREATE TABLE ");
-            stringBuilder.append(tableName);
-            stringBuilder.append(" (");
-            for (int i = 0; i < numberOfAgent; i++) {
-                stringBuilder.append("agent");
-                stringBuilder.append(i);
-                stringBuilder.append(" TEXT");
-                if (i < numberOfAgent - 1) {
-                    stringBuilder.append(",");
-                } else {
-                    stringBuilder.append(")");
-                }
-            }
-            this.statement.executeUpdate(stringBuilder.toString());
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 }

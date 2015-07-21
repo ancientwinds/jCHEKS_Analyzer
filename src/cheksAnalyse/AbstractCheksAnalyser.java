@@ -3,6 +3,7 @@ package cheksAnalyse;
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.Arrays;
+import mainAnalyser.Saver;
 
 /**
  *
@@ -15,6 +16,7 @@ public abstract class AbstractCheksAnalyser {
     private final AbstractChaoticSystem chaoticSystem;
     private int evolutionCount;
     private boolean analyseCompleted;
+    protected boolean saved = false;
 
     public AbstractCheksAnalyser(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         this.logEnabled = enableLog;
@@ -33,6 +35,12 @@ public abstract class AbstractCheksAnalyser {
     protected abstract void scan();
 
     protected abstract void verify();
+    
+    protected String getSystemId() {
+        return this.chaoticSystem.getSystemId();
+    }
+    
+    public abstract void saveResult(Saver saver);
 
     protected byte[] getKey() {
         return key;

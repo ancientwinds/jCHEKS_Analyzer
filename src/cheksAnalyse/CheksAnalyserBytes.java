@@ -2,6 +2,7 @@ package cheksAnalyse;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
+import mainAnalyser.Saver;
 
 /**
  *
@@ -38,4 +39,10 @@ public class CheksAnalyserBytes extends AbstractCheksAnalyser{
         super.log();
         System.out.println("Bytes saw: " + Arrays.toString(this.bytesSaw.toArray()));
     }
+
+    @Override
+    public void saveResult(Saver saver) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }
