@@ -1,6 +1,5 @@
-package cheksAnalyse.butterfly;
+package cheksAnalyse.NIST;
 
-import cheksAnalyse.NIST.AbstractNistTest;
 import static org.apache.commons.math3.special.Erf.erfc;
 
 /**

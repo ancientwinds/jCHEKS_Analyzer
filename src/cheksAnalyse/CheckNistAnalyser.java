@@ -1,5 +1,8 @@
 package cheksAnalyse;
 
+import cheksAnalyse.NIST.NistTest1;
+import cheksAnalyse.NIST.NistTest3;
+import cheksAnalyse.NIST.NistTest2;
 import cheksAnalyse.NIST.AbstractNistTest;
 import cheksAnalyse.butterfly.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;

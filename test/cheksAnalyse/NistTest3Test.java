@@ -1,6 +1,6 @@
 package cheksAnalyse;
 
-import cheksAnalyse.butterfly.NistTest3;
+import cheksAnalyse.NIST.NistTest3;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

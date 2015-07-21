@@ -1,6 +1,6 @@
 package cheksAnalyse;
 
-import cheksAnalyse.butterfly.NistTest2;
+import cheksAnalyse.NIST.NistTest2;
 import java.util.BitSet;
 import java.util.HashMap;
 import org.junit.Test;
