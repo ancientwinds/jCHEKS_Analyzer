@@ -4,9 +4,9 @@ import cheksAnalyse.NIST.NistTest1;
 import cheksAnalyse.NIST.NistTest3;
 import cheksAnalyse.NIST.NistTest2;
 import cheksAnalyse.NIST.AbstractNistTest;
-import cheksAnalyse.butterfly.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.HashMap;
+import mainAnalyser.Saver;
 
 /**
  *
@@ -31,6 +31,11 @@ public class CheckNistAnalyser extends AbstractCheksAnalyser{
 
     @Override
     protected void verify() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveResult(Saver saver) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

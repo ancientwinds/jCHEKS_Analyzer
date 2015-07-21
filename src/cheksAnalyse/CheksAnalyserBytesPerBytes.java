@@ -4,6 +4,7 @@ import com.archosResearch.jCHEKS.chaoticSystem.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.Arrays;
 import java.util.HashSet;
+import mainAnalyser.Saver;
 
 /**
  *
@@ -66,5 +67,10 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
                 System.out.println("Bytes saw: " + Arrays.toString(this.bytesSaw));
             }
         }
+    }
+    
+    @Override
+    public void saveResult(Saver saver) {
+        saver.saveEvolutionCount("AGENT_LEVELS", this.getSystemId(), this.getEvolutionCount());
     }
 }

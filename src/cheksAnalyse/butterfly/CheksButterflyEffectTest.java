@@ -6,18 +6,19 @@ import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
 import java.util.logging.*;
+import mainAnalyser.Saver;
 
 /**
  *
  * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
-public class ButterflyAnalyser extends AbstractCheksAnalyser {
+public class CheksButterflyEffectTest extends AbstractCheksAnalyser {
 
     private final HashMap<Integer, CryptoChaoticSystem> clones = new HashMap();
     private int iteration = 1000;
     private final int[][] distances;
     
-    public ButterflyAnalyser(boolean enableLog, ChaoticSystem chaoticSystem, int iteration) throws Exception {
+    public CheksButterflyEffectTest(boolean enableLog, ChaoticSystem chaoticSystem, int iteration) throws Exception {
         super(enableLog, chaoticSystem);
         this.iteration = 1000;
         this.distances = new int[chaoticSystem.getAgents().size()][this.iteration];               
@@ -45,7 +46,7 @@ public class ButterflyAnalyser extends AbstractCheksAnalyser {
             try {
                 this.distances[i][this.getEvolutionCount()] = this.getDistance(this.getKey(), clone.getKey());
             } catch (Exception ex) {
-                Logger.getLogger(ButterflyAnalyser.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CheksButterflyEffectTest.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             clone.evolveSystem();
@@ -99,5 +100,12 @@ public class ButterflyAnalyser extends AbstractCheksAnalyser {
         
         return results;
     }
-    
+
+    @Override
+    public void saveResult(Saver saver) {
+        if(!saved) {
+            saver.saveButterflyEffect(this.getSystemId(), this.distances);
+            saved = true;
+        }
+    }    
 }

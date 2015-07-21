@@ -3,6 +3,7 @@ package cheksAnalyse;
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
+import mainAnalyser.Saver;
 
 /**
  *
@@ -59,5 +60,10 @@ public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
             System.out.println("Falses: " + Arrays.toString(falsesSaw));
             System.out.println("Trues: " + Arrays.toString(truesSaw));
         }
+    }
+
+    @Override
+    public void saveResult(Saver saver) {
+        saver.saveEvolutionCount("KEY_BITS", this.getSystemId(), this.getEvolutionCount());
     }
 }
