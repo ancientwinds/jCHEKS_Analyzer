@@ -1,5 +1,6 @@
 package cheksAnalyse;
 
+import cheksAnalyse.butterfly.NistTest1;
 import java.util.BitSet;
 import org.junit.Test;
 import static org.junit.Assert.*;

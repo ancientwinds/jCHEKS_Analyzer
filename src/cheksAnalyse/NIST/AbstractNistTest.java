@@ -1,4 +1,4 @@
-package cheksAnalyse;
+package cheksAnalyse.NIST;
 
 import java.util.BitSet;
 

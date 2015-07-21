@@ -1,5 +1,7 @@
 package cheksAnalyse;
 
+import cheksAnalyse.NIST.AbstractNistTest;
+import cheksAnalyse.butterfly.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.HashMap;
 
@@ -14,6 +16,9 @@ public class CheckNistAnalyser extends AbstractCheksAnalyser{
     public CheckNistAnalyser(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
         this.nistTests.put(1, new NistTest1());
+        this.nistTests.put(2, new NistTest2());
+        this.nistTests.put(3, new NistTest3());
+        this.nistTests.put(4, new NistTest1());
     }
 
     @Override
