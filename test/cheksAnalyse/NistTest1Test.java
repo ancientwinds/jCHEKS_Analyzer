@@ -1,17 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cheksAnalyse;
 
+import cheksAnalyse.NIST.NistTest1;
 import java.util.BitSet;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author etudiant
+ * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
 public class NistTest1Test {
     
@@ -19,7 +15,7 @@ public class NistTest1Test {
     public void testCalculateSn() {
         NistTest1 instance = new NistTest1(10);
         
-        BitSet bits = BitSet.valueOf(new long[] { Long.parseLong("1011010101", 2) });
+        boolean bits[] = {true, false, true, true, false, true, false, true, false, true};
         assertEquals(2, instance.calculateSn(bits));          
     }
     
@@ -27,7 +23,7 @@ public class NistTest1Test {
     public void testCalculateSobs() {
         NistTest1 instance = new NistTest1(10);
         
-        BitSet bits = BitSet.valueOf(new long[] { Long.parseLong("1011010101", 2) });
+        boolean bits[] = {true, false, true, true, false, true, false, true, false, true};
         int Sn = instance.calculateSn(bits);
         
         assertEquals(0.632455532, instance.calculateSobs(bits, Sn), 0.00001);
@@ -38,7 +34,7 @@ public class NistTest1Test {
     public void testCalculatePValue() {
         NistTest1 instance = new NistTest1(10);
         
-        BitSet bits = BitSet.valueOf(new long[] { Long.parseLong("1011010101", 2) });
+        boolean bits[] = {true, false, true, true, false, true, false, true, false, true};
         int Sn = instance.calculateSn(bits);
         double Sobs = instance.calculateSobs(bits, Sn);
         
@@ -48,7 +44,7 @@ public class NistTest1Test {
     @Test
     public void testExecuteTestShouldPass() {
         NistTest1 instance = new NistTest1(10);
-        BitSet bits = BitSet.valueOf(new long[] { Long.parseLong("1011010101", 2) });
+        boolean bits[] = {true, false, true, true, false, true, false, true, false, true};
         
         instance.executeTest(bits);
         

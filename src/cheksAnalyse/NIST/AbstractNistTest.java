@@ -1,4 +1,4 @@
-package cheksAnalyse;
+package cheksAnalyse.NIST;
 
 import java.util.BitSet;
 
@@ -11,7 +11,7 @@ public abstract class AbstractNistTest {
     protected boolean passed = false;
     protected int bitsNeeded = 0;
     
-    public abstract void executeTest(BitSet bits);
+    public abstract void executeTest(boolean[] bits);
     
     public boolean isPassed() {
         return this.passed;
