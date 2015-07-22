@@ -24,10 +24,10 @@ public class CheksAnalyserBytesPerBytesTest {
             }
             i++;
         }
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys);
-        CheksAnalyserBytesPerBytes analyser = new CheksAnalyserBytesPerBytes(true, sys, 16);
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);
+        CheksAnalyserBytesPerBytes analyser = new CheksAnalyserBytesPerBytes(true, sys);
         while(!analyser.isComplete()){
-            analyser.analyse();
+            analyser.analyse(sys);
             sys.evolveSystem();
         }
         
@@ -48,10 +48,10 @@ public class CheksAnalyserBytesPerBytesTest {
             }
             i++;
         }
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys);
-        CheksAnalyserBytesPerBytes analyser = new CheksAnalyserBytesPerBytes(true, sys, 16);
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);
+        CheksAnalyserBytesPerBytes analyser = new CheksAnalyserBytesPerBytes(true, sys);
         while(!analyser.isComplete()){
-            analyser.analyse();
+            analyser.analyse(sys);
             sys.evolveSystem();
         }
         

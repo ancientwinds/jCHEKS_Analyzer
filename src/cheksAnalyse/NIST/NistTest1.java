@@ -1,5 +1,7 @@
 package cheksAnalyse.NIST;
 
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import mainAnalyser.Saver;
 import static org.apache.commons.math3.special.Erf.erfc;
 
 /**
@@ -10,24 +12,23 @@ import static org.apache.commons.math3.special.Erf.erfc;
  */
 public class NistTest1 extends AbstractNistTest{
     
-    public NistTest1() {
-        super();
-        this.bitsNeeded = 100000;
+    public static String TABLE_NAME = "FrequencyMonobit_NIST_1";
+    
+    public NistTest1(AbstractChaoticSystem chaoticSystem) throws Exception {
+        super(chaoticSystem, 100000);
     }
     
-    public NistTest1(int bitsNeeded) {
-        super();
-        this.bitsNeeded = bitsNeeded;
+    public NistTest1(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
+        super(chaoticSystem, bitsNeeded);
     }
-    
+
     @Override
     public void executeTest(boolean[] bits) {
         int Sn = this.calculateSn(bits);
-        double Sobs = this.calculateSobs(bits, Sn);
-        double pValue = this.calculatePValue(Sobs, Sn);
-        
-        this.passed = pValue > 0.01;
-        
+        double Sobs = this.calculateSobs(bits, Math.abs(Sn));
+
+        this.pValue = this.calculatePValue(Sobs, Sn);
+        this.passed = this.pValue > 0.01;        
     }
     
     public int calculateSn(boolean[] bits) {
@@ -45,11 +46,16 @@ public class NistTest1 extends AbstractNistTest{
     }
     
     public double calculateSobs(boolean[] bit, int Sn) {
-        return Sn / Math.sqrt(bit.length);
+        return Math.abs(Sn) / Math.sqrt(bit.length);
     }
     
     public double calculatePValue(double Sobs, int Sn) {
-        return erfc(Sobs / Math.sqrt(Sn));
+        return erfc(Sobs / Math.sqrt(2));
+    }
+
+    @Override
+    public void saveResult(Saver saver) {
+        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
 }

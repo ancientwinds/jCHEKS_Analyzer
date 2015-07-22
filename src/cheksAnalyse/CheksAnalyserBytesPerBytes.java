@@ -1,6 +1,5 @@
 package cheksAnalyse;
 
-import com.archosResearch.jCHEKS.chaoticSystem.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -13,26 +12,30 @@ import mainAnalyser.Saver;
 public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
     
     private HashSet<Byte>[] bytesSaw;
-    private final int ammountOfByte;
+    private int ammountOfByte;
+    public static final String TABLE_NAME = "agent_levels";
 
-    /**
-     *
-     * @param enableLog
-     * @param chaoticSystem
-     * @param ammountOfByte
-     * @throws Exception
-     */
-    public CheksAnalyserBytesPerBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem, int ammountOfByte) throws Exception{
+    public CheksAnalyserBytesPerBytes(AbstractChaoticSystem chaoticSystem) throws Exception{
+        super(true, chaoticSystem);
+        this.initAnalyser(chaoticSystem);
+       
+    }
+    
+    public CheksAnalyserBytesPerBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
         super(enableLog, chaoticSystem);
-        this.ammountOfByte = ammountOfByte;
-        this.bytesSaw = new HashSet[ammountOfByte];
+        this.initAnalyser(chaoticSystem);
+    }
+    
+    private void initAnalyser(AbstractChaoticSystem chaoticSsytem) {
+        this.ammountOfByte = chaoticSystem.getAgentsCount();
+        this.bytesSaw = new HashSet[this.ammountOfByte];
         for (int i = 0; i < this.bytesSaw.length; i++) {
             this.bytesSaw[i] = new HashSet();
-        }        
+        } 
     }
     
     @Override
-    protected void scan() {
+    protected void scan(AbstractChaoticSystem chaoticSystem) {
         byte[] array = this.getKey();
         for (int i = 0; i < ammountOfByte; i++) {
             this.bytesSaw[i].add(array[i]);
@@ -71,6 +74,6 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
     
     @Override
     public void saveResult(Saver saver) {
-        saver.saveEvolutionCount("AGENT_LEVELS", this.getSystemId(), this.getEvolutionCount());
+        saver.saveEvolutionCount(TABLE_NAME, this.getSystemId(), this.getEvolutionCount());
     }
 }

@@ -11,16 +11,18 @@ import java.util.*;
 public class FakeChaoticSystem extends AbstractChaoticSystem {
 
     private int evolution;
+    private int agentCount = 0;
     private final ArrayList<byte[]> keyList;
 
     /**
      *
      * @param keyList
      */
-    public FakeChaoticSystem(ArrayList<byte[]> keyList) {
+    public FakeChaoticSystem(ArrayList<byte[]> keyList, int agentCount) {
         super(0);
         this.evolution = 0;
         this.keyList = keyList;
+        this.agentCount = agentCount;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
 
     @Override
     public AbstractChaoticSystem cloneSystem() {
-        return new FakeChaoticSystem(this.keyList);
+        return new FakeChaoticSystem(this.keyList, this.agentCount);
 
     }
 
@@ -69,5 +71,8 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     @Override
     protected void generateSystem(int keyLength, Random random) throws ChaoticSystemException {
     }
+    
+    @Override
+    public int getAgentsCount() { return this.agentCount;}
 
 }

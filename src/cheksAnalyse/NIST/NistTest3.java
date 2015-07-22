@@ -1,5 +1,7 @@
 package cheksAnalyse.NIST;
 
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import mainAnalyser.Saver;
 import static org.apache.commons.math3.special.Erf.erfc;
 
 /**
@@ -9,15 +11,15 @@ import static org.apache.commons.math3.special.Erf.erfc;
  * NIST Test 2.3: Runs test
  */
 public class NistTest3 extends AbstractNistTest{
+    
+    public static String TABLE_NAME = "Runs_NIST_3";
 
-    public NistTest3() {
-        super();
-        this.bitsNeeded = 100000;
+    public NistTest3(AbstractChaoticSystem chaoticSystem) throws Exception {
+        super(chaoticSystem, 100000);
     }
     
-    public NistTest3(int bitsNeeded) {
-        super();
-        this.bitsNeeded = bitsNeeded;
+    public NistTest3(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
+        super(chaoticSystem, bitsNeeded);
     }
     
     @Override
@@ -26,8 +28,7 @@ public class NistTest3 extends AbstractNistTest{
         if(this.shouldContinue(p)) {
             int[] Si = this.calculateSi(bits);
             double vObs = this.calculateVobs(Si);
-            double pValue = this.calculatePValue(vObs, p);
-            
+            this.pValue = this.calculatePValue(vObs, p);
             this.passed = pValue > 0.01;
         }
     }
@@ -39,18 +40,16 @@ public class NistTest3 extends AbstractNistTest{
             if(bits[i] == true) {
                 ones++;
             }
-        }
-        
-        return ones / (double) this.bitsNeeded;
-        
+        }        
+        return ones / (double) this.bitsNeeded;        
     }
     
     public double calculateT() {
-        return 2 / Math.sqrt(this.bitsNeeded);
+        return (double) 2 / Math.sqrt(this.bitsNeeded);
     }
     
-    public boolean shouldContinue(double p) {        
-        return Math.abs(p - 0.5) < this.calculateT();
+    public boolean shouldContinue(double p) {
+        return Math.abs(p - (double)1/(double)2) < this.calculateT();
     }
     
     public int[] calculateSi(boolean[] bits) {
@@ -82,5 +81,10 @@ public class NistTest3 extends AbstractNistTest{
         double div = 2 * Math.sqrt(2 * this.bitsNeeded) * p * (1 - p);
         
         return erfc(abs / div);
+    }
+
+    @Override
+    public void saveResult(Saver saver) {
+        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
 }

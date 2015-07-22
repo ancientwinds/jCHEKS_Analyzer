@@ -1,5 +1,8 @@
 package cheksAnalyse.NIST;
 
+import Utils.Utils;
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import mainAnalyser.Saver;
 import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
 /**
@@ -12,26 +15,26 @@ import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 public class NistTest2 extends AbstractNistTest{
 
     private int blockLength = 2000;
+    public static String TABLE_NAME = "FrequencyBlock_NIST_2";
+
     
-    public NistTest2() {
-        super();
-        this.bitsNeeded = 100000;
+    public NistTest2(AbstractChaoticSystem chaoticSystem) throws Exception {
+        super(chaoticSystem, 100000);
     }
     
-    public NistTest2(int bitsNeeded, int blockLength) {
-        super();
-        this.bitsNeeded = bitsNeeded;
+    public NistTest2(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
+        super(chaoticSystem, bitsNeeded);
         this.blockLength = blockLength;
     }
     
     @Override
     public void executeTest(boolean[] bits) {
-        boolean[][] blocks = this.partitionBits(bits);
+        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, this.blockLength);//this.partitionBits(bits);
         double[] proportions = this.calculateProportion(blocks);
         double[] ratios = this.calculateRatio(proportions);
         double xObs = this.calculateXobs(ratios);
-        double pValue = this.calculatePValue(xObs);
-        
+        this.pValue = this.calculatePValue(xObs);
+
         this.passed = pValue > 0.01;
     }
     
@@ -92,6 +95,11 @@ public class NistTest2 extends AbstractNistTest{
         int blockCount = this.bitsNeeded/this.blockLength;
        
         return regularizedGammaQ((double)blockCount/2, xObs/2);
+    }
+    
+    @Override
+    public void saveResult(Saver saver) {
+        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
 }

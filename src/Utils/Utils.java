@@ -80,8 +80,19 @@ public class Utils {
     }
     
     public static boolean isPair(int number) {
-        if(number % 2 == 0)
-            return true;
-        return false;
+        return number % 2 == 0;
+    }
+    
+    public static boolean[][] partitionBitsInBlocks(boolean[] bits, int blockLength) {        
+        
+        boolean blockBits[][] = new boolean[bits.length/blockLength][blockLength];
+        
+        for(int i = 0; i < bits.length/blockLength; i++) {
+            for(int j = 0; j < blockLength; j++) {
+                blockBits[i][j] = bits[j + (i * blockLength)]; 
+            }
+        }
+
+        return blockBits;
     }
 }

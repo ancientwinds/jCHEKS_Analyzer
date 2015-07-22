@@ -19,16 +19,16 @@ public class CheksAnalyserBytesTest {
         boolean completed = false;
         while(!completed) {
             System.out.println(i);
-            keys.add(new byte[]{i,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
+            keys.add(new byte[]{i,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
             if(i == 127){
                 completed = true;
             }
             i++;
         }
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys);
-        CheksAnalyserBytes analyser = new CheksAnalyserBytes(true, sys, 16);
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);
+        CheksAnalyserBytes analyser = new CheksAnalyserBytes(true, sys);
         while(!analyser.isComplete()){
-            analyser.analyse();
+            analyser.analyse(sys);
             sys.evolveSystem();
         }
         assertEquals(255, analyser.getEvolutionCount());
@@ -42,17 +42,17 @@ public class CheksAnalyserBytesTest {
         boolean completed = false;
         while(!completed) {
             System.out.println(i);
-            keys.add(new byte[]{i,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
-            keys.add(new byte[]{i,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
+            keys.add(new byte[]{i,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
+            keys.add(new byte[]{i,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
             if(i == 127){
                 completed = true;
             }
             i++;
         }
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys);
-        CheksAnalyserBytes analyser = new CheksAnalyserBytes(true, sys, 16);
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);
+        CheksAnalyserBytes analyser = new CheksAnalyserBytes(true, sys);
         while(!analyser.isComplete()){
-            analyser.analyse();
+            analyser.analyse(sys);
             sys.evolveSystem();
         }
         assertEquals(510, analyser.getEvolutionCount());
