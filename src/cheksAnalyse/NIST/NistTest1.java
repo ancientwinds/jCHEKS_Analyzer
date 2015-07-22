@@ -12,24 +12,23 @@ import static org.apache.commons.math3.special.Erf.erfc;
  */
 public class NistTest1 extends AbstractNistTest{
     
+    public static String TABLE_NAME = "FrequencyMonobit_NIST_1";
+    
     public NistTest1(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem);
-        this.bitsNeeded = 100000;
-        NistTest1.TABLE_NAME = "FrequencyMonobit_NIST-1";
+        super(chaoticSystem, 100000);
     }
     
     public NistTest1(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
-        super(chaoticSystem);
-        this.bitsNeeded = bitsNeeded;
+        super(chaoticSystem, bitsNeeded);
     }
-    
+
     @Override
     public void executeTest(boolean[] bits) {
         int Sn = this.calculateSn(bits);
-        double Sobs = this.calculateSobs(bits, Sn);
-        double pValue = this.calculatePValue(Sobs, Sn);
-        
-        this.passed = pValue > 0.01;
+        double Sobs = this.calculateSobs(bits, Math.abs(Sn));
+
+        this.pValue = this.calculatePValue(Sobs, Sn);
+        this.passed = this.pValue > 0.01;
         
     }
     
@@ -48,26 +47,33 @@ public class NistTest1 extends AbstractNistTest{
     }
     
     public double calculateSobs(boolean[] bit, int Sn) {
-        return Sn / Math.sqrt(bit.length);
+        return Math.abs(Sn) / Math.sqrt(bit.length);
     }
     
     public double calculatePValue(double Sobs, int Sn) {
-        return erfc(Sobs / Math.sqrt(Sn));
+        return erfc(Sobs / Math.sqrt(2));
     }
 
     @Override
     protected void scan(AbstractChaoticSystem system) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.bitsCount == this.bitsNeeded) {
+            this.executeTest(bits);
+            this.testExecuted = true;
+        } else {
+            this.appendKey();
+        }
     }
 
     @Override
     protected void verify() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.testExecuted) {
+            this.complete();
+        }
     }
 
     @Override
     public void saveResult(Saver saver) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
 }

@@ -13,15 +13,15 @@ public class NistTest4 extends AbstractNistTest{
 
     private int blockLength = 128;
 
+    public static String TABLE_NAME = "LongestRun_NIST_4";
+    
     public NistTest4(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem);
+        super(chaoticSystem, 100000);
         this.bitsNeeded = 100000;
-        NistTest4.TABLE_NAME = "LongestRun_NIST-4";
     }
     
     public NistTest4(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
-        super(chaoticSystem);
-        this.bitsNeeded = bitsNeeded;
+        super(chaoticSystem, bitsNeeded);
         this.blockLength = blockLength;
     }
     
@@ -45,17 +45,24 @@ public class NistTest4 extends AbstractNistTest{
 
     @Override
     protected void scan(AbstractChaoticSystem system) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.bitsCount == this.bitsNeeded) {
+            this.executeTest(bits);
+            this.testExecuted = true;
+        } else {
+            this.appendKey();
+        }
     }
 
     @Override
     protected void verify() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.testExecuted) {
+            this.complete();
+        }
     }
 
     @Override
     public void saveResult(Saver saver) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
 }

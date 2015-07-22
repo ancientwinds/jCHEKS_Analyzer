@@ -113,7 +113,6 @@ public class Saver {
     private void createNistTable(String tableName) throws Exception {
         this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
         this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, p_value NUMERIC)");
-
     }
 
     private void createEvolutionTable(String tableName) throws Exception {        
@@ -131,12 +130,13 @@ public class Saver {
         this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT, agent_id INTEGER, variation INTEGER, occurence_count INTEGER, PRIMARY KEY(chaotic_system_id, agent_id, variation))");
     }
     
-    public void saveNistResults(AbstractChaoticSystem system, int testId, double pValue) {
+    public void saveNistResults(String systemId, String tableName, double pValue) {
         try {
-            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO TABLE NIST_" + testId + " (chaotic_system_id, p_value) VALUES (?,?)");
-            insertStatement.setString(1, system.getSystemId());
+            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, p_value) VALUES (?,?)");
+            insertStatement.setString(1, systemId);
             insertStatement.setDouble(2, pValue);
             insertStatement.executeUpdate();
+            this.connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }        
@@ -148,8 +148,7 @@ public class Saver {
             insertStatement.setString(1, chaoticSystemId);
             insertStatement.setInt(2, evolutionCount);            
             insertStatement.executeUpdate();
-            this.connection.commit();
-            
+            this.connection.commit();            
         } catch (SQLException ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }

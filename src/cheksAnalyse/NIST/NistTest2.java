@@ -14,16 +14,15 @@ import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 public class NistTest2 extends AbstractNistTest{
 
     private int blockLength = 2000;
+    public static String TABLE_NAME = "FrequencyBlock_NIST_2";
+
     
     public NistTest2(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem);
-        this.bitsNeeded = 100000;
-        NistTest2.TABLE_NAME = "FrequencyBlock_NIST-2";
+        super(chaoticSystem, 100000);
     }
     
     public NistTest2(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
-        super(chaoticSystem);
-        this.bitsNeeded = bitsNeeded;
+        super(chaoticSystem, bitsNeeded);
         this.blockLength = blockLength;
     }
     
@@ -33,8 +32,8 @@ public class NistTest2 extends AbstractNistTest{
         double[] proportions = this.calculateProportion(blocks);
         double[] ratios = this.calculateRatio(proportions);
         double xObs = this.calculateXobs(ratios);
-        double pValue = this.calculatePValue(xObs);
-        
+        this.pValue = this.calculatePValue(xObs);
+
         this.passed = pValue > 0.01;
     }
     
@@ -99,17 +98,24 @@ public class NistTest2 extends AbstractNistTest{
 
     @Override
     protected void scan(AbstractChaoticSystem system) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.bitsCount == this.bitsNeeded) {
+            this.executeTest(bits);
+            this.testExecuted = true;
+        } else {
+            this.appendKey();
+        }
     }
 
     @Override
     protected void verify() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.testExecuted) {
+            this.complete();
+        }
     }
 
     @Override
     public void saveResult(Saver saver) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
 }

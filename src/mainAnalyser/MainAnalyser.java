@@ -1,18 +1,14 @@
 package mainAnalyser;
 
-import cheksAnalyse.butterfly.CheksButterflyEffectTest;
 import Utils.Utils;
 import cheksAnalyse.*;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import com.archosResearch.jCHEKS.chaoticSystem.*;
-import com.archosResearch.jCHEKS.chaoticSystem.exception.CloningException;
-import com.archosResearch.jCHEKS.chaoticSystem.exception.KeyLenghtException;
+import com.archosResearch.jCHEKS.chaoticSystem.exception.*;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.*;
 import java.util.logging.*;
 
 /**
@@ -20,12 +16,6 @@ import java.util.logging.*;
  * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class MainAnalyser {
-
-    public static void main(String[] args) throws Exception {
-        MainAnalyser analyser = new MainAnalyser(2, 32);
-        analyser.analyse();
-       
-    }
 
     private final Saver saver;
     private final int iterations;
@@ -35,20 +25,14 @@ public class MainAnalyser {
     
     private HashSet<AbstractCheksAnalyser> analysers = new HashSet();
     private HashSet<AnalyserType> types = new HashSet();
-
-    public MainAnalyser(int iterations, int numberOfAgent) {  
-        
-        //types.add(AnalyserType.BOOLEANS);
-        //types.add(AnalyserType.BYTESPERBYTES);
-        //types.add(AnalyserType.BUTTERFLY);
-        //types.add(AnalyserType.OCCURENCE);
-        //types.add(AnalyserType.VARIATION);
-        types.add(AnalyserType.NIST_1);
-        
+    
+    public MainAnalyser(int iterations, int numberOfAgent, HashSet<AnalyserType> types) {                
         this.iterations = iterations;
         this.numberOfAgent = numberOfAgent;
+        this.types = types;
+        
         this.saver = new Saver();
-        saver.initDatabase(this.types);
+        saver.initDatabase(types);
         
         try {
             currentChaoticSystem = new CryptoChaoticSystem(this.numberOfAgent * Byte.SIZE, "test");
@@ -114,26 +98,6 @@ public class MainAnalyser {
         System.out.println("|------------------------------|");
     }
 
-    private void performEvolutionDependantAnalyse() {
-        /*while (true) {
-            if (!currentBoolAnalyser.isComplete()) {
-                currentBoolAnalyser.analyse();
-            }
-            if (!currentBytesAnalyser.isComplete()) {
-                currentBytesAnalyser.analyse();
-            }
-            if (!butterflyAnalyser.isComplete()) {
-                butterflyAnalyser.analyse();
-            }
-            
-            if (currentBoolAnalyser.isComplete() && currentBytesAnalyser.isComplete() && butterflyAnalyser.isComplete()) {
-                break;
-            } else {
-                currentChaoticSystem.evolveSystem();
-            }
-        }*/
-    }
-
     private void reinitChaoticSystem() {
         try {
             this.currentChaoticSystem = this.backupChaoticSystem.cloneSystem();
@@ -182,4 +146,21 @@ public class MainAnalyser {
         }
         System.out.println(Arrays.toString(Distribution.getSum(distributions)));
     }
+    
+    public static void main(String[] args) throws Exception {
+        HashSet<AnalyserType> types = new HashSet();
+        //types.add(AnalyserType.BOOLEANS);
+        //types.add(AnalyserType.BYTESPERBYTES);
+        //types.add(AnalyserType.BUTTERFLY);
+        //types.add(AnalyserType.OCCURENCE);
+        //types.add(AnalyserType.VARIATION);
+        types.add(AnalyserType.NIST_1);
+        types.add(AnalyserType.NIST_2);
+        types.add(AnalyserType.NIST_3);
+        
+        MainAnalyser analyser = new MainAnalyser(200, 32, types);
+        analyser.analyse();
+       
+    }
+
 }

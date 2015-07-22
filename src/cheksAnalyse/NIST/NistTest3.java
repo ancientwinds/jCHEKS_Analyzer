@@ -11,16 +11,15 @@ import static org.apache.commons.math3.special.Erf.erfc;
  * NIST Test 2.3: Runs test
  */
 public class NistTest3 extends AbstractNistTest{
+    
+    public static String TABLE_NAME = "Runs_NIST_3";
 
     public NistTest3(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem);
-        this.bitsNeeded = 100000;
-        NistTest3.TABLE_NAME = "Runs_NIST-3";
+        super(chaoticSystem, 100000);
     }
     
     public NistTest3(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
-        super(chaoticSystem);
-        this.bitsNeeded = bitsNeeded;
+        super(chaoticSystem, bitsNeeded);
     }
     
     @Override
@@ -29,8 +28,8 @@ public class NistTest3 extends AbstractNistTest{
         if(this.shouldContinue(p)) {
             int[] Si = this.calculateSi(bits);
             double vObs = this.calculateVobs(Si);
-            double pValue = this.calculatePValue(vObs, p);
-            
+            this.pValue = this.calculatePValue(vObs, p);
+            System.out.println(this.pValue);
             this.passed = pValue > 0.01;
         }
     }
@@ -42,18 +41,16 @@ public class NistTest3 extends AbstractNistTest{
             if(bits[i] == true) {
                 ones++;
             }
-        }
-        
-        return ones / (double) this.bitsNeeded;
-        
+        }        
+        return ones / (double) this.bitsNeeded;        
     }
     
     public double calculateT() {
-        return 2 / Math.sqrt(this.bitsNeeded);
+        return (double) 2 / Math.sqrt(this.bitsNeeded);
     }
     
-    public boolean shouldContinue(double p) {        
-        return Math.abs(p - 0.5) < this.calculateT();
+    public boolean shouldContinue(double p) {
+        return Math.abs(p - (double)1/(double)2) < this.calculateT();
     }
     
     public int[] calculateSi(boolean[] bits) {
@@ -89,16 +86,24 @@ public class NistTest3 extends AbstractNistTest{
 
     @Override
     protected void scan(AbstractChaoticSystem system) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.bitsCount == this.bitsNeeded) {
+            System.out.print(system.getSystemId() + " ");
+            this.executeTest(bits);
+            this.testExecuted = true;
+        } else {
+            this.appendKey();
+        }
     }
 
     @Override
     protected void verify() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.testExecuted) {
+            this.complete();
+        }
     }
 
     @Override
     public void saveResult(Saver saver) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
 }

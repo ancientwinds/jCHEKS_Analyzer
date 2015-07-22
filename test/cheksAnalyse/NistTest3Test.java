@@ -1,8 +1,6 @@
 package cheksAnalyse;
 
-import cheksAnalyse.NIST.NistTest2;
 import cheksAnalyse.NIST.NistTest3;
-import cheksAnalyse.butterfly.TempChaoticSystem;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.ArrayList;
 import org.junit.Test;
@@ -131,6 +129,25 @@ public class NistTest3Test {
         
         instance.executeTest(bits);
         
+        assertTrue(instance.isPassed());
+    }
+    
+    @Test
+    public void test() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest3 instance = new NistTest3(sys, 100);     
+                 
+        boolean bits[] = new boolean[100];
+
+        String bitsString = "1100100100001111110110101010001000100001011010001100001000110100110001001100011001100010100010111000";
+        for(int i = 0; i < bitsString.length(); i++) {
+            bits[i] = bitsString.substring(i, i + 1).equals("1");
+        }
+        
+        instance.executeTest(bits);
+
         assertTrue(instance.isPassed());
     }
     
