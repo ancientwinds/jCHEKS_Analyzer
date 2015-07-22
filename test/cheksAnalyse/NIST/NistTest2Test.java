@@ -1,5 +1,6 @@
 package cheksAnalyse.NIST;
 
+import Utils.Utils;
 import cheksAnalyse.FakeChaoticSystem;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.ArrayList;
@@ -17,30 +18,7 @@ public class NistTest2Test {
     @Test
     public void testExecuteTest() {
     }
-    
-    @Test
-    public void testPartitionBits() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
-               
-        boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
-              
-        boolean[][] result = instance.partitionBits(bits);
-        
-        assertEquals(3, result.length);
-        
-        for(int i = 0; i < result.length; i++) {
-            assertEquals(3, result[i].length);
-            boolean block[] = new boolean[3];
-            System.arraycopy(bits, i * 3, block, 0, 3);
-            for(int j = 0; j < block.length; j++) {
-                assertEquals(result[i][j], block[j]);
-            }
-        }
-    }
-    
+
     @Test
     public void testCalculateProportion() throws Exception {
         ArrayList<byte[]> keys = new ArrayList();
@@ -50,7 +28,7 @@ public class NistTest2Test {
            
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
-        boolean[][] blocks = instance.partitionBits(bits);
+        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
         
         double[] proportions = instance.calculateProportion(blocks);
         
@@ -69,7 +47,7 @@ public class NistTest2Test {
            
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
-        boolean[][] blocks = instance.partitionBits(bits);
+        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
         
         double[] proportions = instance.calculateProportion(blocks);
         
@@ -89,7 +67,7 @@ public class NistTest2Test {
            
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
-        boolean[][] blocks = instance.partitionBits(bits);
+        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
         
         double[] proportions = instance.calculateProportion(blocks);
         
@@ -107,7 +85,7 @@ public class NistTest2Test {
            
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
-        boolean[][] blocks = instance.partitionBits(bits);
+        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
         
         double[] proportions = instance.calculateProportion(blocks);
         

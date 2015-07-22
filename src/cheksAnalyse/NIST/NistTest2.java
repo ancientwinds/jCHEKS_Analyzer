@@ -38,19 +38,6 @@ public class NistTest2 extends AbstractNistTest{
         this.passed = pValue > 0.01;
     }
     
-    public boolean[][] partitionBits(boolean[] bits) {        
-        
-        boolean blockBits[][] = new boolean[bits.length/this.blockLength][this.blockLength];
-        
-        for(int i = 0; i < bits.length/this.blockLength; i++) {
-            for(int j = 0; j < this.blockLength; j++) {
-                blockBits[i][j] = bits[j + (i * this.blockLength)]; 
-            }
-        }
-
-        return blockBits;
-    }
-    
     public double[] calculateProportion(boolean[][] blocks) {
         double proportions[] = new double[blocks.length];
         
