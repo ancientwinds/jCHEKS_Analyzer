@@ -1,6 +1,6 @@
-package cheksAnalyse;
+package cheksAnalyse.NIST;
 
-import cheksAnalyse.NIST.NistTest3;
+import cheksAnalyse.FakeChaoticSystem;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.ArrayList;
 import org.junit.Test;

@@ -1,12 +1,8 @@
-package cheksAnalyse;
+package cheksAnalyse.NIST;
 
-import cheksAnalyse.NIST.NistTest1;
-import cheksAnalyse.NIST.NistTest2;
-import cheksAnalyse.butterfly.TempChaoticSystem;
+import cheksAnalyse.FakeChaoticSystem;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
