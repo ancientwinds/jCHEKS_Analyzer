@@ -21,7 +21,6 @@ public class MainAnalyser {
     private final int iterations;
     private final int numberOfAgent;
     private ChaoticSystem currentChaoticSystem;
-    private ChaoticSystem backupChaoticSystem;
     
     private HashSet<AbstractCheksAnalyser> analysers = new HashSet();
     private HashSet<AnalyserType> types = new HashSet();
@@ -43,7 +42,6 @@ public class MainAnalyser {
     }
 
     public void analyse() throws Exception {
-
         for (int i = 0; i < iterations; i++) {
             currentChaoticSystem = new CryptoChaoticSystem(this.numberOfAgent * Byte.SIZE, "test" + i);
             this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
@@ -56,19 +54,16 @@ public class MainAnalyser {
                         analyser.saveResult(saver);
                         iterator.remove();
                     }
-                }
-                
+                }                
                 currentChaoticSystem.evolveSystem();
             }
-
         }
         //displayStatsOfADistributionTable("variations");
         //displayStatsOfADistributionTable("occurences");
         //displayStatsOfATable("KEY_BITS");
         //displayStatsOfATable("AGENT_LEVELS");
     }
-/*
-    private void displayStatsOfADistributionTable(String tableName) {
+    /*private void displayStatsOfADistributionTable(String tableName) {
         try {
             
             Distribution[][] systems = saver.getDistributionsOf(tableName, iterations);
@@ -93,14 +88,6 @@ public class MainAnalyser {
         System.out.println("| Median: " + Utils.getMedianInArray(evolutions));
         System.out.println("| Standart deviation: " + Utils.getStandartDeviationInArray(evolutions));
         System.out.println("|------------------------------|");
-    }
-
-    private void reinitChaoticSystem() {
-        try {
-            this.currentChaoticSystem = this.backupChaoticSystem.cloneSystem();
-        } catch (CloningException ex) {
-            Logger.getLogger(MainAnalyser.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private static int brent() throws Exception {
@@ -146,6 +133,7 @@ public class MainAnalyser {
     
     public static void main(String[] args) throws Exception {
         HashSet<AnalyserType> types = new HashSet();
+        
         types.add(AnalyserType.BOOLEANS);
         types.add(AnalyserType.BYTESPERBYTES);
         types.add(AnalyserType.BUTTERFLY);
@@ -156,8 +144,7 @@ public class MainAnalyser {
         types.add(AnalyserType.NIST_3);
         
         MainAnalyser analyser = new MainAnalyser(1, 32, types);
-        analyser.analyse();
-       
+        analyser.analyse();       
     }
 
 }
