@@ -1,7 +1,9 @@
 package cheksAnalyse;
 
 import cheksAnalyse.NIST.NistTest1;
-import java.util.BitSet;
+import cheksAnalyse.butterfly.TempChaoticSystem;
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -11,18 +13,26 @@ import static org.junit.Assert.*;
  */
 public class NistTest1Test {
     
+    
+    
     @Test
-    public void testCalculateSn() {
-        NistTest1 instance = new NistTest1(10);
+    public void testCalculateSn() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest1 instance = new NistTest1(sys, 10);
         
         boolean bits[] = {true, false, true, true, false, true, false, true, false, true};
         assertEquals(2, instance.calculateSn(bits));          
     }
     
     @Test
-    public void testCalculateSobs() {
-        NistTest1 instance = new NistTest1(10);
-        
+    public void testCalculateSobs() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest1 instance = new NistTest1(sys, 10);
+         
         boolean bits[] = {true, false, true, true, false, true, false, true, false, true};
         int Sn = instance.calculateSn(bits);
         
@@ -31,9 +41,12 @@ public class NistTest1Test {
     }
     
     @Test
-    public void testCalculatePValue() {
-        NistTest1 instance = new NistTest1(10);
-        
+    public void testCalculatePValue() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest1 instance = new NistTest1(sys, 10);
+       
         boolean bits[] = {true, false, true, true, false, true, false, true, false, true};
         int Sn = instance.calculateSn(bits);
         double Sobs = instance.calculateSobs(bits, Sn);
@@ -42,8 +55,12 @@ public class NistTest1Test {
     }
     
     @Test
-    public void testExecuteTestShouldPass() {
-        NistTest1 instance = new NistTest1(10);
+    public void testExecuteTestShouldPass() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest1 instance = new NistTest1(sys, 10);
+        
         boolean bits[] = {true, false, true, true, false, true, false, true, false, true};
         
         instance.executeTest(bits);

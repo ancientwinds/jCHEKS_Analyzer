@@ -1,6 +1,10 @@
 package cheksAnalyse;
 
+import cheksAnalyse.NIST.NistTest2;
 import cheksAnalyse.NIST.NistTest3;
+import cheksAnalyse.butterfly.TempChaoticSystem;
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -11,8 +15,11 @@ import static org.junit.Assert.*;
 public class NistTest3Test {
     
     @Test
-    public void testCalculateP() {
-        NistTest3 instance = new NistTest3(10);       
+    public void testCalculateP() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest3 instance = new NistTest3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         
@@ -22,16 +29,22 @@ public class NistTest3Test {
     }
     
     @Test
-    public void testCalculateT() {
-        NistTest3 instance = new NistTest3(10);
-        
+    public void testCalculateT() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest3 instance = new NistTest3(sys, 10);     
+
         assertEquals(0.632455532, instance.calculateT(), 0.0001);
 
     }
     
     @Test
-    public void testShouldContinue_should_return_true() {
-        NistTest3 instance = new NistTest3(10);       
+    public void testShouldContinue_should_return_true() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest3 instance = new NistTest3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         
@@ -41,15 +54,21 @@ public class NistTest3Test {
     }
     
     @Test
-    public void testShouldContinue_should_return_false() {
-        NistTest3 instance = new NistTest3(10);       
+    public void testShouldContinue_should_return_false() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest3 instance = new NistTest3(sys, 10);     
 
         assertFalse(instance.shouldContinue(2.7));
     }
     
     @Test
-    public void testCalculateSi() {
-        NistTest3 instance = new NistTest3(10);       
+    public void testCalculateSi() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest3 instance = new NistTest3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         
@@ -69,8 +88,11 @@ public class NistTest3Test {
     }
     
     @Test
-    public void testCalculateVobs() {
-        NistTest3 instance = new NistTest3(10);       
+    public void testCalculateVobs() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest3 instance = new NistTest3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         
@@ -82,9 +104,12 @@ public class NistTest3Test {
     }
     
     @Test
-    public void testCalculatePValue() {
-        NistTest3 instance = new NistTest3(10);       
-               
+    public void testCalculatePValue() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest3 instance = new NistTest3(sys, 10);     
+              
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};      
         int[] Si = instance.calculateSi(bits); 
         double p = instance.calculateP(bits);
@@ -96,8 +121,11 @@ public class NistTest3Test {
     }
     
     @Test
-    public void testExecuteShouldPass() {
-        NistTest3 instance = new NistTest3(10);       
+    public void testExecuteShouldPass() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest3 instance = new NistTest3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         

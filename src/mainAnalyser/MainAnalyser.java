@@ -3,6 +3,7 @@ package mainAnalyser;
 import cheksAnalyse.butterfly.CheksButterflyEffectTest;
 import Utils.Utils;
 import cheksAnalyse.*;
+import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.chaoticSystem.exception.CloningException;
 import com.archosResearch.jCHEKS.chaoticSystem.exception.KeyLenghtException;
@@ -11,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.logging.*;
 
 /**
@@ -20,74 +22,65 @@ import java.util.logging.*;
 public class MainAnalyser {
 
     public static void main(String[] args) throws Exception {
-        MainAnalyser analyser = new MainAnalyser(1, 32);
+        MainAnalyser analyser = new MainAnalyser(2, 32);
         analyser.analyse();
-        
-        //Saver s = new Saver(32);
-        //s.initDatabase();
-        /*ChaoticSystem system = new CryptoChaoticSystem(256, new Random());
-        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, system, 256);
-        while(!analyser.isComplete()) {
-            analyser.analyse();
-            system.evolveSystem();
-            
-        }*/
-        
-        //FileReader.saveChaoticSystem("temp.xml", system);
+       
     }
-    private final Distribution[] agentsLevelsOccurencesDistributions;
-    private final Distribution[] agentsLevelsVariationsDistributions;
+
     private final Saver saver;
     private final int iterations;
     private final int numberOfAgent;
     private ChaoticSystem currentChaoticSystem;
     private ChaoticSystem backupChaoticSystem;
-    private CheksAnalyserBooleans currentBoolAnalyser;
-    private CheksAnalyserBytesPerBytes currentBytesAnalyser;
-    private CheksButterflyEffectTest butterflyAnalyser;
-    private byte[] lastKey;
-    private byte[] currentKey;
     
     private HashSet<AbstractCheksAnalyser> analysers = new HashSet();
+    private HashSet<AnalyserType> types = new HashSet();
 
-    public MainAnalyser(int iterations, int numberOfAgent) {
-
-                   
-            this.iterations = iterations;
-            this.numberOfAgent = numberOfAgent;
-            this.saver = new Saver(numberOfAgent);
-            saver.initDatabase();
-        /*try {     
+    public MainAnalyser(int iterations, int numberOfAgent) {  
+        
+        //types.add(AnalyserType.BOOLEANS);
+        //types.add(AnalyserType.BYTESPERBYTES);
+        //types.add(AnalyserType.BUTTERFLY);
+        //types.add(AnalyserType.OCCURENCE);
+        //types.add(AnalyserType.VARIATION);
+        types.add(AnalyserType.NIST_1);
+        
+        this.iterations = iterations;
+        this.numberOfAgent = numberOfAgent;
+        this.saver = new Saver();
+        saver.initDatabase(this.types);
+        
+        try {
             currentChaoticSystem = new CryptoChaoticSystem(this.numberOfAgent * Byte.SIZE, "test");
-            
-            this.analysers.add(new CheksAnalyserBooleans(false, currentChaoticSystem, this.numberOfAgent * Byte.SIZE));
-            this.analysers.add(new CheksAnalyserBytesPerBytes(false, currentChaoticSystem, this.numberOfAgent));
-            this.analysers.add(new CheksButterflyEffectTest(false, currentChaoticSystem, 1000));
+
+            this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
+
         } catch (Exception ex) {
             Logger.getLogger(MainAnalyser.class.getName()).log(Level.SEVERE, null, ex);
-        }*/ 
-            
-            agentsLevelsOccurencesDistributions = new Distribution[numberOfAgent];
-            agentsLevelsVariationsDistributions = new Distribution[numberOfAgent];
-            reinitDistributions();
+        }
         
     }
 
     public void analyse() throws Exception {
 
         for (int i = 0; i < iterations; i++) {
-            setCurrentSystemAndAnalysers();
-            performEvolutionDependantAnalyse();
-            saveRelativeEvolutionResults();
-            reinitChaoticSystem();
-            performDistributionAnalyse();
-            saveDistributionsResults();
-            reinitDistributions();
+            currentChaoticSystem = new CryptoChaoticSystem(this.numberOfAgent * Byte.SIZE, "test" + i);
+            this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
+            while(!this.analysers.isEmpty()) {                
+                for(Iterator<AbstractCheksAnalyser> iterator = this.analysers.iterator(); iterator.hasNext();) {
+                    AbstractCheksAnalyser analyser = iterator.next();
+                    if(!analyser.isComplete()) {
+                        analyser.analyse(currentChaoticSystem);
+                    } else {
+                        analyser.saveResult(saver);
+                        iterator.remove();
+                    }
+                }
+                
+                currentChaoticSystem.evolveSystem();
+            }
+
         }
-        
-        //Butterfly effect test
-        
-        
         //displayStatsOfADistributionTable("variations");
         //displayStatsOfADistributionTable("occurences");
         //displayStatsOfATable("KEY_BITS");
@@ -121,44 +114,8 @@ public class MainAnalyser {
         System.out.println("|------------------------------|");
     }
 
-    private int getVariationByAgent(int agent) {
-        int currentLevel = currentKey[agent] + 128;
-        int lastLevel = lastKey[agent] + 128;
-        int variation = currentLevel - lastLevel;
-        if (variation < -128 || variation > 127) {
-            return (256 - Math.abs(variation)) * ((variation < 0) ? 1 : -1);
-        } else {
-            return variation;
-        }
-    }
-
-    private void performDistributionAnalyse() {
-        lastKey = currentChaoticSystem.getKey();
-        for (int j = 0; j <= 1000000; j++) {
-            currentChaoticSystem.evolveSystem();
-            currentKey = currentChaoticSystem.getKey();
-            for (int k = 0; k < numberOfAgent; k++) {
-                agentsLevelsVariationsDistributions[k].registerValue(getVariationByAgent(k));
-                agentsLevelsOccurencesDistributions[k].registerValue(currentKey[k]);
-            }
-            lastKey = currentKey;
-        }
-    }
-
-    private void saveRelativeEvolutionResults() {
-        currentBoolAnalyser.saveResult(saver);
-        currentBytesAnalyser.saveResult(saver);
-        butterflyAnalyser.saveResult(saver);
-    }
-
-    private void saveDistributionsResults() {
-        saver.saveDistributionInTable(currentChaoticSystem.getSystemId(), "OCCURENCES", agentsLevelsOccurencesDistributions);
-        saver.saveDistributionInTable(currentChaoticSystem.getSystemId(), "VARIATIONS", agentsLevelsVariationsDistributions);
-    }
-
-
     private void performEvolutionDependantAnalyse() {
-        while (true) {
+        /*while (true) {
             if (!currentBoolAnalyser.isComplete()) {
                 currentBoolAnalyser.analyse();
             }
@@ -174,7 +131,7 @@ public class MainAnalyser {
             } else {
                 currentChaoticSystem.evolveSystem();
             }
-        }
+        }*/
     }
 
     private void reinitChaoticSystem() {
@@ -205,21 +162,6 @@ public class MainAnalyser {
                 turtle = rabbit.clone();
                 System.out.println(rabbitState);
             }
-        }
-    }
-
-    private void setCurrentSystemAndAnalysers() throws Exception {
-        currentChaoticSystem = new CryptoChaoticSystem(numberOfAgent * Byte.SIZE, "test");
-        currentBoolAnalyser = new CheksAnalyserBooleans(false, currentChaoticSystem, this.numberOfAgent * Byte.SIZE);
-        currentBytesAnalyser = new CheksAnalyserBytesPerBytes(false, currentChaoticSystem, this.numberOfAgent);
-        butterflyAnalyser = new CheksButterflyEffectTest(false, currentChaoticSystem, 1000);
-        backupChaoticSystem = currentChaoticSystem.cloneSystem();
-    }
-
-    private void reinitDistributions() {
-        for (int j = 0; j < numberOfAgent; j++) {
-            agentsLevelsOccurencesDistributions[j] = new Distribution();
-            agentsLevelsVariationsDistributions[j] = new Distribution();
         }
     }
 

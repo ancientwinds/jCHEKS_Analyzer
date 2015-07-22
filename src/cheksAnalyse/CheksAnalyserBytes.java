@@ -11,15 +11,25 @@ import mainAnalyser.Saver;
 public class CheksAnalyserBytes extends AbstractCheksAnalyser{
     
     HashSet<Byte> bytesSaw;
-    private final int ammountOfBytes;
-    public CheksAnalyserBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem, int ammountOfBytes) throws Exception{
+    private int ammountOfBytes;
+    
+    public CheksAnalyserBytes(AbstractChaoticSystem chaoticSystem) throws Exception{
+        super(false, chaoticSystem);
+        this.initAnalyser(chaoticSystem);
+    }
+        
+    public CheksAnalyserBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
         super(enableLog, chaoticSystem);
-        this.ammountOfBytes = ammountOfBytes;
+        this.initAnalyser(chaoticSystem);
+    }
+    
+    private void initAnalyser(AbstractChaoticSystem chaoticSystem) {
+        this.ammountOfBytes = chaoticSystem.getAgentsCount();
         this.bytesSaw = new HashSet();
     }
     
     @Override
-    protected void scan() {
+    protected void scan(AbstractChaoticSystem chaoticSystem) {
         byte[] array = this.getKey();
         
         for (int i = 0; i < ammountOfBytes; i++) {

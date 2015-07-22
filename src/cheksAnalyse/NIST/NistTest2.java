@@ -1,5 +1,7 @@
 package cheksAnalyse.NIST;
 
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import mainAnalyser.Saver;
 import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
 /**
@@ -13,13 +15,14 @@ public class NistTest2 extends AbstractNistTest{
 
     private int blockLength = 2000;
     
-    public NistTest2() {
-        super();
+    public NistTest2(AbstractChaoticSystem chaoticSystem) throws Exception {
+        super(chaoticSystem);
         this.bitsNeeded = 100000;
+        NistTest2.TABLE_NAME = "FrequencyBlock_NIST-2";
     }
     
-    public NistTest2(int bitsNeeded, int blockLength) {
-        super();
+    public NistTest2(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
+        super(chaoticSystem);
         this.bitsNeeded = bitsNeeded;
         this.blockLength = blockLength;
     }
@@ -92,6 +95,21 @@ public class NistTest2 extends AbstractNistTest{
         int blockCount = this.bitsNeeded/this.blockLength;
        
         return regularizedGammaQ((double)blockCount/2, xObs/2);
+    }
+
+    @Override
+    protected void scan(AbstractChaoticSystem system) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void verify() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveResult(Saver saver) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

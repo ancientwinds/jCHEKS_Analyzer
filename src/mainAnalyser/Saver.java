@@ -1,7 +1,15 @@
 package mainAnalyser;
 
+import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
+import cheksAnalyse.CheksAnalyserBooleans;
+import cheksAnalyse.CheksAnalyserBytesPerBytes;
+import cheksAnalyse.CheksAnalyserLevelOccurence;
+import cheksAnalyse.CheksAnalyserLevelVariation;
+import cheksAnalyse.NIST.*;
+import cheksAnalyse.butterfly.CheksButterflyEffectTest;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.sql.*;
+import java.util.HashSet;
 import java.util.logging.*;
 
 /**
@@ -12,23 +20,83 @@ public class Saver {
 
     private Connection connection;
     private Statement statement;
-    private final int numberOfAgent;
 
-    public Saver(int numberOfAgent) {
-        this.numberOfAgent = numberOfAgent;
+    public Saver() {
         this.connection = null;
         this.statement = null;
     }
 
-    public void initDatabase() {
+    public void initDatabase(HashSet<AnalyserType> types) {
         try {
             openDatabase();
-            this.createNistTables();
-            createEvolutionTable("KEY_BITS");
-            createEvolutionTable("AGENT_LEVELS");
-            createOccurenceTable("VARIATIONS");
-            createOccurenceTable("OCCURENCES");
-            createButterflyEffectTable();
+            
+            for(AnalyserType type : types) {
+                switch (type) {
+                    case NIST:
+                        break;
+                    case BYTESPERBYTES:
+                        createEvolutionTable(CheksAnalyserBytesPerBytes.TABLE_NAME);
+                        break;
+                    case BOOLEANS:
+                        createEvolutionTable(CheksAnalyserBooleans.TABLE_NAME);
+                        break;
+                    case BUTTERFLY:
+                        createButterflyEffectTable(CheksButterflyEffectTest.TABLE_NAME);
+                        break;
+                    case OCCURENCE:
+                        createOccurenceTable(CheksAnalyserLevelOccurence.TABLE_NAME);
+                        break;
+                    case VARIATION:
+                        createOccurenceTable(CheksAnalyserLevelVariation.TABLE_NAME);
+                        break;
+                    case NIST_1:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_2:
+                        this.createNistTable(NistTest2.TABLE_NAME);
+                        break;
+                    case NIST_3:
+                        this.createNistTable(NistTest3.TABLE_NAME);
+                        break;
+                    case NIST_4:
+                        this.createNistTable(NistTest4.TABLE_NAME);
+                        break;
+                    case NIST_5:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_6:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_7:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_8:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_9:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_10:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_11:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_12:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_13:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_14:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                    case NIST_15:
+                        this.createNistTable(NistTest1.TABLE_NAME);
+                        break;
+                }
+            }
+            
             this.connection.commit();
         } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
@@ -42,13 +110,10 @@ public class Saver {
         this.statement = connection.createStatement();
     }
     
-    private void createNistTables() throws Exception {
-        for(int i = 1; i <= 15; i++) {
+    private void createNistTable(String tableName) throws Exception {
+        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
+        this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, p_value NUMERIC)");
 
-            this.statement.executeUpdate("DROP TABLE IF EXISTS NIST_" + i);
-            this.statement.executeUpdate("CREATE TABLE NIST_" + i + " (chaotic_system_id TEXT PRIMARY KEY, p_value NUMERIC)");
-
-        }
     }
 
     private void createEvolutionTable(String tableName) throws Exception {        
@@ -56,9 +121,9 @@ public class Saver {
         this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, evolution_count DOUBLE)");
     }
     
-    private void createButterflyEffectTable() throws Exception {
-        this.statement.executeUpdate("DROP TABLE IF EXISTS BUTTERFLY_EFFECT");
-        this.statement.executeUpdate("CREATE TABLE BUTTERFLY_EFFECT (chaotic_system_id TEXT, clone_id INTEGER, evolution_count INTEGER, distance INTEGER, PRIMARY KEY (chaotic_system_id, clone_id, evolution_count))");
+    private void createButterflyEffectTable(String tableName) throws Exception {
+        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
+        this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT, clone_id INTEGER, evolution_count INTEGER, distance INTEGER, PRIMARY KEY (chaotic_system_id, clone_id, evolution_count))");
     }
 
     private void createOccurenceTable(String tableName) throws Exception {
@@ -75,14 +140,6 @@ public class Saver {
         } catch (SQLException ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }        
-    }
-    
-    public void saveValueInTable(String tableName, int valueToSave) {
-        try {
-            this.statement.executeUpdate("INSERT INTO " + tableName + " (evolutions) VALUES (" + valueToSave + ")");
-        } catch (SQLException ex) {
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public void saveEvolutionCount(String tableName, String chaoticSystemId, int evolutionCount) {
@@ -121,7 +178,7 @@ public class Saver {
     public void saveButterflyEffect(String systemId, int[][] results) {
 
         try {
-            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO BUTTERFLY_EFFECT (chaotic_system_id, clone_id, evolution_count, distance) VALUES (?,?,?,?)");
+            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO butterfly_effect (chaotic_system_id, clone_id, evolution_count, distance) VALUES (?,?,?,?)");
             for (int i = 0; i < results.length; i ++) { 
                 for (int j = 0; j < results[i].length; j++) {
                     insertStatement.setString(1, systemId);

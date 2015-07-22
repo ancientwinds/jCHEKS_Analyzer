@@ -1,6 +1,10 @@
 package cheksAnalyse;
 
+import cheksAnalyse.NIST.NistTest1;
 import cheksAnalyse.NIST.NistTest2;
+import cheksAnalyse.butterfly.TempChaoticSystem;
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
 import org.junit.Test;
@@ -19,8 +23,11 @@ public class NistTest2Test {
     }
     
     @Test
-    public void testPartitionBits() {
-        NistTest2 instance = new NistTest2(10, 3);       
+    public void testPartitionBits() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest2 instance = new NistTest2(sys, 10, 3);       
                
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
@@ -39,9 +46,12 @@ public class NistTest2Test {
     }
     
     @Test
-    public void testCalculateProportion() {
-        NistTest2 instance = new NistTest2(10, 3);       
-               
+    public void testCalculateProportion() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest2 instance = new NistTest2(sys, 10, 3);       
+           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
         boolean[][] blocks = instance.partitionBits(bits);
@@ -55,9 +65,12 @@ public class NistTest2Test {
     }
     
     @Test
-    public void testCalculateRation() {
-        NistTest2 instance = new NistTest2(10, 3);       
-               
+    public void testCalculateRation() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest2 instance = new NistTest2(sys, 10, 3);       
+           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
         boolean[][] blocks = instance.partitionBits(bits);
@@ -72,9 +85,12 @@ public class NistTest2Test {
     }
     
     @Test
-    public void testCalculateXobs() {
-        NistTest2 instance = new NistTest2(10, 3);       
-               
+    public void testCalculateXobs() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest2 instance = new NistTest2(sys, 10, 3);       
+           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
         boolean[][] blocks = instance.partitionBits(bits);
@@ -87,9 +103,12 @@ public class NistTest2Test {
     }
     
     @Test
-    public void testCalculatePValue() {
-        NistTest2 instance = new NistTest2(10, 3);       
-               
+    public void testCalculatePValue() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest2 instance = new NistTest2(sys, 10, 3);       
+           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
         boolean[][] blocks = instance.partitionBits(bits);
@@ -103,9 +122,12 @@ public class NistTest2Test {
     }
     
     @Test
-    public void testExecuteTestShouldPass() {
-        NistTest2 instance = new NistTest2(10, 3);       
-               
+    public void testExecuteTestShouldPass() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        NistTest2 instance = new NistTest2(sys, 10, 3);       
+           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};
         instance.executeTest(bits);
                 

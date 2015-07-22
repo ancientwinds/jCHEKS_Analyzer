@@ -12,20 +12,29 @@ import mainAnalyser.Saver;
 public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
 
     
-    private final boolean[] falsesSaw;
-    private final boolean[] truesSaw;
-    private final int ammountOfBit;
+    private boolean[] falsesSaw;
+    private boolean[] truesSaw;
+    private int ammountOfBit;
+    public static final String TABLE_NAME = "key_bits";
     
-    public CheksAnalyserBooleans(boolean enableLog, AbstractChaoticSystem chaoticSystem, int ammountOfBit) throws Exception{
+    public CheksAnalyserBooleans(AbstractChaoticSystem chaoticSystem) throws Exception{
+        super(false, chaoticSystem);
+        this.initAnalyser(chaoticSystem);
+    }
+    
+    public CheksAnalyserBooleans(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
         super(enableLog, chaoticSystem);
-        this.falsesSaw = new boolean[ammountOfBit];
-        this.truesSaw = new boolean[ammountOfBit];
-        this.ammountOfBit = ammountOfBit;
+        this.initAnalyser(chaoticSystem);
     }
 
+    private void initAnalyser(AbstractChaoticSystem chaoticSystem) {
+        this.ammountOfBit = chaoticSystem.getAgentsCount() * Byte.BYTES;
+        this.falsesSaw = new boolean[this.ammountOfBit];
+        this.truesSaw = new boolean[this.ammountOfBit];
+    }
     
     @Override
-    protected void scan() {
+    protected void scan(AbstractChaoticSystem chaoticSystem) {
         byte[] array = this.getKey();
         boolean[] booleans = Utils.bytesToBooleanArray(array);
         for (int i = 0; i < ammountOfBit; i++) {
@@ -64,6 +73,6 @@ public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
 
     @Override
     public void saveResult(Saver saver) {
-        saver.saveEvolutionCount("KEY_BITS", this.getSystemId(), this.getEvolutionCount());
+        saver.saveEvolutionCount(TABLE_NAME, this.getSystemId(), this.getEvolutionCount());
     }
 }

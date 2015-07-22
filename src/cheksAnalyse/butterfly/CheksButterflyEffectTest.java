@@ -15,12 +15,13 @@ import mainAnalyser.Saver;
 public class CheksButterflyEffectTest extends AbstractCheksAnalyser {
 
     private final HashMap<Integer, CryptoChaoticSystem> clones = new HashMap();
-    private int iteration = 1000;
+    private final int iteration = 1000;
     private final int[][] distances;
     
-    public CheksButterflyEffectTest(boolean enableLog, ChaoticSystem chaoticSystem, int iteration) throws Exception {
+    public static final String TABLE_NAME = "butterfly_effect";
+    
+    public CheksButterflyEffectTest(boolean enableLog, ChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
-        this.iteration = 1000;
         this.distances = new int[chaoticSystem.getAgents().size()][this.iteration];               
         this.generateClones(chaoticSystem);        
     }
@@ -40,7 +41,7 @@ public class CheksButterflyEffectTest extends AbstractCheksAnalyser {
     }
 
     @Override
-    protected void scan() {       
+    protected void scan(AbstractChaoticSystem chaoticSystem) {       
         for(int i = 0; i < this.clones.size(); i++) {
             CryptoChaoticSystem clone = this.clones.get(i);
             try {

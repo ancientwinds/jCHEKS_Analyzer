@@ -1,5 +1,7 @@
 package cheksAnalyse.NIST;
 
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import mainAnalyser.Saver;
 import static org.apache.commons.math3.special.Erf.erfc;
 
 /**
@@ -10,13 +12,14 @@ import static org.apache.commons.math3.special.Erf.erfc;
  */
 public class NistTest3 extends AbstractNistTest{
 
-    public NistTest3() {
-        super();
+    public NistTest3(AbstractChaoticSystem chaoticSystem) throws Exception {
+        super(chaoticSystem);
         this.bitsNeeded = 100000;
+        NistTest3.TABLE_NAME = "Runs_NIST-3";
     }
     
-    public NistTest3(int bitsNeeded) {
-        super();
+    public NistTest3(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
+        super(chaoticSystem);
         this.bitsNeeded = bitsNeeded;
     }
     
@@ -82,5 +85,20 @@ public class NistTest3 extends AbstractNistTest{
         double div = 2 * Math.sqrt(2 * this.bitsNeeded) * p * (1 - p);
         
         return erfc(abs / div);
+    }
+
+    @Override
+    protected void scan(AbstractChaoticSystem system) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void verify() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveResult(Saver saver) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
