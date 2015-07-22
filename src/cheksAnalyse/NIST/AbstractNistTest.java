@@ -2,7 +2,10 @@ package cheksAnalyse.NIST;
 
 import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
+import static cheksAnalyse.NIST.NistTest2.TABLE_NAME;
+import static cheksAnalyse.NIST.NistTest4.TABLE_NAME;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import mainAnalyser.Saver;
 
 /**
  *
@@ -53,5 +56,22 @@ public abstract class AbstractNistTest extends AbstractCheksAnalyser{
                 System.arraycopy(bitsToAdd, 0, this.bits, bitsCount, this.bitsNeeded - this.bitsCount);
                 this.bitsCount += this.bitsNeeded - this.bitsCount;
             }
+    }
+    
+    @Override
+    protected void scan(AbstractChaoticSystem system) {
+        if(this.bitsCount == this.bitsNeeded) {
+            this.executeTest(bits);
+            this.testExecuted = true;
+        } else {
+            this.appendKey();
+        }
+    }
+
+    @Override
+    protected void verify() {
+        if(this.testExecuted) {
+            this.complete();
+        }
     }
 }

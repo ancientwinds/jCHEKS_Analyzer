@@ -1,5 +1,6 @@
 package cheksAnalyse.NIST;
 
+import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import mainAnalyser.Saver;
 import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
@@ -28,7 +29,7 @@ public class NistTest2 extends AbstractNistTest{
     
     @Override
     public void executeTest(boolean[] bits) {
-        boolean[][] blocks = this.partitionBits(bits);
+        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, this.blockLength);//this.partitionBits(bits);
         double[] proportions = this.calculateProportion(blocks);
         double[] ratios = this.calculateRatio(proportions);
         double xObs = this.calculateXobs(ratios);
@@ -95,24 +96,7 @@ public class NistTest2 extends AbstractNistTest{
        
         return regularizedGammaQ((double)blockCount/2, xObs/2);
     }
-
-    @Override
-    protected void scan(AbstractChaoticSystem system) {
-        if(this.bitsCount == this.bitsNeeded) {
-            this.executeTest(bits);
-            this.testExecuted = true;
-        } else {
-            this.appendKey();
-        }
-    }
-
-    @Override
-    protected void verify() {
-        if(this.testExecuted) {
-            this.complete();
-        }
-    }
-
+    
     @Override
     public void saveResult(Saver saver) {
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);

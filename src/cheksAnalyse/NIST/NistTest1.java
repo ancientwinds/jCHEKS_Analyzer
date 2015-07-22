@@ -54,23 +54,6 @@ public class NistTest1 extends AbstractNistTest{
     }
 
     @Override
-    protected void scan(AbstractChaoticSystem system) {
-        if(this.bitsCount == this.bitsNeeded) {
-            this.executeTest(bits);
-            this.testExecuted = true;
-        } else {
-            this.appendKey();
-        }
-    }
-
-    @Override
-    protected void verify() {
-        if(this.testExecuted) {
-            this.complete();
-        }
-    }
-
-    @Override
     public void saveResult(Saver saver) {
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
