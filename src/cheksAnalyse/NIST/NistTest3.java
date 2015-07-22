@@ -29,7 +29,6 @@ public class NistTest3 extends AbstractNistTest{
             int[] Si = this.calculateSi(bits);
             double vObs = this.calculateVobs(Si);
             this.pValue = this.calculatePValue(vObs, p);
-            System.out.println(this.pValue);
             this.passed = pValue > 0.01;
         }
     }
@@ -87,7 +86,6 @@ public class NistTest3 extends AbstractNistTest{
     @Override
     protected void scan(AbstractChaoticSystem system) {
         if(this.bitsCount == this.bitsNeeded) {
-            System.out.print(system.getSystemId() + " ");
             this.executeTest(bits);
             this.testExecuted = true;
         } else {

@@ -36,13 +36,10 @@ public class MainAnalyser {
         
         try {
             currentChaoticSystem = new CryptoChaoticSystem(this.numberOfAgent * Byte.SIZE, "test");
-
             this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
-
         } catch (Exception ex) {
             Logger.getLogger(MainAnalyser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
     }
 
     public void analyse() throws Exception {
@@ -149,16 +146,16 @@ public class MainAnalyser {
     
     public static void main(String[] args) throws Exception {
         HashSet<AnalyserType> types = new HashSet();
-        //types.add(AnalyserType.BOOLEANS);
-        //types.add(AnalyserType.BYTESPERBYTES);
-        //types.add(AnalyserType.BUTTERFLY);
-        //types.add(AnalyserType.OCCURENCE);
-        //types.add(AnalyserType.VARIATION);
+        types.add(AnalyserType.BOOLEANS);
+        types.add(AnalyserType.BYTESPERBYTES);
+        types.add(AnalyserType.BUTTERFLY);
+        types.add(AnalyserType.OCCURENCE);
+        types.add(AnalyserType.VARIATION);
         types.add(AnalyserType.NIST_1);
         types.add(AnalyserType.NIST_2);
         types.add(AnalyserType.NIST_3);
         
-        MainAnalyser analyser = new MainAnalyser(200, 32, types);
+        MainAnalyser analyser = new MainAnalyser(1, 32, types);
         analyser.analyse();
        
     }

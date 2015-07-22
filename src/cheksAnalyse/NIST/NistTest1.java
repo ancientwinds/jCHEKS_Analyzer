@@ -28,8 +28,7 @@ public class NistTest1 extends AbstractNistTest{
         double Sobs = this.calculateSobs(bits, Math.abs(Sn));
 
         this.pValue = this.calculatePValue(Sobs, Sn);
-        this.passed = this.pValue > 0.01;
-        
+        this.passed = this.pValue > 0.01;        
     }
     
     public int calculateSn(boolean[] bits) {
