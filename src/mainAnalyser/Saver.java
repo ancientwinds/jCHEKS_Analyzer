@@ -1,13 +1,9 @@
 package mainAnalyser;
 
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
-import cheksAnalyse.CheksAnalyserBooleans;
-import cheksAnalyse.CheksAnalyserBytesPerBytes;
-import cheksAnalyse.CheksAnalyserLevelOccurence;
-import cheksAnalyse.CheksAnalyserLevelVariation;
+import cheksAnalyse.*;
 import cheksAnalyse.NIST.*;
 import cheksAnalyse.butterfly.CheksButterflyEffectTest;
-import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.logging.*;
@@ -32,8 +28,6 @@ public class Saver {
             
             for(AnalyserType type : types) {
                 switch (type) {
-                    case NIST:
-                        break;
                     case BYTESPERBYTES:
                         createEvolutionTable(CheksAnalyserBytesPerBytes.TABLE_NAME);
                         break;
@@ -97,7 +91,8 @@ public class Saver {
                 }
             }
             
-            this.connection.commit();
+            this.connection.commit(); 
+            this.closeDatabase();
         } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -108,6 +103,15 @@ public class Saver {
         this.connection = DriverManager.getConnection("jdbc:sqlite:keys.db");
         this.connection.setAutoCommit(false);
         this.statement = connection.createStatement();
+    }
+    
+    private void closeDatabase() {
+        try {
+            this.statement.close();
+            this.connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void createNistTable(String tableName) throws Exception {
@@ -132,31 +136,36 @@ public class Saver {
     
     public void saveNistResults(String systemId, String tableName, double pValue) {
         try {
+            this.openDatabase();
             PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, p_value) VALUES (?,?)");
             insertStatement.setString(1, systemId);
             insertStatement.setDouble(2, pValue);
             insertStatement.executeUpdate();
             this.connection.commit();
-        } catch (SQLException ex) {
+            this.closeDatabase();
+        } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }      
     }
     
     public void saveEvolutionCount(String tableName, String chaoticSystemId, int evolutionCount) {
         try {
+            this.openDatabase();
             PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, evolution_count) VALUES (?,?)");
             insertStatement.setString(1, chaoticSystemId);
             insertStatement.setInt(2, evolutionCount);            
             insertStatement.executeUpdate();
-            this.connection.commit();            
-        } catch (SQLException ex) {
+            this.connection.commit();
+            this.closeDatabase();
+        } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     public void saveDistributionInTable(String chaoticSystemId, String tableName, Distribution[] distributions) {
-        try {            
+        try {
+            this.openDatabase();
             for(int i = 0; i < distributions.length; i++) {
                 for(int j = 0; j < distributions[i].getAgentLevels().length; j++) {
                     PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, agent_id, variation, occurence_count) VALUES (?,?,?,?)");
@@ -168,15 +177,15 @@ public class Saver {
                 }
             }
             this.connection.commit();
-            
-        } catch (SQLException ex) {
+            this.closeDatabase();
+        } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public void saveButterflyEffect(String systemId, int[][] results) {
-
         try {
+            this.openDatabase();
             PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO butterfly_effect (chaotic_system_id, clone_id, evolution_count, distance) VALUES (?,?,?,?)");
             for (int i = 0; i < results.length; i ++) { 
                 for (int j = 0; j < results[i].length; j++) {
@@ -188,7 +197,8 @@ public class Saver {
                 }
             }
             this.connection.commit();
-        } catch (SQLException ex) {
+            this.closeDatabase();
+        } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

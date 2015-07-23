@@ -14,7 +14,7 @@ public class CheksAnalyserLevelVariation extends AbstractCheksAnalyser{
     private Distribution distributions[];
     private byte[] lastKey;
     private byte[] currentKey;
-    public static final String TABLE_NAME = "variations";
+    public static final String TABLE_NAME = "nbOccurences_levelVariation";
     
     public CheksAnalyserLevelVariation(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(false, chaoticSystem);

@@ -13,7 +13,7 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
     
     private HashSet<Byte>[] bytesSaw;
     private int ammountOfByte;
-    public static final String TABLE_NAME = "agent_levels";
+    public static final String TABLE_NAME = "nbEvolutions_allAgentLevels";
 
     public CheksAnalyserBytesPerBytes(AbstractChaoticSystem chaoticSystem) throws Exception{
         super(true, chaoticSystem);

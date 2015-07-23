@@ -5,11 +5,14 @@ import cheksAnalyse.*;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.chaoticSystem.exception.*;
+import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.*;
+import java.util.Date;
 
 /**
  *
@@ -19,9 +22,7 @@ public class MainAnalyser {
 
     private final Saver saver;
     private final int iterations;
-    private final int numberOfAgent;
-    private ChaoticSystem currentChaoticSystem;
-    
+    private final int numberOfAgent;    
     private HashSet<AbstractCheksAnalyser> analysers = new HashSet();
     private HashSet<AnalyserType> types = new HashSet();
     
@@ -31,20 +32,16 @@ public class MainAnalyser {
         this.types = types;
         
         this.saver = new Saver();
-        saver.initDatabase(types);
-        
-        try {
-            currentChaoticSystem = new CryptoChaoticSystem(this.numberOfAgent * Byte.SIZE, "test");
-            this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
-        } catch (Exception ex) {
-            Logger.getLogger(MainAnalyser.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        saver.initDatabase(types);      
     }
 
     public void analyse() throws Exception {
         for (int i = 0; i < iterations; i++) {
-            currentChaoticSystem = new CryptoChaoticSystem(this.numberOfAgent * Byte.SIZE, "test" + i);
+            Date startTime = new Date();
+
+            AbstractChaoticSystem currentChaoticSystem = new CryptoChaoticSystem(this.numberOfAgent * Byte.SIZE, "test" + i);
             this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
+            //TODO Also verify if the stop file is there.
             while(!this.analysers.isEmpty()) {                
                 for(Iterator<AbstractCheksAnalyser> iterator = this.analysers.iterator(); iterator.hasNext();) {
                     AbstractCheksAnalyser analyser = iterator.next();
@@ -54,9 +51,16 @@ public class MainAnalyser {
                         analyser.saveResult(saver);
                         iterator.remove();
                     }
+                    analyser = null;
                 }                
                 currentChaoticSystem.evolveSystem();
             }
+            this.analysers.clear();
+            System.out.println(currentChaoticSystem.getSystemId() + " is done!!!");
+            DateFormat dateFormat = new SimpleDateFormat("mm:ss");
+            Date date = new Date((new Date()).getTime() - startTime.getTime());
+            System.out.println("Finished in: " + dateFormat.format(date));
+            currentChaoticSystem = null;
         }
         //displayStatsOfADistributionTable("variations");
         //displayStatsOfADistributionTable("occurences");
@@ -143,7 +147,7 @@ public class MainAnalyser {
         types.add(AnalyserType.NIST_2);
         types.add(AnalyserType.NIST_3);
         
-        MainAnalyser analyser = new MainAnalyser(1, 32, types);
+        MainAnalyser analyser = new MainAnalyser(5, 32, types);
         analyser.analyse();       
     }
 

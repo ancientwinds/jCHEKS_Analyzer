@@ -20,9 +20,9 @@ public class CheksButterflyEffectTest extends AbstractCheksAnalyser {
     
     public static final String TABLE_NAME = "butterfly_effect";
     
-    public CheksButterflyEffectTest(boolean enableLog, ChaoticSystem chaoticSystem) throws Exception {
+    public CheksButterflyEffectTest(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
-        this.distances = new int[chaoticSystem.getAgents().size()][this.iteration];               
+        this.distances = new int[chaoticSystem.getAgentsCount()][this.iteration];               
         this.generateClones(chaoticSystem);        
     }
     
@@ -78,28 +78,6 @@ public class CheksButterflyEffectTest extends AbstractCheksAnalyser {
         if(this.getEvolutionCount() == this.iteration - 1) {
             this.complete();
         }
-    }
-    
-    public HashMap<Integer, String> getResults() {
-        HashMap<Integer, String> results = new HashMap();
-        
-        for (int i = 0; i < this.distances.length; i ++) {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("[");
-
-            for (int j = 0; j < this.distances[i].length; j++) {
-                stringBuilder.append(this.distances[i][j]);
-                if(j == this.distances[i].length - 1) {
-                    stringBuilder.append("]");
-                } else {
-                    stringBuilder.append(", ");
-                }            
-            }
-            
-            results.put(i, stringBuilder.toString());
-        }
-        
-        return results;
     }
 
     @Override

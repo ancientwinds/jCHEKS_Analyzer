@@ -15,7 +15,7 @@ public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
     private boolean[] falsesSaw;
     private boolean[] truesSaw;
     private int ammountOfBit;
-    public static final String TABLE_NAME = "key_bits";
+    public static final String TABLE_NAME = "nbEvolutions_AllKeyBits";
     
     public CheksAnalyserBooleans(AbstractChaoticSystem chaoticSystem) throws Exception{
         super(false, chaoticSystem);
