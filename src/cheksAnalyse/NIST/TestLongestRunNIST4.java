@@ -10,19 +10,19 @@ import mainAnalyser.Saver;
  * 
  * NIST Test 2.4: Longest Run in a Block
  */
-public class NistTest4 extends AbstractNistTest{
+public class TestLongestRunNIST4 extends AbstractNistTest{
 
     private int blockLength = 128;
 
     public static String TABLE_NAME = "LongestRun_NIST_4";
     private double ratios[] = {0.1174, 0.2430, 0.2493, 0.1752, 0.1027, 0.1124};
     
-    public NistTest4(AbstractChaoticSystem chaoticSystem) throws Exception {
+    public TestLongestRunNIST4(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 100000);
         this.bitsNeeded = 100000;
     }
     
-    public NistTest4(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
+    public TestLongestRunNIST4(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
         super(chaoticSystem, bitsNeeded);
         this.blockLength = blockLength;
     }

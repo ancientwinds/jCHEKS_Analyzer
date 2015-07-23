@@ -2,8 +2,8 @@ package cheksAnalyse.NIST;
 
 import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
-import static cheksAnalyse.NIST.NistTest2.TABLE_NAME;
-import static cheksAnalyse.NIST.NistTest4.TABLE_NAME;
+import static cheksAnalyse.NIST.TestFrequencyBlockNIST2.TABLE_NAME;
+import static cheksAnalyse.NIST.TestLongestRunNIST4.TABLE_NAME;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import mainAnalyser.Saver;
 

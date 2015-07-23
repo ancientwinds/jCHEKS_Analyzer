@@ -12,7 +12,7 @@ import mainAnalyser.Saver;
  *
  * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
-public class CheksButterflyEffectTest extends AbstractCheksAnalyser {
+public class TestButterflyEffect extends AbstractCheksAnalyser {
 
     private final HashMap<Integer, CryptoChaoticSystem> clones = new HashMap();
     private final int iteration = 1000;
@@ -20,7 +20,7 @@ public class CheksButterflyEffectTest extends AbstractCheksAnalyser {
     
     public static final String TABLE_NAME = "butterfly_effect";
     
-    public CheksButterflyEffectTest(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
+    public TestButterflyEffect(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
         this.distances = new int[chaoticSystem.getAgentsCount()][this.iteration];               
         this.generateClones(chaoticSystem);        
@@ -47,7 +47,7 @@ public class CheksButterflyEffectTest extends AbstractCheksAnalyser {
             try {
                 this.distances[i][this.getEvolutionCount()] = this.getDistance(this.getKey(), clone.getKey());
             } catch (Exception ex) {
-                Logger.getLogger(CheksButterflyEffectTest.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TestButterflyEffect.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             clone.evolveSystem();

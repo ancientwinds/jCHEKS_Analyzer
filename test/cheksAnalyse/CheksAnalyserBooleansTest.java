@@ -29,7 +29,7 @@ public class CheksAnalyserBooleansTest {
         }
         System.out.println(keys.size());
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);
-        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, sys);
+        TestNbEvolutionsAllKeyBits analyser = new TestNbEvolutionsAllKeyBits(true, sys);
         while(!analyser.isComplete()){
             analyser.analyse(sys);
             sys.evolveSystem();
@@ -48,7 +48,7 @@ public class CheksAnalyserBooleansTest {
         keys.add(new byte[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
         System.out.println(keys.size());
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);
-        CheksAnalyserBooleans analyser = new CheksAnalyserBooleans(true, sys);
+        TestNbEvolutionsAllKeyBits analyser = new TestNbEvolutionsAllKeyBits(true, sys);
         while(!analyser.isComplete()){
             analyser.analyse(sys);
             sys.evolveSystem();

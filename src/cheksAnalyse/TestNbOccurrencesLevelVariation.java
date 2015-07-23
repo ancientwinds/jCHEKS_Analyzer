@@ -8,20 +8,20 @@ import mainAnalyser.Saver;
  *
  * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
-public class CheksAnalyserLevelVariation extends AbstractCheksAnalyser{
+public class TestNbOccurrencesLevelVariation extends AbstractCheksAnalyser{
 
     private final int iterations = 1000000;
     private Distribution distributions[];
     private byte[] lastKey;
     private byte[] currentKey;
-    public static final String TABLE_NAME = "nbOccurences_levelVariation";
+    public static final String TABLE_NAME = "nbOccurrences_levelVariation";
     
-    public CheksAnalyserLevelVariation(AbstractChaoticSystem chaoticSystem) throws Exception {
+    public TestNbOccurrencesLevelVariation(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(false, chaoticSystem);
         this.initAnalyser(chaoticSystem);
     }
 
-    public CheksAnalyserLevelVariation(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
+    public TestNbOccurrencesLevelVariation(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
         this.initAnalyser(chaoticSystem);
     }

@@ -3,7 +3,7 @@ package mainAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import cheksAnalyse.*;
 import cheksAnalyse.NIST.*;
-import cheksAnalyse.butterfly.CheksButterflyEffectTest;
+import cheksAnalyse.butterfly.TestButterflyEffect;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.logging.*;
@@ -29,64 +29,64 @@ public class Saver {
             for(AnalyserType type : types) {
                 switch (type) {
                     case BYTESPERBYTES:
-                        createEvolutionTable(CheksAnalyserBytesPerBytes.TABLE_NAME);
+                        createEvolutionTable(TestNbEvolutionsAllAgentLevels.TABLE_NAME);
                         break;
                     case BOOLEANS:
-                        createEvolutionTable(CheksAnalyserBooleans.TABLE_NAME);
+                        createEvolutionTable(TestNbEvolutionsAllKeyBits.TABLE_NAME);
                         break;
                     case BUTTERFLY:
-                        createButterflyEffectTable(CheksButterflyEffectTest.TABLE_NAME);
+                        createButterflyEffectTable(TestButterflyEffect.TABLE_NAME);
                         break;
                     case OCCURENCE:
-                        createOccurenceTable(CheksAnalyserLevelOccurence.TABLE_NAME);
+                        createOccurenceTable(TestNbOccurrencesLevel.TABLE_NAME);
                         break;
                     case VARIATION:
-                        createOccurenceTable(CheksAnalyserLevelVariation.TABLE_NAME);
+                        createOccurenceTable(TestNbOccurrencesLevelVariation.TABLE_NAME);
                         break;
                     case NIST_1:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_2:
-                        this.createNistTable(NistTest2.TABLE_NAME);
+                        this.createNistTable(TestFrequencyBlockNIST2.TABLE_NAME);
                         break;
                     case NIST_3:
-                        this.createNistTable(NistTest3.TABLE_NAME);
+                        this.createNistTable(TestRunsNIST3.TABLE_NAME);
                         break;
                     case NIST_4:
-                        this.createNistTable(NistTest4.TABLE_NAME);
+                        this.createNistTable(TestLongestRunNIST4.TABLE_NAME);
                         break;
                     case NIST_5:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_6:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_7:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_8:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_9:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_10:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_11:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_12:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_13:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_14:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_15:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                 }
             }

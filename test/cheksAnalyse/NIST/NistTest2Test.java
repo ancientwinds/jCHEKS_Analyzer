@@ -24,7 +24,7 @@ public class NistTest2Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
+        TestFrequencyBlockNIST2 instance = new TestFrequencyBlockNIST2(sys, 10, 3);       
            
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
@@ -43,7 +43,7 @@ public class NistTest2Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
+        TestFrequencyBlockNIST2 instance = new TestFrequencyBlockNIST2(sys, 10, 3);       
            
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
@@ -63,7 +63,7 @@ public class NistTest2Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
+        TestFrequencyBlockNIST2 instance = new TestFrequencyBlockNIST2(sys, 10, 3);       
            
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
@@ -81,7 +81,7 @@ public class NistTest2Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
+        TestFrequencyBlockNIST2 instance = new TestFrequencyBlockNIST2(sys, 10, 3);       
            
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
@@ -100,7 +100,7 @@ public class NistTest2Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
+        TestFrequencyBlockNIST2 instance = new TestFrequencyBlockNIST2(sys, 10, 3);       
            
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};
         instance.executeTest(bits);

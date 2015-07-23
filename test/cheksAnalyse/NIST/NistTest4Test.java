@@ -26,7 +26,7 @@ public class NistTest4Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest4 instance = new NistTest4(sys, 128, 8);
+        TestLongestRunNIST4 instance = new TestLongestRunNIST4(sys, 128, 8);
         
         boolean bits[] = new boolean[128];
 

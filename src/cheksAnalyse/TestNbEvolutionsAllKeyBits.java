@@ -9,7 +9,7 @@ import mainAnalyser.Saver;
  *
  * @author Michael Roussel <rousselm4@gmail.com>
  */
-public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
+public class TestNbEvolutionsAllKeyBits extends AbstractCheksAnalyser{
 
     
     private boolean[] falsesSaw;
@@ -17,12 +17,12 @@ public class CheksAnalyserBooleans extends AbstractCheksAnalyser{
     private int ammountOfBit;
     public static final String TABLE_NAME = "nbEvolutions_AllKeyBits";
     
-    public CheksAnalyserBooleans(AbstractChaoticSystem chaoticSystem) throws Exception{
+    public TestNbEvolutionsAllKeyBits(AbstractChaoticSystem chaoticSystem) throws Exception{
         super(false, chaoticSystem);
         this.initAnalyser(chaoticSystem);
     }
     
-    public CheksAnalyserBooleans(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
+    public TestNbEvolutionsAllKeyBits(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
         super(enableLog, chaoticSystem);
         this.initAnalyser(chaoticSystem);
     }

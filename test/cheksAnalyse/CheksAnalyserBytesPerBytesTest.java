@@ -25,7 +25,7 @@ public class CheksAnalyserBytesPerBytesTest {
             i++;
         }
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);
-        CheksAnalyserBytesPerBytes analyser = new CheksAnalyserBytesPerBytes(true, sys);
+        TestNbEvolutionsAllAgentLevels analyser = new TestNbEvolutionsAllAgentLevels(true, sys);
         while(!analyser.isComplete()){
             analyser.analyse(sys);
             sys.evolveSystem();
@@ -49,7 +49,7 @@ public class CheksAnalyserBytesPerBytesTest {
             i++;
         }
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);
-        CheksAnalyserBytesPerBytes analyser = new CheksAnalyserBytesPerBytes(true, sys);
+        TestNbEvolutionsAllAgentLevels analyser = new TestNbEvolutionsAllAgentLevels(true, sys);
         while(!analyser.isComplete()){
             analyser.analyse(sys);
             sys.evolveSystem();

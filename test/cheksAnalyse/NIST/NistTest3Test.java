@@ -17,7 +17,7 @@ public class NistTest3Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest3 instance = new NistTest3(sys, 10);     
+        TestRunsNIST3 instance = new TestRunsNIST3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         
@@ -31,7 +31,7 @@ public class NistTest3Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest3 instance = new NistTest3(sys, 10);     
+        TestRunsNIST3 instance = new TestRunsNIST3(sys, 10);     
 
         assertEquals(0.632455532, instance.calculateT(), 0.0001);
 
@@ -42,7 +42,7 @@ public class NistTest3Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest3 instance = new NistTest3(sys, 10);     
+        TestRunsNIST3 instance = new TestRunsNIST3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         
@@ -56,7 +56,7 @@ public class NistTest3Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest3 instance = new NistTest3(sys, 10);     
+        TestRunsNIST3 instance = new TestRunsNIST3(sys, 10);     
 
         assertFalse(instance.shouldContinue(2.7));
     }
@@ -66,7 +66,7 @@ public class NistTest3Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest3 instance = new NistTest3(sys, 10);     
+        TestRunsNIST3 instance = new TestRunsNIST3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         
@@ -90,7 +90,7 @@ public class NistTest3Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest3 instance = new NistTest3(sys, 10);     
+        TestRunsNIST3 instance = new TestRunsNIST3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         
@@ -106,7 +106,7 @@ public class NistTest3Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest3 instance = new NistTest3(sys, 10);     
+        TestRunsNIST3 instance = new TestRunsNIST3(sys, 10);     
               
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};      
         int[] Si = instance.calculateSi(bits); 
@@ -123,7 +123,7 @@ public class NistTest3Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest3 instance = new NistTest3(sys, 10);     
+        TestRunsNIST3 instance = new TestRunsNIST3(sys, 10);     
                
         boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
         
@@ -137,7 +137,7 @@ public class NistTest3Test {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest3 instance = new NistTest3(sys, 100);     
+        TestRunsNIST3 instance = new TestRunsNIST3(sys, 100);     
                  
         boolean bits[] = new boolean[100];
 
