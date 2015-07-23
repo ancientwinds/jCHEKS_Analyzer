@@ -45,7 +45,7 @@ public class TestButterflyEffect extends AbstractCheksAnalyser {
         for(int i = 0; i < this.clones.size(); i++) {
             CryptoChaoticSystem clone = this.clones.get(i);
             try {
-                this.distances[i][this.getEvolutionCount()] = this.getDistance(this.getKey(), clone.getKey());
+                this.distances[i][this.getEvolutionCount()] = getDistance(this.getKey(), clone.getKey());
             } catch (Exception ex) {
                 Logger.getLogger(TestButterflyEffect.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -54,18 +54,19 @@ public class TestButterflyEffect extends AbstractCheksAnalyser {
         }
     }
     
-    private int getDistance(byte[] baseKey, byte[] cloneKey) throws Exception {        
+    public static int getDistance(byte[] baseKey, byte[] cloneKey) throws Exception {        
         if(baseKey.length == cloneKey.length) {
             int distance = 0;
             for(int i = 0; i < baseKey.length; i++) {
-                BitSet baseBits = Utils.getBitSet(baseKey[i]);
-                BitSet cloneBits = Utils.getBitSet(cloneKey[i]);
-                
-                for(int x = 0; x < baseBits.length(); x++)
+                boolean[] baseBool = Utils.byteToBooleanArray(baseKey[i]);
+                boolean[] cloneBool = Utils.byteToBooleanArray(cloneKey[i]);
+                                
+                for(int x = 0; x < baseBool.length; x++)
                 {
-                    if(baseBits.get(x) != cloneBits.get(x)) {  
+                    if(baseBool[x] != cloneBool[x]) {
                         distance++;
                     }
+                    
                 }                
             }            
             return distance;
