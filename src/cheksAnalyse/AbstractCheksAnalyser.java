@@ -1,12 +1,11 @@
 package cheksAnalyse;
 
 import Utils.Utils;
-import cheksAnalyse.NIST.NistTest1;
-import cheksAnalyse.NIST.NistTest2;
-import cheksAnalyse.NIST.NistTest3;
-import cheksAnalyse.NIST.NistTest4;
-import cheksAnalyse.butterfly.CheksButterflyEffectTest;
-import com.archosResearch.jCHEKS.chaoticSystem.ChaoticSystem;
+import cheksAnalyse.NIST.TestFrequencyMonobitNIST1;
+import cheksAnalyse.NIST.TestFrequencyBlockNIST2;
+import cheksAnalyse.NIST.TestRunsNIST3;
+import cheksAnalyse.NIST.TestLongestRunNIST4;
+import cheksAnalyse.butterfly.TestButterflyEffect;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -71,6 +70,7 @@ public abstract class AbstractCheksAnalyser {
     }
     
     public abstract void saveResult(Saver saver);
+    public abstract String getTableName();
 
     protected byte[] getKey() {
         return key;
@@ -109,64 +109,64 @@ public abstract class AbstractCheksAnalyser {
         for(AnalyserType type : types) {
             switch (type) {
                 case BYTESPERBYTES:
-                    analyserList.add(new CheksAnalyserBytesPerBytes(false, system));
+                    analyserList.add(new TestNbEvolutionsAllAgentLevels(false, system));
                     break;
                 case BOOLEANS:
-                    analyserList.add(new CheksAnalyserBooleans(false, system));
+                    analyserList.add(new TestNbEvolutionsAllKeyBits(false, system));
                     break;
                 case BUTTERFLY:
-                    analyserList.add(new CheksButterflyEffectTest(false, system)); 
+                    analyserList.add(new TestButterflyEffect(false, system)); 
                     break;
                 case OCCURENCE:
-                    analyserList.add(new CheksAnalyserLevelOccurence(system));
+                    analyserList.add(new TestNbOccurrencesLevel(system));
                     break;
                 case VARIATION:
-                    analyserList.add(new CheksAnalyserLevelVariation(system));
+                    analyserList.add(new TestNbOccurrencesLevelVariation(system));
                     break;
                 case NIST_1:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_2:
-                    analyserList.add(new NistTest2(system));
+                    analyserList.add(new TestFrequencyBlockNIST2(system));
                     break;
                 case NIST_3:
-                    analyserList.add(new NistTest3(system));
+                    analyserList.add(new TestRunsNIST3(system));
                     break;
                 case NIST_4:
-                    analyserList.add(new NistTest4(system));
+                    analyserList.add(new TestLongestRunNIST4(system));
                     break;
                 case NIST_5:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_6:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_7:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_8:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_9:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_10:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_11:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_12:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_13:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_14:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_15:
-                    analyserList.add(new NistTest1(system));
+                    analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;                   
             }
         }

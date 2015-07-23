@@ -3,7 +3,7 @@ package mainAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import cheksAnalyse.*;
 import cheksAnalyse.NIST.*;
-import cheksAnalyse.butterfly.CheksButterflyEffectTest;
+import cheksAnalyse.butterfly.TestButterflyEffect;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.logging.*;
@@ -24,69 +24,69 @@ public class Saver {
 
     public void initDatabase(HashSet<AnalyserType> types) {
         try {
-            openDatabase();
+            this.openDatabase();
             
             for(AnalyserType type : types) {
                 switch (type) {
                     case BYTESPERBYTES:
-                        createEvolutionTable(CheksAnalyserBytesPerBytes.TABLE_NAME);
+                        this.createEvolutionTable(TestNbEvolutionsAllAgentLevels.TABLE_NAME);
                         break;
                     case BOOLEANS:
-                        createEvolutionTable(CheksAnalyserBooleans.TABLE_NAME);
+                        this.createEvolutionTable(TestNbEvolutionsAllKeyBits.TABLE_NAME);
                         break;
                     case BUTTERFLY:
-                        createButterflyEffectTable(CheksButterflyEffectTest.TABLE_NAME);
+                        this.createButterflyEffectTable(TestButterflyEffect.TABLE_NAME);
                         break;
                     case OCCURENCE:
-                        createOccurenceTable(CheksAnalyserLevelOccurence.TABLE_NAME);
+                        this.createOccurenceTable(TestNbOccurrencesLevel.TABLE_NAME);
                         break;
                     case VARIATION:
-                        createOccurenceTable(CheksAnalyserLevelVariation.TABLE_NAME);
+                        this.createOccurenceTable(TestNbOccurrencesLevelVariation.TABLE_NAME);
                         break;
                     case NIST_1:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_2:
-                        this.createNistTable(NistTest2.TABLE_NAME);
+                        this.createNistTable(TestFrequencyBlockNIST2.TABLE_NAME);
                         break;
                     case NIST_3:
-                        this.createNistTable(NistTest3.TABLE_NAME);
+                        this.createNistTable(TestRunsNIST3.TABLE_NAME);
                         break;
                     case NIST_4:
-                        this.createNistTable(NistTest4.TABLE_NAME);
+                        this.createNistTable(TestLongestRunNIST4.TABLE_NAME);
                         break;
                     case NIST_5:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_6:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_7:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_8:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_9:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_10:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_11:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_12:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_13:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_14:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_15:
-                        this.createNistTable(NistTest1.TABLE_NAME);
+                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                 }
             }
@@ -115,23 +115,19 @@ public class Saver {
     }
     
     private void createNistTable(String tableName) throws Exception {
-        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
-        this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, p_value NUMERIC)");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, p_value NUMERIC)");
     }
 
     private void createEvolutionTable(String tableName) throws Exception {        
-        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
-        this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, evolution_count DOUBLE)");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, evolution_count DOUBLE)");
     }
     
     private void createButterflyEffectTable(String tableName) throws Exception {
-        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
-        this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT, clone_id INTEGER, evolution_count INTEGER, distance INTEGER, PRIMARY KEY (chaotic_system_id, clone_id, evolution_count))");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT, clone_id INTEGER, evolution_count INTEGER, distance INTEGER, PRIMARY KEY (chaotic_system_id, clone_id, evolution_count))");
     }
 
     private void createOccurenceTable(String tableName) throws Exception {
-        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
-        this.statement.executeUpdate("CREATE TABLE " + tableName + " (chaotic_system_id TEXT, agent_id INTEGER, variation INTEGER, occurence_count INTEGER, PRIMARY KEY(chaotic_system_id, agent_id, variation))");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT, agent_id INTEGER, variation INTEGER, occurence_count INTEGER, PRIMARY KEY(chaotic_system_id, agent_id, variation))");
     }
     
     public void saveNistResults(String systemId, String tableName, double pValue) {
@@ -235,5 +231,54 @@ public class Saver {
     private String[] getArrayFromString(String serializedArray) {
         return serializedArray.replace("[", "").replace("]", "").split(", ");
     }
-
+    
+    private void deleteTable(String tableName) throws SQLException {
+        System.out.println("Dropping table " + tableName);
+        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
+        this.connection.commit();
+    }
+    
+    public void cleanDataBase() throws Exception {
+        this.openDatabase();
+        
+        this.deleteTable(TestNbEvolutionsAllAgentLevels.TABLE_NAME);                        
+        this.deleteTable(TestNbEvolutionsAllKeyBits.TABLE_NAME);                        
+        this.deleteTable(TestButterflyEffect.TABLE_NAME);                        
+        this.deleteTable(TestNbOccurrencesLevel.TABLE_NAME);                        
+        this.deleteTable(TestNbOccurrencesLevelVariation.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyBlockNIST2.TABLE_NAME);                        
+        this.deleteTable(TestRunsNIST3.TABLE_NAME);                        
+        this.deleteTable(TestLongestRunNIST4.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+        
+        this.closeDatabase();        
+    }
+    
+    public boolean isTestRunnedForSystem(String tableName, String systemId) throws Exception {
+        this.openDatabase();
+        PreparedStatement selectStatement = this.connection.prepareStatement("SELECT COUNT(*) AS rowcount FROM " + tableName + " WHERE chaotic_system_id = ?");
+        selectStatement.setString(1, systemId);
+        
+        ResultSet rs = selectStatement.executeQuery();
+        int count = rs.getInt("rowcount");
+        this.closeDatabase();       
+        
+        return count > 0;
+    }
+    
+    public static void main(String[] args) throws Exception {
+        Saver saver = new Saver();
+        saver.cleanDataBase();
+    }
 }

@@ -10,15 +10,15 @@ import static org.apache.commons.math3.special.Erf.erfc;
  * 
  * NIST Test 2.3: Runs test
  */
-public class NistTest3 extends AbstractNistTest{
+public class TestRunsNIST3 extends AbstractNistTest{
     
     public static String TABLE_NAME = "Runs_NIST_3";
 
-    public NistTest3(AbstractChaoticSystem chaoticSystem) throws Exception {
+    public TestRunsNIST3(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 100000);
     }
     
-    public NistTest3(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
+    public TestRunsNIST3(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
         super(chaoticSystem, bitsNeeded);
     }
     
@@ -86,5 +86,10 @@ public class NistTest3 extends AbstractNistTest{
     @Override
     public void saveResult(Saver saver) {
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
+    }
+    
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }

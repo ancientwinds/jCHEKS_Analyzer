@@ -10,15 +10,15 @@ import static org.apache.commons.math3.special.Erf.erfc;
  * 
  * NIST Test 2.1: Frequency Monobit
  */
-public class NistTest1 extends AbstractNistTest{
+public class TestFrequencyMonobitNIST1 extends AbstractNistTest{
     
     public static String TABLE_NAME = "FrequencyMonobit_NIST_1";
     
-    public NistTest1(AbstractChaoticSystem chaoticSystem) throws Exception {
+    public TestFrequencyMonobitNIST1(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 100000);
     }
     
-    public NistTest1(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
+    public TestFrequencyMonobitNIST1(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
         super(chaoticSystem, bitsNeeded);
     }
 
@@ -58,4 +58,8 @@ public class NistTest1 extends AbstractNistTest{
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
 }

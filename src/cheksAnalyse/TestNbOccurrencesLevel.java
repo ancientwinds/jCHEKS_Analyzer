@@ -8,19 +8,19 @@ import mainAnalyser.Saver;
  *
  * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
-public class CheksAnalyserLevelOccurence extends AbstractCheksAnalyser{
+public class TestNbOccurrencesLevel extends AbstractCheksAnalyser{
 
     private final int iterations = 1000000;
     private Distribution distributions[];
     
     public static final String TABLE_NAME = "nbOccurrences_level";
     
-    public CheksAnalyserLevelOccurence(AbstractChaoticSystem chaoticSystem) throws Exception {
+    public TestNbOccurrencesLevel(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(false, chaoticSystem);
         this.initAnalyser(chaoticSystem);
     }    
     
-    public CheksAnalyserLevelOccurence(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
+    public TestNbOccurrencesLevel(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
         this.initAnalyser(chaoticSystem);
     }
@@ -52,4 +52,8 @@ public class CheksAnalyserLevelOccurence extends AbstractCheksAnalyser{
         saver.saveDistributionInTable(this.getSystemId(), TABLE_NAME, distributions);
     }
     
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
 }

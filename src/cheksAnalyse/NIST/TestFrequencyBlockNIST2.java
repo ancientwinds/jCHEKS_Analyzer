@@ -12,17 +12,17 @@ import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
  * NIST Test 2.2: Frequency Block Test
  */
 
-public class NistTest2 extends AbstractNistTest{
+public class TestFrequencyBlockNIST2 extends AbstractNistTest{
 
     private int blockLength = 2000;
     public static String TABLE_NAME = "FrequencyBlock_NIST_2";
 
     
-    public NistTest2(AbstractChaoticSystem chaoticSystem) throws Exception {
+    public TestFrequencyBlockNIST2(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 100000);
     }
     
-    public NistTest2(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
+    public TestFrequencyBlockNIST2(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
         super(chaoticSystem, bitsNeeded);
         this.blockLength = blockLength;
     }
@@ -89,4 +89,8 @@ public class NistTest2 extends AbstractNistTest{
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
 }

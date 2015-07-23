@@ -12,20 +12,20 @@ import static org.junit.Assert.*;
  *
  * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
-public class NistTest2Test {
+public class TestFrequencyBlockNIST2Test {
     
     
-    @Test
-    public void testExecuteTest() {
+    private final TestFrequencyBlockNIST2 instance;
+    
+    public TestFrequencyBlockNIST2Test() throws Exception {
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        instance = new TestFrequencyBlockNIST2(sys, 10, 3);       
     }
 
     @Test
     public void testCalculateProportion() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
-           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
         boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
@@ -40,11 +40,6 @@ public class NistTest2Test {
     
     @Test
     public void testCalculateRation() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
-           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
         boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
@@ -60,11 +55,6 @@ public class NistTest2Test {
     
     @Test
     public void testCalculateXobs() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
-           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
         boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
@@ -78,11 +68,6 @@ public class NistTest2Test {
     
     @Test
     public void testCalculatePValue() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
-           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
               
         boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
@@ -97,11 +82,6 @@ public class NistTest2Test {
     
     @Test
     public void testExecuteTestShouldPass() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        NistTest2 instance = new NistTest2(sys, 10, 3);       
-           
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};
         instance.executeTest(bits);
                 

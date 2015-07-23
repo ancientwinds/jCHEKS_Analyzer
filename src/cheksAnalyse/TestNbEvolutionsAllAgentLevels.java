@@ -9,19 +9,19 @@ import mainAnalyser.Saver;
  *
  * @author Michael Roussel <rousselm4@gmail.com>
  */
-public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
+public class TestNbEvolutionsAllAgentLevels extends AbstractCheksAnalyser{
     
     private HashSet<Byte>[] bytesSaw;
     private int ammountOfByte;
     public static final String TABLE_NAME = "nbEvolutions_allAgentLevels";
 
-    public CheksAnalyserBytesPerBytes(AbstractChaoticSystem chaoticSystem) throws Exception{
+    public TestNbEvolutionsAllAgentLevels(AbstractChaoticSystem chaoticSystem) throws Exception{
         super(true, chaoticSystem);
         this.initAnalyser(chaoticSystem);
        
     }
     
-    public CheksAnalyserBytesPerBytes(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
+    public TestNbEvolutionsAllAgentLevels(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
         super(enableLog, chaoticSystem);
         this.initAnalyser(chaoticSystem);
     }
@@ -75,5 +75,10 @@ public class CheksAnalyserBytesPerBytes extends AbstractCheksAnalyser{
     @Override
     public void saveResult(Saver saver) {
         saver.saveEvolutionCount(TABLE_NAME, this.getSystemId(), this.getEvolutionCount());
+    }
+    
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }
