@@ -6,7 +6,6 @@ import cheksAnalyse.NIST.TestFrequencyBlockNIST2;
 import cheksAnalyse.NIST.TestRunsNIST3;
 import cheksAnalyse.NIST.TestLongestRunNIST4;
 import cheksAnalyse.butterfly.TestButterflyEffect;
-import com.archosResearch.jCHEKS.chaoticSystem.ChaoticSystem;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -71,6 +70,7 @@ public abstract class AbstractCheksAnalyser {
     }
     
     public abstract void saveResult(Saver saver);
+    public abstract String getTableName();
 
     protected byte[] getKey() {
         return key;

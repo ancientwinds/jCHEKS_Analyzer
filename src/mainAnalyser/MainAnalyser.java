@@ -1,6 +1,5 @@
 package mainAnalyser;
 
-import Utils.Utils;
 import cheksAnalyse.*;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import com.archosResearch.jCHEKS.chaoticSystem.*;
@@ -8,6 +7,7 @@ import com.archosResearch.jCHEKS.chaoticSystem.exception.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.io.File;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.DateFormat;
@@ -25,10 +25,18 @@ public class MainAnalyser {
     private HashSet<AbstractCheksAnalyser> analysers = new HashSet();
     private HashSet<AnalyserType> types = new HashSet();
     
+    private static final String FILE_TO_STOP = "removeToStop.stop";
+    
     public MainAnalyser(HashSet<AnalyserType> types) {                
 
-        this.types = types;
+        File f = new File(FILE_TO_STOP);
+        try {
+            f.createNewFile();
+        } catch (IOException ex) {
+            System.out.println("Could not create file to stop analyse. " + ex.getMessage());
+        }
         
+        this.types = types;        
         this.saver = new Saver();
         saver.initDatabase(types);        
     }
@@ -36,65 +44,60 @@ public class MainAnalyser {
     public void analyse() throws Exception {
         HashSet<String> systemsName = this.getSystemsFileName("system");
         for(Iterator<String> system = systemsName.iterator(); system.hasNext();) {
-            String fileName = system.next();
-            Date startTime = new Date();
-
-            AbstractChaoticSystem currentChaoticSystem = FileReader.readChaoticSystem(fileName);
-            this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
-            //TODO Also verify if the stop file is there.
-            while(!this.analysers.isEmpty()) {                
-                for(Iterator<AbstractCheksAnalyser> iterator = this.analysers.iterator(); iterator.hasNext();) {
-                    AbstractCheksAnalyser analyser = iterator.next();
-                    if(!analyser.isComplete()) {
-                        analyser.analyse(currentChaoticSystem);
-                    } else {
-                        analyser.saveResult(saver);
-                        iterator.remove();
-                    }
-                    analyser = null;
-                }                
-                currentChaoticSystem.evolveSystem();
+            if(shouldContinueAnalyse()) {
+                String fileName = system.next();
+                Date startTime = new Date();
+                
+                this.analyseSystem(fileName);                
+                
+                DateFormat dateFormat = new SimpleDateFormat("mm:ss");
+                Date date = new Date((new Date()).getTime() - startTime.getTime());
+                System.out.println("Analyse of " + fileName + " is done. It took: " + dateFormat.format(date));
+                system.remove();
+            } else {
+                return;
             }
-            this.analysers.clear();
-            System.out.println(currentChaoticSystem.getSystemId() + " is done!!!");
-            DateFormat dateFormat = new SimpleDateFormat("mm:ss");
-            Date date = new Date((new Date()).getTime() - startTime.getTime());
-            System.out.println("Finished in: " + dateFormat.format(date));
-            currentChaoticSystem = null;
-            system.remove();
         }
 
-        /*
-        for (int i = 0; i < iterations; i++) {
-            Date startTime = new Date();
-
-            AbstractChaoticSystem currentChaoticSystem = new CryptoChaoticSystem(this.numberOfAgent * Byte.SIZE, "test" + i);
-            this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
-            //TODO Also verify if the stop file is there.
-            while(!this.analysers.isEmpty()) {                
-                for(Iterator<AbstractCheksAnalyser> iterator = this.analysers.iterator(); iterator.hasNext();) {
-                    AbstractCheksAnalyser analyser = iterator.next();
-                    if(!analyser.isComplete()) {
-                        analyser.analyse(currentChaoticSystem);
-                    } else {
-                        analyser.saveResult(saver);
-                        iterator.remove();
-                    }
-                    analyser = null;
-                }                
-                currentChaoticSystem.evolveSystem();
-            }
-            this.analysers.clear();
-            System.out.println(currentChaoticSystem.getSystemId() + " is done!!!");
-            DateFormat dateFormat = new SimpleDateFormat("mm:ss");
-            Date date = new Date((new Date()).getTime() - startTime.getTime());
-            System.out.println("Finished in: " + dateFormat.format(date));
-            currentChaoticSystem = null;
-        }*/
         //displayStatsOfADistributionTable("variations");
         //displayStatsOfADistributionTable("occurences");
         //displayStatsOfATable("KEY_BITS");
         //displayStatsOfATable("AGENT_LEVELS");
+    }
+    
+    private boolean analyseWithSystem(AbstractCheksAnalyser analyser, AbstractChaoticSystem system) throws Exception {
+        if(!saver.isTestRunnedForSystem(analyser.getTableName(), system.getSystemId())) {
+            if(!analyser.isComplete()) {
+                analyser.analyse(system);
+                return false;
+            } else {
+                analyser.saveResult(saver);                        
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+    
+    private void analyseSystem(String systemName) throws Exception {
+        AbstractChaoticSystem currentChaoticSystem = FileReader.readChaoticSystem(systemName);
+        this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
+                
+        while(!this.analysers.isEmpty()) {                
+            for(Iterator<AbstractCheksAnalyser> iterator = this.analysers.iterator(); iterator.hasNext();) {
+                AbstractCheksAnalyser analyser = iterator.next();
+                if(this.analyseWithSystem(analyser, currentChaoticSystem)) {
+                    iterator.remove();
+                }
+            }                
+            currentChaoticSystem.evolveSystem();
+        }
+        this.analysers.clear();
+    }
+    
+    private boolean shouldContinueAnalyse() {
+        File f = new File(FILE_TO_STOP);
+        return f.exists() && !f.isDirectory();
     }
     /*private void displayStatsOfADistributionTable(String tableName) {
         try {

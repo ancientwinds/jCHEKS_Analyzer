@@ -87,4 +87,9 @@ public class TestRunsNIST3 extends AbstractNistTest{
     public void saveResult(Saver saver) {
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
+    
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
 }

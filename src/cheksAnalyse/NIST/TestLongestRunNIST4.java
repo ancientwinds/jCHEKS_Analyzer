@@ -65,4 +65,9 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
+    
 }

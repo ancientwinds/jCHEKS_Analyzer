@@ -76,4 +76,9 @@ public class TestNbEvolutionsAllAgentLevels extends AbstractCheksAnalyser{
     public void saveResult(Saver saver) {
         saver.saveEvolutionCount(TABLE_NAME, this.getSystemId(), this.getEvolutionCount());
     }
+    
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
 }

@@ -86,5 +86,10 @@ public class TestButterflyEffect extends AbstractCheksAnalyser {
             saver.saveButterflyEffect(this.getSystemId(), this.distances);
             saved = true;
         }
-    }    
+    } 
+    
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
 }

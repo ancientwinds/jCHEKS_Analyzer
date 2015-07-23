@@ -52,4 +52,8 @@ public class TestNbOccurrencesLevel extends AbstractCheksAnalyser{
         saver.saveDistributionInTable(this.getSystemId(), TABLE_NAME, distributions);
     }
     
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
 }

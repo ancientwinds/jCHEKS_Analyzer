@@ -12,6 +12,7 @@ public class CheksAnalyserBytes extends AbstractCheksAnalyser{
     
     HashSet<Byte> bytesSaw;
     private int ammountOfBytes;
+    private static String TABLE_NAME = "";
     
     public CheksAnalyserBytes(AbstractChaoticSystem chaoticSystem) throws Exception{
         super(false, chaoticSystem);
@@ -53,6 +54,11 @@ public class CheksAnalyserBytes extends AbstractCheksAnalyser{
     @Override
     public void saveResult(Saver saver) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
     
 }

@@ -68,4 +68,9 @@ public class TestNbOccurrencesLevelVariation extends AbstractCheksAnalyser{
             return variation;
         }
     }
+    
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
+    }
 }

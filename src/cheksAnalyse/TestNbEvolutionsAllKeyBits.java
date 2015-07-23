@@ -10,7 +10,6 @@ import mainAnalyser.Saver;
  * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class TestNbEvolutionsAllKeyBits extends AbstractCheksAnalyser{
-
     
     private boolean[] falsesSaw;
     private boolean[] truesSaw;
@@ -74,5 +73,10 @@ public class TestNbEvolutionsAllKeyBits extends AbstractCheksAnalyser{
     @Override
     public void saveResult(Saver saver) {
         saver.saveEvolutionCount(TABLE_NAME, this.getSystemId(), this.getEvolutionCount());
+    }
+    
+    @Override
+    public String getTableName() {
+        return TABLE_NAME;
     }
 }
