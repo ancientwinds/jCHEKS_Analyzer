@@ -2,10 +2,7 @@ package cheksAnalyse.NIST;
 
 import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
-import static cheksAnalyse.NIST.TestFrequencyBlockNIST2.TABLE_NAME;
-import static cheksAnalyse.NIST.TestLongestRunNIST4.TABLE_NAME;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.Saver;
 
 /**
  *
@@ -47,15 +44,15 @@ public abstract class AbstractNistTest extends AbstractCheksAnalyser{
     
     public void appendKey() {
         byte[] key = this.getKey();
-            boolean[] bitsToAdd = Utils.bytesToBooleanArray(key);
-            
-            if(this.bitsNeeded - this.bitsCount > bitsToAdd.length) {
-                System.arraycopy(bitsToAdd, 0, this.bits, bitsCount, bitsToAdd.length);
-                this.bitsCount += bitsToAdd.length;
-            } else {
-                System.arraycopy(bitsToAdd, 0, this.bits, bitsCount, this.bitsNeeded - this.bitsCount);
-                this.bitsCount += this.bitsNeeded - this.bitsCount;
-            }
+        boolean[] bitsToAdd = Utils.bytesToBooleanArray(key);
+
+        if(this.bitsNeeded - this.bitsCount > bitsToAdd.length) {
+            System.arraycopy(bitsToAdd, 0, this.bits, bitsCount, bitsToAdd.length);
+            this.bitsCount += bitsToAdd.length;
+        } else {
+            System.arraycopy(bitsToAdd, 0, this.bits, bitsCount, this.bitsNeeded - this.bitsCount);
+            this.bitsCount += this.bitsNeeded - this.bitsCount;
+        }
     }
     
     @Override

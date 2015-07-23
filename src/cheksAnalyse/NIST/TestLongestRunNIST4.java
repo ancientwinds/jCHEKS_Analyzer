@@ -3,6 +3,7 @@ package cheksAnalyse.NIST;
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import mainAnalyser.Saver;
+import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
 /**
  *
@@ -28,12 +29,14 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
     }
     
     @Override
-    public void executeTest(boolean[] bits) {
-        
+    public void executeTest(boolean[] bits) {        
         boolean[][] bitsBlocks = Utils.partitionBitsInBlocks(bits, blockLength);
         int[] runsLength = this.calculateBlocksLongestRun(bitsBlocks);
         int[] buckets = this.calculateBucketContent(runsLength);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        double x2Obs = this.calculateX2Obs(buckets);
+        this.pValue = this.calculatePValue(x2Obs);
+        
+        this.passed = this.pValue > 0.01;
     }
     
     public int[] calculateBucketContent(int[] runsLength) {
@@ -78,16 +81,16 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
     }
     
     public int calculateLongestRun(boolean[] block) {
-        int runLength = 1;
+        int runLength = 0;
         int longestRun = runLength;
-        System.out.println(block.length);
         for(int i = 0; i < block.length; i++) {
-            if(block[i] == block[i + 1]) {
-                runLength++;
+            if(block[i]) {
+                runLength++;                              
             } else {
-                if(runLength > longestRun) {
-                    longestRun = runLength;
-                }
+                runLength = 0;
+            }
+            if(runLength > longestRun) {
+                longestRun = runLength;
             }
         }        
         return longestRun;
@@ -97,14 +100,19 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
         double X2Obs = 0.0;
         
         for(int i = 0; i < buckets.length; i++) {
-            X2Obs += (Math.pow((double)buckets[i] - 49 * ratios[i], 2)) / 49 * ratios[i];
+            X2Obs += Math.pow((double)buckets[i] - (49 * ratios[i]), 2) / (49 * ratios[i]);
         }
         
         return X2Obs;
     }
     
+    public double calculatePValue(double X2Obs) {
+        return regularizedGammaQ(2.5, X2Obs/(double)2);
+    }
+        
     @Override
     public void saveResult(Saver saver) {
+        System.out.println(this.pValue);
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     

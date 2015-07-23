@@ -179,14 +179,15 @@ public class MainAnalyser {
     public static void main(String[] args) throws Exception {
         HashSet<AnalyserType> types = new HashSet();
         
-        //types.add(AnalyserType.BOOLEANS);
-        //types.add(AnalyserType.BYTESPERBYTES);
-        types.add(AnalyserType.BUTTERFLY);
+        types.add(AnalyserType.BOOLEANS);
+        types.add(AnalyserType.BYTESPERBYTES);
+        //types.add(AnalyserType.BUTTERFLY);
         //types.add(AnalyserType.OCCURENCE);
         //types.add(AnalyserType.VARIATION);
-        //types.add(AnalyserType.NIST_1);
-        //types.add(AnalyserType.NIST_2);
-        //types.add(AnalyserType.NIST_3);
+        types.add(AnalyserType.NIST_1);
+        types.add(AnalyserType.NIST_2);
+        types.add(AnalyserType.NIST_3);
+        //types.add(AnalyserType.NIST_4);
         
         MainAnalyser analyser = new MainAnalyser(types);
         analyser.analyse();       
