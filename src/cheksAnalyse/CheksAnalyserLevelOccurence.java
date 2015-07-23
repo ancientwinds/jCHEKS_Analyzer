@@ -13,7 +13,7 @@ public class CheksAnalyserLevelOccurence extends AbstractCheksAnalyser{
     private final int iterations = 1000000;
     private Distribution distributions[];
     
-    public static final String TABLE_NAME = "occurences";
+    public static final String TABLE_NAME = "nbOccurrences_level";
     
     public CheksAnalyserLevelOccurence(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(false, chaoticSystem);

@@ -19,7 +19,6 @@ import mainAnalyser.Saver;
 public abstract class AbstractCheksAnalyser {
 
     public enum AnalyserType {
-        NIST,
         BYTESPERBYTES,
         BOOLEANS,
         BUTTERFLY,
@@ -105,12 +104,10 @@ public abstract class AbstractCheksAnalyser {
         return this.analyseCompleted;
     }
     
-    public static HashSet<AbstractCheksAnalyser> createAnalyser(HashSet<AnalyserType> types, ChaoticSystem system) throws Exception {
+    public static HashSet<AbstractCheksAnalyser> createAnalyser(HashSet<AnalyserType> types, AbstractChaoticSystem system) throws Exception {
         HashSet<AbstractCheksAnalyser> analyserList = new HashSet();
         for(AnalyserType type : types) {
             switch (type) {
-                case NIST:
-                    break;
                 case BYTESPERBYTES:
                     analyserList.add(new CheksAnalyserBytesPerBytes(false, system));
                     break;
@@ -170,8 +167,7 @@ public abstract class AbstractCheksAnalyser {
                     break;
                 case NIST_15:
                     analyserList.add(new NistTest1(system));
-                    break;
-                   
+                    break;                   
             }
         }
         return analyserList;
