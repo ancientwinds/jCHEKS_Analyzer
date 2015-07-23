@@ -10,8 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.*;
 import java.util.Date;
 
@@ -71,12 +70,10 @@ public class MainAnalyser {
                 analyser.analyse(system);
                 return false;
             } else {
-                analyser.saveResult(saver);                        
-                return true;
+                analyser.saveResult(saver);
             }
-        } else {
-            return true;
-        }
+        }        
+        return true;
     }
     
     private void analyseSystem(String systemName) throws Exception {
