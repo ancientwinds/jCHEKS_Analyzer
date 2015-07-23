@@ -7,6 +7,7 @@ import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.chaoticSystem.exception.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
+import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.DateFormat;
@@ -20,22 +21,50 @@ import java.util.Date;
  */
 public class MainAnalyser {
 
-    private final Saver saver;
-    private final int iterations;
-    private final int numberOfAgent;    
+    private final Saver saver; 
     private HashSet<AbstractCheksAnalyser> analysers = new HashSet();
     private HashSet<AnalyserType> types = new HashSet();
     
-    public MainAnalyser(int iterations, int numberOfAgent, HashSet<AnalyserType> types) {                
-        this.iterations = iterations;
-        this.numberOfAgent = numberOfAgent;
+    public MainAnalyser(HashSet<AnalyserType> types) {                
+
         this.types = types;
         
         this.saver = new Saver();
-        saver.initDatabase(types);      
+        saver.initDatabase(types);        
     }
 
     public void analyse() throws Exception {
+        HashSet<String> systemsName = this.getSystemsFileName("system");
+        for(Iterator<String> system = systemsName.iterator(); system.hasNext();) {
+            String fileName = system.next();
+            Date startTime = new Date();
+
+            AbstractChaoticSystem currentChaoticSystem = FileReader.readChaoticSystem(fileName);
+            this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
+            //TODO Also verify if the stop file is there.
+            while(!this.analysers.isEmpty()) {                
+                for(Iterator<AbstractCheksAnalyser> iterator = this.analysers.iterator(); iterator.hasNext();) {
+                    AbstractCheksAnalyser analyser = iterator.next();
+                    if(!analyser.isComplete()) {
+                        analyser.analyse(currentChaoticSystem);
+                    } else {
+                        analyser.saveResult(saver);
+                        iterator.remove();
+                    }
+                    analyser = null;
+                }                
+                currentChaoticSystem.evolveSystem();
+            }
+            this.analysers.clear();
+            System.out.println(currentChaoticSystem.getSystemId() + " is done!!!");
+            DateFormat dateFormat = new SimpleDateFormat("mm:ss");
+            Date date = new Date((new Date()).getTime() - startTime.getTime());
+            System.out.println("Finished in: " + dateFormat.format(date));
+            currentChaoticSystem = null;
+            system.remove();
+        }
+
+        /*
         for (int i = 0; i < iterations; i++) {
             Date startTime = new Date();
 
@@ -61,7 +90,7 @@ public class MainAnalyser {
             Date date = new Date((new Date()).getTime() - startTime.getTime());
             System.out.println("Finished in: " + dateFormat.format(date));
             currentChaoticSystem = null;
-        }
+        }*/
         //displayStatsOfADistributionTable("variations");
         //displayStatsOfADistributionTable("occurences");
         //displayStatsOfATable("KEY_BITS");
@@ -83,7 +112,7 @@ public class MainAnalyser {
     }*/
 
     private void displayStatsOfATable(String tableName) throws SQLException {
-        double[] evolutions = saver.getEvolutionsOf(tableName, iterations);
+        /*double[] evolutions = saver.getEvolutionsOf(tableName, iterations);
         System.out.println("|------STATS-OF-" + tableName.toUpperCase() + "----|");
         System.out.println("| Sum: " + Utils.getSumInArray(evolutions));
         System.out.println("| Average: " + Utils.getAverageInArray(evolutions));
@@ -91,7 +120,7 @@ public class MainAnalyser {
         System.out.println("| Maximum: " + Utils.getMaximumInArray(evolutions));
         System.out.println("| Median: " + Utils.getMedianInArray(evolutions));
         System.out.println("| Standart deviation: " + Utils.getStandartDeviationInArray(evolutions));
-        System.out.println("|------------------------------|");
+        System.out.println("|------------------------------|");*/
     }
 
     private static int brent() throws Exception {
@@ -135,20 +164,32 @@ public class MainAnalyser {
         System.out.println(Arrays.toString(Distribution.getSum(distributions)));
     }
     
+    private HashSet<String> getSystemsFileName(String folderName) {
+        File folder = new File(folderName);
+        File[] listOfFiles = folder.listFiles();
+        HashSet<String> filesName = new HashSet();
+        for (File listOfFile : listOfFiles) {
+            if (listOfFile.isFile()) {
+                filesName.add(listOfFile.getName());
+            }
+        } 
+        return filesName;
+    }
+    
     public static void main(String[] args) throws Exception {
         HashSet<AnalyserType> types = new HashSet();
         
         types.add(AnalyserType.BOOLEANS);
         types.add(AnalyserType.BYTESPERBYTES);
-        types.add(AnalyserType.BUTTERFLY);
-        types.add(AnalyserType.OCCURENCE);
-        types.add(AnalyserType.VARIATION);
+        //types.add(AnalyserType.BUTTERFLY);
+        //types.add(AnalyserType.OCCURENCE);
+        //types.add(AnalyserType.VARIATION);
         types.add(AnalyserType.NIST_1);
         types.add(AnalyserType.NIST_2);
         types.add(AnalyserType.NIST_3);
         
-        MainAnalyser analyser = new MainAnalyser(5, 32, types);
+        MainAnalyser analyser = new MainAnalyser(types);
         analyser.analyse();       
     }
-
+    
 }
