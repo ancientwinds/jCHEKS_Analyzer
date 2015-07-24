@@ -16,8 +16,6 @@ public class Saver {
 
     private Connection connection;
     private Statement statement;
-
-    private boolean locked = false;
     
     public Saver() {
         this.connection = null;
@@ -98,24 +96,18 @@ public class Saver {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public boolean isLocked() {
-        return this.locked;
-    }
     
-    public void lockBD() {
-        this.locked = true;
-    }
-    
-    public void unlockDB() {
-        this.locked = false;
-    }
-    
-    private void openDatabase() throws Exception {
-        Class.forName("org.sqlite.JDBC");
-        this.connection = DriverManager.getConnection("jdbc:sqlite:keys.db");
-        this.connection.setAutoCommit(false);
-        this.statement = connection.createStatement();
+    private void openDatabase() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            this.connection = DriverManager.getConnection("jdbc:sqlite:keys.db");
+            this.connection.setAutoCommit(false);
+            this.statement = connection.createStatement();
+        } catch (SQLException ex) {
+            System.err.println("Error while opening the database");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void closeDatabase() {
@@ -127,28 +119,44 @@ public class Saver {
         }
     }
     
-    private void createNistTable(String tableName) throws Exception {
-        this.statement = connection.createStatement();
-        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, p_value NUMERIC)");
-        this.statement.close();
+    private void createNistTable(String tableName) {
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, p_value NUMERIC)");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
     }
 
-    private void createEvolutionTable(String tableName) throws Exception {        
-        this.statement = connection.createStatement();
-        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, evolution_count DOUBLE)");
-        this.statement.close();
+    private void createEvolutionTable(String tableName){        
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, evolution_count DOUBLE)");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
     }
     
-    private void createButterflyEffectTable(String tableName) throws Exception {
-        this.statement = connection.createStatement();
-        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT, clone_id INTEGER, evolution_count INTEGER, distance INTEGER, PRIMARY KEY (chaotic_system_id, clone_id, evolution_count))");
-        this.statement.close();
+    private void createButterflyEffectTable(String tableName) {
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT, clone_id INTEGER, evolution_count INTEGER, distance INTEGER, PRIMARY KEY (chaotic_system_id, clone_id, evolution_count))");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
     }
 
-    private void createOccurenceTable(String tableName) throws Exception {
-        this.statement = connection.createStatement();
-        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT, agent_id INTEGER, variation INTEGER, occurence_count INTEGER, PRIMARY KEY(chaotic_system_id, agent_id, variation))");
-        this.statement.close();
+    private void createOccurenceTable(String tableName){
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT, agent_id INTEGER, variation INTEGER, occurence_count INTEGER, PRIMARY KEY(chaotic_system_id, agent_id, variation))");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
     }
     
     public void saveNistResults(String systemId, String tableName, double pValue) {
@@ -158,9 +166,9 @@ public class Saver {
             insertStatement.setDouble(2, pValue);
             insertStatement.executeUpdate();
             this.connection.commit();
-            if (insertStatement != null) insertStatement.close();
+            insertStatement.close();
         } catch (Exception ex) {
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error while inserting Nist result for system: " + systemId + " on test: " + tableName);
         }
     }
     
@@ -171,10 +179,10 @@ public class Saver {
             insertStatement.setInt(2, evolutionCount);            
             insertStatement.executeUpdate();
             this.connection.commit();
-            if (insertStatement != null) insertStatement.close();
+            insertStatement.close();
 
         } catch (Exception ex) {
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Error while inserting evolutions count result for system: " + chaoticSystemId + " on table: " + tableName);
         }
     }
 
@@ -188,13 +196,13 @@ public class Saver {
                     insertStatement.setInt(3, j);
                     insertStatement.setInt(4, distributions[i].getAgentLevels()[j]);
                     insertStatement.executeUpdate();
-                    if (insertStatement != null) insertStatement.close();
+                    insertStatement.close();
                 }
             }
             this.connection.commit();
 
-        } catch (Exception ex) {
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            System.err.println("Error while inserting distribution result for system: " + chaoticSystemId + " on table: " + tableName);
         }
     }
     
@@ -213,8 +221,8 @@ public class Saver {
             this.connection.commit();
             if (insertStatement != null) insertStatement.close();
 
-        } catch (Exception ex) {
-            Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            System.err.println("Error while inserting butterfly effect result for system: " + systemId);
         }
     }
 
@@ -240,10 +248,8 @@ public class Saver {
                 system[j] = ;
                 String[] stringValues = getArrayFromString(ruleSet.getString("agent" + j));
                 for (String stringValue : stringValues) {
-                    int value = Integer.parseInt(stringValue);
-                    
+                    int value = Integer.parseInt(stringValue);                    
                 }
-
             }
         }
         return systems;
@@ -253,14 +259,18 @@ public class Saver {
         return serializedArray.replace("[", "").replace("]", "").split(", ");
     }
     
-    private void deleteTable(String tableName) throws SQLException {
-        System.out.println("Dropping table " + tableName);
-        this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
-        this.statement.close();
-        this.connection.commit();
+    private void deleteTable(String tableName) {
+        try {
+            System.out.println("Dropping table " + tableName);
+            this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
+            this.statement.close();
+            this.connection.commit();
+        } catch (SQLException ex) {
+            System.err.println("Error while deleting table: " + tableName);
+        }
     }
     
-    public void cleanDataBase() throws Exception {
+    public void cleanDataBase() {
         this.openDatabase();
         
         this.deleteTable(TestNbEvolutionsAllAgentLevels.TABLE_NAME);                        
@@ -287,26 +297,29 @@ public class Saver {
         this.closeDatabase();        
     }
     
-    public boolean isTestRunnedForSystem(String tableName, String systemId) throws Exception {
-        //this.openDatabase();
-        PreparedStatement selectStatement = this.connection.prepareStatement("SELECT COUNT(*) AS rowcount FROM " + tableName + " WHERE chaotic_system_id = ?");
-        selectStatement.setString(1, systemId);
-        
-        ResultSet rs = selectStatement.executeQuery();
-        if(rs == null) {
-            this.closeDatabase();
-            System.out.println("error");
+    public boolean isTestRunnedForSystem(String tableName, String systemId) {
+        try {
+            PreparedStatement selectStatement = this.connection.prepareStatement("SELECT COUNT(*) AS rowcount FROM " + tableName + " WHERE chaotic_system_id = ?");
+            selectStatement.setString(1, systemId);
+            
+            ResultSet rs = selectStatement.executeQuery();
+            if(rs == null) {
+                this.closeDatabase();
+                System.out.println("error");
+                return false;
+            }
+            int count = rs.getInt("rowcount");
+            selectStatement.close();
+            
+            return count > 0;
+        } catch (SQLException ex) {
+            System.err.println("Error while checking if test: " + tableName +" was run for system: " + systemId);
             return false;
         }
-        int count = rs.getInt("rowcount");
-        if(selectStatement != null) selectStatement.close();
-        //this.closeDatabase();       
-        
-        return count > 0;
     }
     
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
         Saver saver = new Saver();
         saver.cleanDataBase();
-    }
+    }*/
 }
