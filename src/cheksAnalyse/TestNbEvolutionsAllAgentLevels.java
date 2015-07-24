@@ -17,8 +17,7 @@ public class TestNbEvolutionsAllAgentLevels extends AbstractCheksAnalyser{
 
     public TestNbEvolutionsAllAgentLevels(AbstractChaoticSystem chaoticSystem) throws Exception{
         super(true, chaoticSystem);
-        this.initAnalyser(chaoticSystem);
-       
+        this.initAnalyser(chaoticSystem);       
     }
     
     public TestNbEvolutionsAllAgentLevels(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception{
@@ -26,7 +25,7 @@ public class TestNbEvolutionsAllAgentLevels extends AbstractCheksAnalyser{
         this.initAnalyser(chaoticSystem);
     }
     
-    private void initAnalyser(AbstractChaoticSystem chaoticSsytem) {
+    private void initAnalyser(AbstractChaoticSystem chaoticSystem) {
         this.ammountOfByte = chaoticSystem.getAgentsCount();
         this.bytesSaw = new HashSet[this.ammountOfByte];
         for (int i = 0; i < this.bytesSaw.length; i++) {
@@ -36,7 +35,7 @@ public class TestNbEvolutionsAllAgentLevels extends AbstractCheksAnalyser{
     
     @Override
     protected void scan(AbstractChaoticSystem chaoticSystem) {
-        byte[] array = this.getKey();
+        byte[] array = chaoticSystem.getKey();
         for (int i = 0; i < ammountOfByte; i++) {
             this.bytesSaw[i].add(array[i]);
         }

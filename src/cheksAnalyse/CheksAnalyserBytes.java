@@ -31,7 +31,7 @@ public class CheksAnalyserBytes extends AbstractCheksAnalyser{
     
     @Override
     protected void scan(AbstractChaoticSystem chaoticSystem) {
-        byte[] array = this.getKey();
+        byte[] array = chaoticSystem.getKey();
         
         for (int i = 0; i < ammountOfBytes; i++) {
             this.bytesSaw.add(array[i]);

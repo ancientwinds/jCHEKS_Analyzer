@@ -1,12 +1,13 @@
 package mainAnalyser;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
  *
  * @author Michael Roussel <rousselm4@gmail.com>
  */
-public class Distribution {
+public class Distribution implements Serializable{
 
     public static int[] getSum(Distribution[] distributions) {
         int[] sum = new int[256];

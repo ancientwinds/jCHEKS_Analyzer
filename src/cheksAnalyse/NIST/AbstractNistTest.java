@@ -42,8 +42,7 @@ public abstract class AbstractNistTest extends AbstractCheksAnalyser{
         return this.bitsNeeded;
     }
     
-    public void appendKey() {
-        byte[] key = this.getKey();
+    public void appendKey(byte[] key) {
         boolean[] bitsToAdd = Utils.bytesToBooleanArray(key);
 
         if(this.bitsNeeded - this.bitsCount > bitsToAdd.length) {
@@ -61,7 +60,7 @@ public abstract class AbstractNistTest extends AbstractCheksAnalyser{
             this.executeTest(bits);
             this.testExecuted = true;
         } else {
-            this.appendKey();
+            this.appendKey(system.getKey());
         }
     }
 

@@ -34,7 +34,7 @@ public class TestNbEvolutionsAllKeyBits extends AbstractCheksAnalyser{
     
     @Override
     protected void scan(AbstractChaoticSystem chaoticSystem) {
-        byte[] array = this.getKey();
+        byte[] array = chaoticSystem.getKey();
         boolean[] booleans = Utils.bytesToBooleanArray(array);
         for (int i = 0; i < ammountOfBit; i++) {
             if(booleans[i]){

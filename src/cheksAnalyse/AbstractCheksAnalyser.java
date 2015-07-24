@@ -1,12 +1,12 @@
 package cheksAnalyse;
 
-import Utils.Utils;
 import cheksAnalyse.NIST.TestFrequencyMonobitNIST1;
 import cheksAnalyse.NIST.TestFrequencyBlockNIST2;
 import cheksAnalyse.NIST.TestRunsNIST3;
 import cheksAnalyse.NIST.TestLongestRunNIST4;
 import cheksAnalyse.butterfly.TestButterflyEffect;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import mainAnalyser.Saver;
@@ -15,7 +15,7 @@ import mainAnalyser.Saver;
  *
  * @author Michael Roussel <rousselm4@gmail.com>
  */
-public abstract class AbstractCheksAnalyser {
+public abstract class AbstractCheksAnalyser implements Serializable{
 
     public enum AnalyserType {
         BYTESPERBYTES,
@@ -42,16 +42,21 @@ public abstract class AbstractCheksAnalyser {
     
     protected final boolean logEnabled;
     private byte[] key;
-    final AbstractChaoticSystem chaoticSystem;
     private int evolutionCount;
     private boolean analyseCompleted;
     protected boolean saved = false;
+    private final String systemId;
 
+    
     public AbstractCheksAnalyser(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         this.logEnabled = enableLog;
-        this.chaoticSystem = chaoticSystem;
-        this.key = Utils.concatByteArrays(this.chaoticSystem.getKey(), this.chaoticSystem.getKey());
+        this.systemId = chaoticSystem.getSystemId();
     }
+    
+    public abstract void saveResult(Saver saver);
+    public abstract String getTableName();
+    protected abstract void scan(AbstractChaoticSystem system);
+    protected abstract void verify();
 
     public int getEvolutionCount() {
         return evolutionCount;
@@ -59,29 +64,14 @@ public abstract class AbstractCheksAnalyser {
 
     protected void complete() {
         this.analyseCompleted = true;
-    }
-
-    protected abstract void scan(AbstractChaoticSystem system);
-
-    protected abstract void verify();
+    }    
     
     protected String getSystemId() {
-        return this.chaoticSystem.getSystemId();
+        return this.systemId;
     }
     
-    public abstract void saveResult(Saver saver);
-    public abstract String getTableName();
-
-    protected byte[] getKey() {
-        return key;
-    }
-
-    public void updateKey() {
-        this.key = this.chaoticSystem.getKey();
-    }
-
     public void analyse(AbstractChaoticSystem system) {
-        updateKey();
+        //updateKey();
         scan(system);
         log();
         verify();

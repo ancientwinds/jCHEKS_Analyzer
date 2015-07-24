@@ -36,9 +36,9 @@ public class TestNbOccurrencesLevelVariation extends AbstractCheksAnalyser{
     @Override
     protected void scan(AbstractChaoticSystem system) {
         if(this.lastKey == null) {
-            this.lastKey = this.getKey();
+            this.lastKey = system.getKey();
         } else {
-            this.currentKey = this.getKey();
+            this.currentKey = system.getKey();
             for(int i = 0; i < system.getAgentsCount(); i++) {
                 this.distributions[i].registerValue(getVariationByAgent(i));
             }

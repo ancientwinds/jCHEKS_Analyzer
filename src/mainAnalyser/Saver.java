@@ -17,6 +17,8 @@ public class Saver {
     private Connection connection;
     private Statement statement;
 
+    private boolean locked = false;
+    
     public Saver() {
         this.connection = null;
         this.statement = null;
@@ -92,12 +94,23 @@ public class Saver {
             }
             
             this.connection.commit(); 
-            this.closeDatabase();
         } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public boolean isLocked() {
+        return this.locked;
+    }
+    
+    public void lockBD() {
+        this.locked = true;
+    }
+    
+    public void unlockDB() {
+        this.locked = false;
+    }
+    
     private void openDatabase() throws Exception {
         Class.forName("org.sqlite.JDBC");
         this.connection = DriverManager.getConnection("jdbc:sqlite:keys.db");
@@ -115,53 +128,58 @@ public class Saver {
     }
     
     private void createNistTable(String tableName) throws Exception {
+        this.statement = connection.createStatement();
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, p_value NUMERIC)");
+        this.statement.close();
     }
 
     private void createEvolutionTable(String tableName) throws Exception {        
+        this.statement = connection.createStatement();
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT PRIMARY KEY, evolution_count DOUBLE)");
+        this.statement.close();
     }
     
     private void createButterflyEffectTable(String tableName) throws Exception {
+        this.statement = connection.createStatement();
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT, clone_id INTEGER, evolution_count INTEGER, distance INTEGER, PRIMARY KEY (chaotic_system_id, clone_id, evolution_count))");
+        this.statement.close();
     }
 
     private void createOccurenceTable(String tableName) throws Exception {
+        this.statement = connection.createStatement();
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT, agent_id INTEGER, variation INTEGER, occurence_count INTEGER, PRIMARY KEY(chaotic_system_id, agent_id, variation))");
+        this.statement.close();
     }
     
     public void saveNistResults(String systemId, String tableName, double pValue) {
         try {
-            this.openDatabase();
             PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, p_value) VALUES (?,?)");
             insertStatement.setString(1, systemId);
             insertStatement.setDouble(2, pValue);
             insertStatement.executeUpdate();
             this.connection.commit();
-            this.closeDatabase();
+            if (insertStatement != null) insertStatement.close();
         } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
-        }      
+        }
     }
     
     public void saveEvolutionCount(String tableName, String chaoticSystemId, int evolutionCount) {
         try {
-            this.openDatabase();
             PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, evolution_count) VALUES (?,?)");
             insertStatement.setString(1, chaoticSystemId);
             insertStatement.setInt(2, evolutionCount);            
             insertStatement.executeUpdate();
             this.connection.commit();
-            this.closeDatabase();
+            if (insertStatement != null) insertStatement.close();
+
         } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public void saveDistributionInTable(String chaoticSystemId, String tableName, Distribution[] distributions) {
         try {
-            this.openDatabase();
             for(int i = 0; i < distributions.length; i++) {
                 for(int j = 0; j < distributions[i].getAgentLevels().length; j++) {
                     PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, agent_id, variation, occurence_count) VALUES (?,?,?,?)");
@@ -170,10 +188,11 @@ public class Saver {
                     insertStatement.setInt(3, j);
                     insertStatement.setInt(4, distributions[i].getAgentLevels()[j]);
                     insertStatement.executeUpdate();
+                    if (insertStatement != null) insertStatement.close();
                 }
             }
             this.connection.commit();
-            this.closeDatabase();
+
         } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -181,7 +200,6 @@ public class Saver {
     
     public void saveButterflyEffect(String systemId, int[][] results) {
         try {
-            this.openDatabase();
             PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO butterfly_effect (chaotic_system_id, clone_id, evolution_count, distance) VALUES (?,?,?,?)");
             for (int i = 0; i < results.length; i ++) { 
                 for (int j = 0; j < results[i].length; j++) {
@@ -193,19 +211,22 @@ public class Saver {
                 }
             }
             this.connection.commit();
-            this.closeDatabase();
+            if (insertStatement != null) insertStatement.close();
+
         } catch (Exception ex) {
             Logger.getLogger(Saver.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public double[] getEvolutionsOf(String tableName, int iterations) throws SQLException {
+        this.statement = connection.createStatement();
         ResultSet ruleSet = statement.executeQuery("SELECT * FROM " + tableName + ";");
         double[] evolutions = new double[iterations];
         for (int i = 0; i < iterations; i++) {
             ruleSet.next();
             evolutions[i] = ruleSet.getInt("evolutions");
         }
+        this.statement.close();
         return evolutions;
     }
 /*
@@ -235,6 +256,7 @@ public class Saver {
     private void deleteTable(String tableName) throws SQLException {
         System.out.println("Dropping table " + tableName);
         this.statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
+        this.statement.close();
         this.connection.commit();
     }
     
@@ -266,13 +288,19 @@ public class Saver {
     }
     
     public boolean isTestRunnedForSystem(String tableName, String systemId) throws Exception {
-        this.openDatabase();
+        //this.openDatabase();
         PreparedStatement selectStatement = this.connection.prepareStatement("SELECT COUNT(*) AS rowcount FROM " + tableName + " WHERE chaotic_system_id = ?");
         selectStatement.setString(1, systemId);
         
         ResultSet rs = selectStatement.executeQuery();
+        if(rs == null) {
+            this.closeDatabase();
+            System.out.println("error");
+            return false;
+        }
         int count = rs.getInt("rowcount");
-        this.closeDatabase();       
+        if(selectStatement != null) selectStatement.close();
+        //this.closeDatabase();       
         
         return count > 0;
     }

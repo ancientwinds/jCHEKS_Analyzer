@@ -45,11 +45,10 @@ public class TestButterflyEffect extends AbstractCheksAnalyser {
         for(int i = 0; i < this.clones.size(); i++) {
             CryptoChaoticSystem clone = this.clones.get(i);
             try {
-                this.distances[i][this.getEvolutionCount()] = getDistance(this.getKey(), clone.getKey());
+                this.distances[i][this.getEvolutionCount()] = getDistance(chaoticSystem.getKey(), clone.getKey());
             } catch (Exception ex) {
                 Logger.getLogger(TestButterflyEffect.class.getName()).log(Level.SEVERE, null, ex);
             }
-
             clone.evolveSystem();
         }
     }
@@ -78,6 +77,7 @@ public class TestButterflyEffect extends AbstractCheksAnalyser {
     protected void verify() {
         if(this.getEvolutionCount() == this.iteration - 1) {
             this.complete();
+            this.clones.clear();
         }
     }
 
@@ -87,7 +87,7 @@ public class TestButterflyEffect extends AbstractCheksAnalyser {
             saver.saveButterflyEffect(this.getSystemId(), this.distances);
             saved = true;
         }
-    } 
+    }
     
     @Override
     public String getTableName() {

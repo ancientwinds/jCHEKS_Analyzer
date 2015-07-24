@@ -24,6 +24,7 @@ public class MainAnalyser {
     private HashSet<AbstractCheksAnalyser> analysers = new HashSet();
     private HashSet<AnalyserType> types = new HashSet();
     
+    
     private static final String FILE_TO_STOP = "removeToStop.stop";
     
     public MainAnalyser(HashSet<AnalyserType> types) {                
@@ -41,8 +42,13 @@ public class MainAnalyser {
     }
 
     public void analyse() throws Exception {
+        int count = 0;
+        
         HashSet<String> systemsName = this.getSystemsFileName("system");
         for(Iterator<String> system = systemsName.iterator(); system.hasNext();) {
+            if(count % 10 == 0) {
+                System.out.println(count);
+            }
             if(shouldContinueAnalyse()) {
                 String fileName = system.next();
                 Date startTime = new Date();
@@ -52,10 +58,12 @@ public class MainAnalyser {
                 DateFormat dateFormat = new SimpleDateFormat("mm:ss");
                 Date date = new Date((new Date()).getTime() - startTime.getTime());
                 System.out.println("Analyse of " + fileName + " is done. It took: " + dateFormat.format(date));
-                system.remove();
+                system.remove();                
             } else {
                 return;
             }
+            count++;
+            
         }
 
         //displayStatsOfADistributionTable("variations");
@@ -86,6 +94,8 @@ public class MainAnalyser {
                 if(this.analyseWithSystem(analyser, currentChaoticSystem)) {
                     iterator.remove();
                 }
+                
+                analyser = null;
             }                
             currentChaoticSystem.evolveSystem();
         }
@@ -181,9 +191,9 @@ public class MainAnalyser {
         
         types.add(AnalyserType.BOOLEANS);
         types.add(AnalyserType.BYTESPERBYTES);
-        //types.add(AnalyserType.BUTTERFLY);
-        //types.add(AnalyserType.OCCURENCE);
-        //types.add(AnalyserType.VARIATION);
+        types.add(AnalyserType.BUTTERFLY);
+        types.add(AnalyserType.OCCURENCE);
+        types.add(AnalyserType.VARIATION);
         types.add(AnalyserType.NIST_1);
         types.add(AnalyserType.NIST_2);
         types.add(AnalyserType.NIST_3);

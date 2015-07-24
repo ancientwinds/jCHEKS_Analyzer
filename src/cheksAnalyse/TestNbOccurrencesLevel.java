@@ -36,7 +36,7 @@ public class TestNbOccurrencesLevel extends AbstractCheksAnalyser{
     protected void scan(AbstractChaoticSystem chaoticSystem) {
         for(int i = 0; i < chaoticSystem.getAgentsCount(); i++) {
             
-            this.distributions[i].registerValue(this.getKey()[i]);
+            this.distributions[i].registerValue(chaoticSystem.getKey()[i]);
         }
     }
 
