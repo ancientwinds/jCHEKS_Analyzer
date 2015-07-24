@@ -1,6 +1,5 @@
 package rmi;
 
-import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import static cheksAnalyse.AbstractCheksAnalyser.AnalyserType.*;
 import cheksAnalyse.NIST.*;
@@ -21,24 +20,23 @@ import net.sf.lipermi.net.Server;
 public class MyServer extends Server implements IServer{
 
     private Saver saver;
-    private HashSet<AbstractCheksAnalyser.AnalyserType> types;
+    private HashSet<AnalyserType> types;
     private HashSet<String> systems;
-    private HashSet<AbstractCheksAnalyser> analyserToSave = new HashSet();
+
     private int analyserGiven = 0;    
     HashSet<Package> packagesToSend = new HashSet();
+    HashSet<Package> packageInAnalyze = new HashSet();
     
-    public MyServer(HashSet<AbstractCheksAnalyser.AnalyserType> types, int port) {
+    public MyServer(HashSet<AnalyserType> types, int port) {
         
         this.types = types;
         this.saver = new Saver();
         this.saver.initDatabase(types);
         
+        System.out.println("Preparing packages to analyse...");
         this.systems = this.getSystemsFileName("system");
         this.packagesToSend = this.generatePackage();
-        System.out.println("System count: " + this.systems.size());
-        System.out.println("Packages to send: " + this.packagesToSend.size());
-        
-        
+        System.out.println("Packages to send: " + this.packagesToSend.size());  
         
         try {
             CallHandler callHandler = new CallHandler();
@@ -108,6 +106,10 @@ public class MyServer extends Server implements IServer{
     @Override
     public Package getAnalyser() {
         
+        if(this.packagesToSend.isEmpty()) {
+            System.out.println("All system have been sent. Waiting to receive all result.");
+            return null;
+        }
         Iterator<Package> iterator = this.packagesToSend.iterator();
         Package packToSend = iterator.next();
         iterator.remove();
@@ -120,6 +122,8 @@ public class MyServer extends Server implements IServer{
             System.out.println("      " + this.analyserGiven + " given!!!    ");
             System.out.println("##################################");
         }
+        
+        this.packageInAnalyze.add(packToSend);
         
         return packToSend;        
     }
@@ -173,9 +177,6 @@ public class MyServer extends Server implements IServer{
     @Override
     public void saveAnalyser(AbstractCheksAnalyser analyser) {
         analyser.saveResult(saver);
-    }
-    
-    
-    
+    } 
 }
 

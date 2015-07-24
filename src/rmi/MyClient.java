@@ -61,10 +61,15 @@ public class MyClient {
          while(this.shouldContinueAnalyse()) {
             Package p = this.serviceCaller.getAnalyser();
             
+            if(p == null) {
+                return;
+            }
+            
+            System.out.println("Starting to analyse: " + p.systemId);
+
             Date startTime = new Date();
             AbstractChaoticSystem currentChaoticSystem = FileReader.readChaoticSystem(p.systemId);
             HashSet<AbstractCheksAnalyser> analysers = AbstractCheksAnalyser.createAnalyser(p.types, currentChaoticSystem);
-            System.out.println("Starting to analyse: " + p.systemId);
             while(!analysers.isEmpty()) {                
                 for(Iterator<AbstractCheksAnalyser> iterator = analysers.iterator(); iterator.hasNext();) {
                     AbstractCheksAnalyser analyser = iterator.next();
@@ -78,8 +83,8 @@ public class MyClient {
                     analyser = null;
                 }                
                 currentChaoticSystem.evolveSystem();
-            }                
-
+            }  
+            
             DateFormat dateFormat = new SimpleDateFormat("mm:ss");
             Date date = new Date((new Date()).getTime() - startTime.getTime());
             System.out.println(p.types.size() + " analyses done on " + p.systemId + ". It took: " + dateFormat.format(date));
