@@ -25,7 +25,6 @@ public class MyServer extends Server implements IServer{
 
     private int analyserGiven = 0;    
     HashSet<Package> packagesToSend = new HashSet();
-    HashSet<Package> packageInAnalyze = new HashSet();
     
     public MyServer(HashSet<AnalyserType> types, int port) {
         
@@ -122,9 +121,7 @@ public class MyServer extends Server implements IServer{
             System.out.println("      " + this.analyserGiven + " given!!!    ");
             System.out.println("##################################");
         }
-        
-        this.packageInAnalyze.add(packToSend);
-        
+               
         return packToSend;        
     }
     
