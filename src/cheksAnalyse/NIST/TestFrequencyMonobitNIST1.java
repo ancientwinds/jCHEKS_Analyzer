@@ -16,10 +16,13 @@ public class TestFrequencyMonobitNIST1 extends AbstractNistTest{
     
     public TestFrequencyMonobitNIST1(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 100000);
+        this.type = AnalyserType.NIST_1;
+
     }
     
     public TestFrequencyMonobitNIST1(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
         super(chaoticSystem, bitsNeeded);
+        this.type = AnalyserType.NIST_1;
     }
 
     @Override

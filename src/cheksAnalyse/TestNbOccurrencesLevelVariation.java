@@ -27,6 +27,7 @@ public class TestNbOccurrencesLevelVariation extends AbstractCheksAnalyser{
     }
     
     private void initAnalyser(AbstractChaoticSystem chaoticSystem) {
+        this.type = AnalyserType.VARIATION;
         this.distributions = new Distribution[chaoticSystem.getAgentsCount()];
         for (int j = 0; j < chaoticSystem.getAgentsCount(); j++) {            
             this.distributions[j] = new Distribution();

@@ -16,10 +16,13 @@ public class TestRunsNIST3 extends AbstractNistTest{
 
     public TestRunsNIST3(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 100000);
+        this.type = AnalyserType.NIST_3;
+
     }
     
     public TestRunsNIST3(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
         super(chaoticSystem, bitsNeeded);
+        this.type = AnalyserType.NIST_3;
     }
     
     @Override

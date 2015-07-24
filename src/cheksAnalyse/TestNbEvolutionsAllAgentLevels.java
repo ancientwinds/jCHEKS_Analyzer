@@ -26,6 +26,7 @@ public class TestNbEvolutionsAllAgentLevels extends AbstractCheksAnalyser{
     }
     
     private void initAnalyser(AbstractChaoticSystem chaoticSystem) {
+        this.type = AnalyserType.BYTESPERBYTES;
         this.ammountOfByte = chaoticSystem.getAgentsCount();
         this.bytesSaw = new HashSet[this.ammountOfByte];
         for (int i = 0; i < this.bytesSaw.length; i++) {

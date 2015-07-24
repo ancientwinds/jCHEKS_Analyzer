@@ -20,11 +20,13 @@ public class TestFrequencyBlockNIST2 extends AbstractNistTest{
     
     public TestFrequencyBlockNIST2(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 100000);
+        this.type = AnalyserType.NIST_2;
     }
     
     public TestFrequencyBlockNIST2(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
         super(chaoticSystem, bitsNeeded);
         this.blockLength = blockLength;
+        this.type = AnalyserType.NIST_2;
     }
     
     @Override

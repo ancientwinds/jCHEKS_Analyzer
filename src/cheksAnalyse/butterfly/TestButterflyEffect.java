@@ -23,7 +23,9 @@ public class TestButterflyEffect extends AbstractCheksAnalyser {
     public TestButterflyEffect(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
         this.distances = new int[chaoticSystem.getAgentsCount()][this.iteration];               
-        this.generateClones(chaoticSystem);        
+        this.generateClones(chaoticSystem); 
+        this.type = AnalyserType.BUTTERFLY;
+
     }
     
     private void generateClones(AbstractChaoticSystem system) {

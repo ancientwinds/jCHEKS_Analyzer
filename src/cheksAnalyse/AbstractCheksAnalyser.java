@@ -46,7 +46,7 @@ public abstract class AbstractCheksAnalyser implements Serializable{
     private boolean analyseCompleted;
     protected boolean saved = false;
     private final String systemId;
-
+    protected AnalyserType type;
     
     public AbstractCheksAnalyser(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         this.logEnabled = enableLog;
@@ -161,5 +161,9 @@ public abstract class AbstractCheksAnalyser implements Serializable{
             }
         }
         return analyserList;
+    }
+    
+    public AnalyserType getType() {
+        return this.type;
     }
 }

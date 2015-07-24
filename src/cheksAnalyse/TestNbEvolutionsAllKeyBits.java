@@ -27,6 +27,7 @@ public class TestNbEvolutionsAllKeyBits extends AbstractCheksAnalyser{
     }
 
     private void initAnalyser(AbstractChaoticSystem chaoticSystem) {
+        this.type = AnalyserType.BOOLEANS;
         this.ammountOfBit = chaoticSystem.getAgentsCount() * Byte.BYTES;
         this.falsesSaw = new boolean[this.ammountOfBit];
         this.truesSaw = new boolean[this.ammountOfBit];
