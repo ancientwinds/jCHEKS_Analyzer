@@ -17,12 +17,11 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
 
     public static String TABLE_NAME = "LongestRun_NIST_4";
     private final double ratios[] = {0.1174, 0.2430, 0.2493, 0.1752, 0.1027, 0.1124};
-    
-    public TestLongestRunNIST4(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
-        this.bitsNeeded = 100000;
-        this.type = AnalyserType.NIST_4;
 
+    public TestLongestRunNIST4(AbstractChaoticSystem chaoticSystem) throws Exception {
+        super(chaoticSystem, 6272);
+        this.bitsNeeded = 6272;
+        this.type = AnalyserType.NIST_4; 
     }
     
     public TestLongestRunNIST4(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
@@ -32,19 +31,20 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
     }
     
     @Override
-    public void executeTest(boolean[] bits) {        
+    public void executeTest(boolean[] bits) {  
         boolean[][] bitsBlocks = Utils.partitionBitsInBlocks(bits, blockLength);
         int[] runsLength = this.calculateBlocksLongestRun(bitsBlocks);
         int[] buckets = this.calculateBucketContent(runsLength);
         double x2Obs = this.calculateX2Obs(buckets);
         this.pValue = this.calculatePValue(x2Obs);
-        
-        this.passed = this.pValue > 0.01;
+
+        this.passed = this.pValue > 0.01;        
     }
     
     public int[] calculateBucketContent(int[] runsLength) {
         int[] buckets = new int[6];
         for(int i = 0; i < runsLength.length; i++) {
+            //System.out.println("Length " + i + ": " + runsLength[i]);
             switch(runsLength[i]) {
                 case 0:
                 case 1:
@@ -70,7 +70,6 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
                     break;                   
             }
         }
-        
         return buckets;
     }
     
@@ -103,19 +102,19 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
         double X2Obs = 0.0;
         
         for(int i = 0; i < buckets.length; i++) {
-            X2Obs += Math.pow((double)buckets[i] - (49 * ratios[i]), 2) / (49 * ratios[i]);
+            double ratioCalculated = (double)49 * ratios[i];
+            X2Obs += Math.pow((double)buckets[i] - ratioCalculated, 2) / ratioCalculated;
         }
         
         return X2Obs;
     }
     
     public double calculatePValue(double X2Obs) {
-        return regularizedGammaQ(2.5, X2Obs/(double)2);
+        return regularizedGammaQ((double)5/(double)2, X2Obs/(double)2);
     }
         
     @Override
     public void saveResult(Saver saver) {
-        System.out.println(this.pValue);
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
