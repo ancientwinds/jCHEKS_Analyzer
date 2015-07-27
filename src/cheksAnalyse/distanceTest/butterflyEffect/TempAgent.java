@@ -1,4 +1,4 @@
-package cheksAnalyse.butterfly;
+package cheksAnalyse.distanceTest.butterflyEffect;
 
 import com.archosResearch.jCHEKS.chaoticSystem.Agent;
 

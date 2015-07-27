@@ -1,5 +1,6 @@
 package cheksAnalyse;
 
+import cheksAnalyse.evolutionTest.TestNbEvolutionsAllKeyBits;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.ArrayList;
 import org.junit.Test;

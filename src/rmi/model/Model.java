@@ -1,11 +1,18 @@
 package rmi.model;
 
+import cheksAnalyse.nistTest.TestLongestRunNIST4;
+import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
+import cheksAnalyse.nistTest.TestRunsNIST3;
+import cheksAnalyse.nistTest.TestFrequencyMonobitNIST1;
+import cheksAnalyse.occurenceTest.TestNbOccurrencesLevelVariation;
+import cheksAnalyse.occurenceTest.TestNbOccurrencesLevel;
+import cheksAnalyse.evolutionTest.TestNbEvolutionsAllKeyBits;
+import cheksAnalyse.evolutionTest.TestNbEvolutionsAllAgentLevels;
 import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import static cheksAnalyse.AbstractCheksAnalyser.AnalyserType.*;
-import cheksAnalyse.NIST.*;
 import cheksAnalyse.*;
-import cheksAnalyse.butterfly.TestButterflyEffect;
+import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
 import java.io.File;
 import java.util.*;
 import mainAnalyser.Saver;

@@ -1,5 +1,6 @@
 package cheksAnalyse.NIST;
 
+import cheksAnalyse.nistTest.TestFrequencyMonobitNIST1;
 import cheksAnalyse.FakeChaoticSystem;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.ArrayList;

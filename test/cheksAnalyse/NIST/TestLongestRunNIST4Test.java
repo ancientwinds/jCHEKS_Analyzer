@@ -1,5 +1,6 @@
 package cheksAnalyse.NIST;
 
+import cheksAnalyse.nistTest.TestLongestRunNIST4;
 import Utils.Utils;
 import cheksAnalyse.FakeChaoticSystem;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;

@@ -1,9 +1,16 @@
 package mainAnalyser;
 
+import cheksAnalyse.nistTest.TestLongestRunNIST4;
+import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
+import cheksAnalyse.nistTest.TestRunsNIST3;
+import cheksAnalyse.nistTest.TestFrequencyMonobitNIST1;
+import cheksAnalyse.occurenceTest.TestNbOccurrencesLevelVariation;
+import cheksAnalyse.occurenceTest.TestNbOccurrencesLevel;
+import cheksAnalyse.evolutionTest.TestNbEvolutionsAllKeyBits;
+import cheksAnalyse.evolutionTest.TestNbEvolutionsAllAgentLevels;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
-import cheksAnalyse.*;
-import cheksAnalyse.NIST.*;
-import cheksAnalyse.butterfly.TestButterflyEffect;
+import cheksAnalyse.distanceTest.TestDistanceBetweenEvolution;
+import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.logging.*;
@@ -88,6 +95,9 @@ public class Saver {
                     case NIST_15:
                         this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
+                    case DISTANCE_EVOLUTION:
+                        this.createDistanceTable(TestDistanceBetweenEvolution.TABLE_NAME);
+                        break;
                 }
             }
             
@@ -148,6 +158,16 @@ public class Saver {
             System.err.println("Error while creating table: " + tableName);
         }
     }
+    
+    private void createDistanceTable(String tableName) {
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id TEXT, evolution_count INTEGER, distance INTEGER, PRIMARY KEY (chaotic_system_id, evolution_count))");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
+    }
 
     private void createOccurenceTable(String tableName){
         try {
@@ -161,12 +181,12 @@ public class Saver {
     
     public void saveNistResults(String systemId, String tableName, double pValue) {
         try {
-            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, p_value) VALUES (?,?)");
-            insertStatement.setString(1, systemId);
-            insertStatement.setDouble(2, pValue);
-            insertStatement.executeUpdate();
-            this.connection.commit();
-            insertStatement.close();
+            try (PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, p_value) VALUES (?,?)")) {
+                insertStatement.setString(1, systemId);
+                insertStatement.setDouble(2, pValue);
+                insertStatement.executeUpdate();
+                this.connection.commit();
+            }
         } catch (Exception ex) {
             System.err.println("Error while inserting Nist result for system: " + systemId + " on test: " + tableName);
         }
@@ -174,12 +194,12 @@ public class Saver {
     
     public void saveEvolutionCount(String tableName, String chaoticSystemId, int evolutionCount) {
         try {
-            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, evolution_count) VALUES (?,?)");
-            insertStatement.setString(1, chaoticSystemId);
-            insertStatement.setInt(2, evolutionCount);            
-            insertStatement.executeUpdate();
-            this.connection.commit();
-            insertStatement.close();
+            try (PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, evolution_count) VALUES (?,?)")) {
+                insertStatement.setString(1, chaoticSystemId);
+                insertStatement.setInt(2, evolutionCount);
+                insertStatement.executeUpdate();
+                this.connection.commit();
+            }
 
         } catch (Exception ex) {
             System.err.println("Error while inserting evolutions count result for system: " + chaoticSystemId + " on table: " + tableName);
@@ -190,13 +210,13 @@ public class Saver {
         try {
             for(int i = 0; i < distributions.length; i++) {
                 for(int j = 0; j < distributions[i].getAgentLevels().length; j++) {
-                    PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, agent_id, variation, occurence_count) VALUES (?,?,?,?)");
-                    insertStatement.setString(1, chaoticSystemId);
-                    insertStatement.setInt(2, i);
-                    insertStatement.setInt(3, j);
-                    insertStatement.setInt(4, distributions[i].getAgentLevels()[j]);
-                    insertStatement.executeUpdate();
-                    insertStatement.close();
+                    try (PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, agent_id, variation, occurence_count) VALUES (?,?,?,?)")) {
+                        insertStatement.setString(1, chaoticSystemId);
+                        insertStatement.setInt(2, i);
+                        insertStatement.setInt(3, j);
+                        insertStatement.setInt(4, distributions[i].getAgentLevels()[j]);
+                        insertStatement.executeUpdate();
+                    }
                 }
             }
             this.connection.commit();
@@ -223,6 +243,23 @@ public class Saver {
 
         } catch (SQLException ex) {
             System.err.println("Error while inserting butterfly effect result for system: " + systemId);
+        }
+    }
+    
+    public void saveDistance(String systemId, String tableName, int[] distances) {
+        try {
+            PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, evolution_count, distance) VALUES (?,?,?)");
+            for (int i = 0; i < distances.length; i ++) {                
+                insertStatement.setString(1, systemId);
+                insertStatement.setInt(2, i);
+                insertStatement.setInt(4, distances[i]);
+                insertStatement.executeUpdate(); 
+            }
+            this.connection.commit();
+            if (insertStatement != null) insertStatement.close();
+
+        } catch (SQLException ex) {
+            System.err.println("Error while inserting " + tableName + " result for system: " + systemId);
         }
     }
 
@@ -335,6 +372,9 @@ public class Saver {
                     case NIST_15:
                         this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
                         break;
+                    case DISTANCE_EVOLUTION:
+                        this.deleteTable(TestDistanceBetweenEvolution.TABLE_NAME);                       
+                        break;
                 }
             }
         this.closeDatabase();        
@@ -342,17 +382,16 @@ public class Saver {
     
     public boolean isTestRunnedForSystem(String tableName, String systemId) {
         try {
-            PreparedStatement selectStatement = this.connection.prepareStatement("SELECT COUNT(*) AS rowcount FROM " + tableName + " WHERE chaotic_system_id = ?");
-            selectStatement.setString(1, systemId);
-            
-            ResultSet rs = selectStatement.executeQuery();
-            if(rs == null) {
-                this.closeDatabase();
-                System.out.println("error");
-                return false;
+            int count;
+            try (PreparedStatement selectStatement = this.connection.prepareStatement("SELECT COUNT(*) AS rowcount FROM " + tableName + " WHERE chaotic_system_id = ?")) {
+                selectStatement.setString(1, systemId);
+                ResultSet rs = selectStatement.executeQuery();
+                if(rs == null) {
+                    this.closeDatabase();
+                    System.out.println("error");
+                    return false;
+                }   count = rs.getInt("rowcount");
             }
-            int count = rs.getInt("rowcount");
-            selectStatement.close();
             
             return count > 0;
         } catch (SQLException ex) {
@@ -370,10 +409,12 @@ public class Saver {
         types.add(AnalyserType.BYTESPERBYTES);
         types.add(AnalyserType.BUTTERFLY);
         types.add(AnalyserType.OCCURENCE);
-        types.add(AnalyserType.VARIATION);
+        //types.add(AnalyserType.VARIATION);
         types.add(AnalyserType.NIST_1);
         types.add(AnalyserType.NIST_2);
         types.add(AnalyserType.NIST_3);
+        types.add(AnalyserType.NIST_4);
+        //types.add(AnalyserType.DISTANCE_EVOLUTION);
         
         saver.cleanDataBase(types);
     }

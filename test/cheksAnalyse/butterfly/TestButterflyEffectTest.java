@@ -5,6 +5,7 @@
  */
 package cheksAnalyse.butterfly;
 
+import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

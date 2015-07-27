@@ -1,15 +1,14 @@
-package cheksAnalyse;
+package cheksAnalyse.evolutionTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.Arrays;
 import java.util.HashSet;
-import mainAnalyser.Saver;
 
 /**
  *
  * @author Michael Roussel <rousselm4@gmail.com>
  */
-public class TestNbEvolutionsAllAgentLevels extends AbstractCheksAnalyser{
+public class TestNbEvolutionsAllAgentLevels extends AbstractEvolutionTest{
     
     private HashSet<Byte>[] bytesSaw;
     private int ammountOfByte;
@@ -70,11 +69,6 @@ public class TestNbEvolutionsAllAgentLevels extends AbstractCheksAnalyser{
                 System.out.println("Bytes saw: " + Arrays.toString(this.bytesSaw));
             }
         }
-    }
-    
-    @Override
-    public void saveResult(Saver saver) {
-        saver.saveEvolutionCount(TABLE_NAME, this.getSystemId(), this.getEvolutionCount());
     }
     
     @Override

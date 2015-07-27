@@ -1,7 +1,7 @@
 package cheksAnalyse;
 
 import Utils.Utils;
-import cheksAnalyse.NIST.TestFrequencyBlockNIST2;
+import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.ArrayList;
 import java.util.Arrays;

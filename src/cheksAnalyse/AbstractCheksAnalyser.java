@@ -1,10 +1,14 @@
 package cheksAnalyse;
 
-import cheksAnalyse.NIST.TestFrequencyMonobitNIST1;
-import cheksAnalyse.NIST.TestFrequencyBlockNIST2;
-import cheksAnalyse.NIST.TestRunsNIST3;
-import cheksAnalyse.NIST.TestLongestRunNIST4;
-import cheksAnalyse.butterfly.TestButterflyEffect;
+import cheksAnalyse.occurenceTest.TestNbOccurrencesLevelVariation;
+import cheksAnalyse.occurenceTest.TestNbOccurrencesLevel;
+import cheksAnalyse.evolutionTest.TestNbEvolutionsAllKeyBits;
+import cheksAnalyse.evolutionTest.TestNbEvolutionsAllAgentLevels;
+import cheksAnalyse.nistTest.TestFrequencyMonobitNIST1;
+import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
+import cheksAnalyse.nistTest.TestRunsNIST3;
+import cheksAnalyse.nistTest.TestLongestRunNIST4;
+import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -37,7 +41,8 @@ public abstract class AbstractCheksAnalyser implements Serializable{
         NIST_12,
         NIST_13,
         NIST_14,
-        NIST_15
+        NIST_15,
+        DISTANCE_EVOLUTION
     }
     
     protected final boolean logEnabled;

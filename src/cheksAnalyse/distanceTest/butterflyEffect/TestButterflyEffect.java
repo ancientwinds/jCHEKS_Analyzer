@@ -1,7 +1,8 @@
-package cheksAnalyse.butterfly;
+package cheksAnalyse.distanceTest.butterflyEffect;
 
 import Utils.Utils;
-import cheksAnalyse.AbstractCheksAnalyser;
+import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
+import cheksAnalyse.distanceTest.AbstractDistanceTest;
 import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
@@ -12,10 +13,9 @@ import mainAnalyser.Saver;
  *
  * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
-public class TestButterflyEffect extends AbstractCheksAnalyser {
+public class TestButterflyEffect extends AbstractDistanceTest {
 
     private final HashMap<Integer, CryptoChaoticSystem> clones = new HashMap();
-    private final int iteration = 1000;
     private final int[][] distances;
     
     public static final String TABLE_NAME = "butterfly_effect";
@@ -54,29 +54,9 @@ public class TestButterflyEffect extends AbstractCheksAnalyser {
             clone.evolveSystem();
         }
     }
-    
-    public static int getDistance(byte[] baseKey, byte[] cloneKey) throws Exception {        
-        if(baseKey.length == cloneKey.length) {
-            int distance = 0;
-            for(int i = 0; i < baseKey.length; i++) {
-                boolean[] baseBool = Utils.byteToBooleanArray(baseKey[i]);
-                boolean[] cloneBool = Utils.byteToBooleanArray(cloneKey[i]);
-                                
-                for(int x = 0; x < baseBool.length; x++)
-                {
-                    if(baseBool[x] != cloneBool[x]) {
-                        distance++;
-                    }
-                    
-                }                
-            }            
-            return distance;
-        }
-        throw new Exception("Key cannot be compared");
-    }
 
     @Override
-    protected void verify() {
+    protected void verify() {        
         if(this.getEvolutionCount() == this.iteration - 1) {
             this.complete();
             this.clones.clear();
@@ -84,11 +64,8 @@ public class TestButterflyEffect extends AbstractCheksAnalyser {
     }
 
     @Override
-    public void saveResult(Saver saver) {
-        if(!saved) {
-            saver.saveButterflyEffect(this.getSystemId(), this.distances);
-            saved = true;
-        }
+    public void saveResult(Saver saver) {        
+        saver.saveButterflyEffect(this.getSystemId(), this.distances);
     }
     
     @Override

@@ -1,39 +1,27 @@
-package cheksAnalyse;
+package cheksAnalyse.occurenceTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.Distribution;
-import mainAnalyser.Saver;
 
 /**
  *
  * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
-public class TestNbOccurrencesLevelVariation extends AbstractCheksAnalyser{
+public class TestNbOccurrencesLevelVariation extends AbstractOccurenceTest{
 
-    private final int iterations = 1000000;
-    private Distribution distributions[];
     private byte[] lastKey;
     private byte[] currentKey;
     public static final String TABLE_NAME = "nbOccurrences_levelVariation";
     
     public TestNbOccurrencesLevelVariation(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(false, chaoticSystem);
-        this.initAnalyser(chaoticSystem);
+        this.type = AnalyserType.VARIATION;
     }
 
     public TestNbOccurrencesLevelVariation(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
-        this.initAnalyser(chaoticSystem);
+        this.type = AnalyserType.VARIATION;
     }
     
-    private void initAnalyser(AbstractChaoticSystem chaoticSystem) {
-        this.type = AnalyserType.VARIATION;
-        this.distributions = new Distribution[chaoticSystem.getAgentsCount()];
-        for (int j = 0; j < chaoticSystem.getAgentsCount(); j++) {            
-            this.distributions[j] = new Distribution();
-        }    
-    }
-
     @Override
     protected void scan(AbstractChaoticSystem system) {
         if(this.lastKey == null) {
@@ -45,20 +33,13 @@ public class TestNbOccurrencesLevelVariation extends AbstractCheksAnalyser{
             }
             this.lastKey = currentKey;
         }  
-    }
-
+    }    
+      
     @Override
-    protected void verify() {
-        if(this.getEvolutionCount() == this.iterations + 1) {
-            this.complete();
-        }
-    }
-
-    @Override
-    public void saveResult(Saver saver) {
-        saver.saveDistributionInTable(this.getSystemId(), TABLE_NAME, distributions);
-    }
-        
+    public String getTableName() {
+        return TABLE_NAME;
+    }  
+    
     private int getVariationByAgent(int agent) {
         int currentLevel = currentKey[agent] + 128;
         int lastLevel = lastKey[agent] + 128;
@@ -70,8 +51,5 @@ public class TestNbOccurrencesLevelVariation extends AbstractCheksAnalyser{
         }
     }
     
-    @Override
-    public String getTableName() {
-        return TABLE_NAME;
-    }
+    
 }

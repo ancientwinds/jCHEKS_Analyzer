@@ -1,15 +1,14 @@
-package cheksAnalyse;
+package cheksAnalyse.evolutionTest;
 
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
-import mainAnalyser.Saver;
 
 /**
  *
  * @author Michael Roussel <rousselm4@gmail.com>
  */
-public class TestNbEvolutionsAllKeyBits extends AbstractCheksAnalyser{
+public class TestNbEvolutionsAllKeyBits extends AbstractEvolutionTest{
     
     private boolean[] falsesSaw;
     private boolean[] truesSaw;
@@ -69,11 +68,6 @@ public class TestNbEvolutionsAllKeyBits extends AbstractCheksAnalyser{
             System.out.println("Falses: " + Arrays.toString(falsesSaw));
             System.out.println("Trues: " + Arrays.toString(truesSaw));
         }
-    }
-
-    @Override
-    public void saveResult(Saver saver) {
-        saver.saveEvolutionCount(TABLE_NAME, this.getSystemId(), this.getEvolutionCount());
     }
     
     @Override

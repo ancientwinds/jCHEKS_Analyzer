@@ -1,4 +1,4 @@
-package cheksAnalyse.NIST;
+package cheksAnalyse.nistTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import mainAnalyser.Saver;
