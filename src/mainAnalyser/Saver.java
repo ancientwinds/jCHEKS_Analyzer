@@ -270,30 +270,73 @@ public class Saver {
         }
     }
     
-    public void cleanDataBase() {
+    public void cleanDataBase(HashSet<AnalyserType> types) {
         this.openDatabase();
         
-        this.deleteTable(TestNbEvolutionsAllAgentLevels.TABLE_NAME);                        
-        this.deleteTable(TestNbEvolutionsAllKeyBits.TABLE_NAME);                        
-        this.deleteTable(TestButterflyEffect.TABLE_NAME);                        
-        this.deleteTable(TestNbOccurrencesLevel.TABLE_NAME);                        
-        this.deleteTable(TestNbOccurrencesLevelVariation.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyBlockNIST2.TABLE_NAME);                        
-        this.deleteTable(TestRunsNIST3.TABLE_NAME);                        
-        this.deleteTable(TestLongestRunNIST4.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
-        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
-        
+        for(AnalyserType type : types) {
+                switch (type) {
+                    case BYTESPERBYTES:
+                        this.deleteTable(TestNbEvolutionsAllAgentLevels.TABLE_NAME);                        
+                        break;
+                    case BOOLEANS:
+                        this.deleteTable(TestNbEvolutionsAllKeyBits.TABLE_NAME);                        
+                        break;
+                    case BUTTERFLY:
+                        this.deleteTable(TestButterflyEffect.TABLE_NAME);                        
+                        break;
+                    case OCCURENCE:
+                        this.deleteTable(TestNbOccurrencesLevel.TABLE_NAME);                        
+                        break;
+                    case VARIATION:
+                        this.deleteTable(TestNbOccurrencesLevelVariation.TABLE_NAME);                        
+                        break;
+                    case NIST_1:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                        
+                        break;
+                    case NIST_2:
+                        this.deleteTable(TestFrequencyBlockNIST2.TABLE_NAME);                        
+                        break;
+                    case NIST_3:
+                        this.deleteTable(TestRunsNIST3.TABLE_NAME);                        
+                        break;
+                    case NIST_4:
+                        this.deleteTable(TestLongestRunNIST4.TABLE_NAME);                        
+                        break;
+                    case NIST_5:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_6:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_7:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_8:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_9:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_10:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_11:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_12:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_13:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_14:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                    case NIST_15:
+                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        break;
+                }
+            }
         this.closeDatabase();        
     }
     
@@ -318,8 +361,20 @@ public class Saver {
         }
     }
     
-    /*public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         Saver saver = new Saver();
-        saver.cleanDataBase();
-    }*/
+        
+        HashSet<AnalyserType> types = new HashSet();
+        
+        types.add(AnalyserType.BOOLEANS);
+        types.add(AnalyserType.BYTESPERBYTES);
+        types.add(AnalyserType.BUTTERFLY);
+        types.add(AnalyserType.OCCURENCE);
+        types.add(AnalyserType.VARIATION);
+        types.add(AnalyserType.NIST_1);
+        types.add(AnalyserType.NIST_2);
+        types.add(AnalyserType.NIST_3);
+        
+        saver.cleanDataBase(types);
+    }
 }
