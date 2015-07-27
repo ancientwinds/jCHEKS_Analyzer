@@ -71,16 +71,10 @@ public class ServerController extends Server implements IServer{
         types.add(AnalyserType.NIST_3);
         //types.add(AnalyserType.NIST_4);        
        
-        if(args.length == 1) {
-            if(args[0].equals("nogui")) {
-                new ServerController(types, false);
-            } else {
-                new ServerController(types, true);
-            }
-        } else {
-            new ServerController(types, true);
-        }
-    }            
+        boolean showGui = args.length == 1 && args[0].equals("nogui");
+        new ServerController(types, showGui);
+        
+    }    
     
     @Override
     public void saveAnalyser(AbstractCheksAnalyser analyser, String systemId, AnalyserType type) {
