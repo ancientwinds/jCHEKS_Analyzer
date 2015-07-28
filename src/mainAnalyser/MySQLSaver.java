@@ -135,6 +135,61 @@ public class MySQLSaver extends AbstractSaver{
         }
     }
      
+    @Override
+    protected void createNistTable(String tableName) {
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id varchar(30) PRIMARY KEY, p_value double)");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
+    }
+    
+    @Override
+    protected void createEvolutionTable(String tableName){        
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id varchar(30) PRIMARY KEY, evolution_count int(11))");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
+    }
+    
+    @Override
+    protected void createButterflyEffectTable(String tableName) {
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id varchar(30), clone_id INTEGER, evolution_count int(11), distance int(11), PRIMARY KEY (chaotic_system_id, clone_id, evolution_count))");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
+    }
+    
+    @Override 
+    protected void createDistanceTable(String tableName) {
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id varchar(30), evolution_count int(11), distance int(11), PRIMARY KEY (chaotic_system_id, evolution_count))");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
+    }
+ 
+    @Override
+    protected void createOccurenceTable(String tableName){
+        try {
+            this.statement = connection.createStatement();
+            this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " (chaotic_system_id varchar(30), agent_id int(11), variation int(11), occurence_count int(11), PRIMARY KEY(chaotic_system_id, agent_id, variation))");
+            this.statement.close();
+        } catch (SQLException ex) {
+            System.err.println("Error while creating table: " + tableName);
+        }
+    }
+
     public double[] getEvolutionsOf(String tableName, int iterations) throws SQLException {
         this.statement = connection.createStatement();
         ResultSet ruleSet = statement.executeQuery("SELECT * FROM " + tableName + ";");
