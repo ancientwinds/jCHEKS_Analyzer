@@ -3,7 +3,6 @@ package cheksAnalyse.distanceTest;
 import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.Saver;
 
 /**
  *

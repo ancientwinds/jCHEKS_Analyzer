@@ -252,7 +252,7 @@ public class Saver {
             for (int i = 0; i < distances.length; i ++) {                
                 insertStatement.setString(1, systemId);
                 insertStatement.setInt(2, i);
-                insertStatement.setInt(4, distances[i]);
+                insertStatement.setInt(3, distances[i]);
                 insertStatement.executeUpdate(); 
             }
             this.connection.commit();

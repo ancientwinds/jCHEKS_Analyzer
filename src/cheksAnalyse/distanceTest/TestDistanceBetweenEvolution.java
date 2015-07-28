@@ -23,7 +23,6 @@ public class TestDistanceBetweenEvolution extends AbstractDistanceTest{
 
     @Override
     public void saveResult(Saver saver) {
-        System.out.println("saving");
         saver.saveDistance(this.getSystemId(), this.getTableName(), distances);
     }
 

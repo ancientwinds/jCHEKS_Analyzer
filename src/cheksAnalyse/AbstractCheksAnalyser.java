@@ -1,5 +1,6 @@
 package cheksAnalyse;
 
+import cheksAnalyse.distanceTest.TestDistanceBetweenEvolution;
 import cheksAnalyse.occurenceTest.TestNbOccurrencesLevelVariation;
 import cheksAnalyse.occurenceTest.TestNbOccurrencesLevel;
 import cheksAnalyse.evolutionTest.TestNbEvolutionsAllKeyBits;
@@ -162,7 +163,10 @@ public abstract class AbstractCheksAnalyser implements Serializable{
                     break;
                 case NIST_15:
                     analyserList.add(new TestFrequencyMonobitNIST1(system));
-                    break;                   
+                    break;
+                case DISTANCE_EVOLUTION:
+                    analyserList.add(new TestDistanceBetweenEvolution(false, system));
+                    break;
             }
         }
         return analyserList;
