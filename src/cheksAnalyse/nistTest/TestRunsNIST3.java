@@ -1,7 +1,8 @@
 package cheksAnalyse.nistTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.Saver;
+import mainAnalyser.AbstractSaver;
+import mainAnalyser.SQLiteSaver;
 import static org.apache.commons.math3.special.Erf.erfc;
 
 /**
@@ -87,7 +88,7 @@ public class TestRunsNIST3 extends AbstractNistTest{
     }
 
     @Override
-    public void saveResult(Saver saver) {
+    public void saveResult(AbstractSaver saver) {
         saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     

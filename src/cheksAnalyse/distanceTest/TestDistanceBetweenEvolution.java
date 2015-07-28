@@ -3,7 +3,8 @@ package cheksAnalyse.distanceTest;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mainAnalyser.Saver;
+import mainAnalyser.AbstractSaver;
+import mainAnalyser.SQLiteSaver;
 
 /**
  *
@@ -22,7 +23,7 @@ public class TestDistanceBetweenEvolution extends AbstractDistanceTest{
     }
 
     @Override
-    public void saveResult(Saver saver) {
+    public void saveResult(AbstractSaver saver) {
         saver.saveDistance(this.getSystemId(), this.getTableName(), distances);
     }
 
@@ -36,6 +37,8 @@ public class TestDistanceBetweenEvolution extends AbstractDistanceTest{
             } catch (Exception ex) {
                 Logger.getLogger(TestDistanceBetweenEvolution.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            lastKey = system.getKey();
         }
     }
     

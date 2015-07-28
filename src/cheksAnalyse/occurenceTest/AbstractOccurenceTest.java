@@ -2,8 +2,9 @@ package cheksAnalyse.occurenceTest;
 
 import cheksAnalyse.AbstractCheksAnalyser;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import mainAnalyser.AbstractSaver;
 import mainAnalyser.Distribution;
-import mainAnalyser.Saver;
+import mainAnalyser.SQLiteSaver;
 
 /**
  *
@@ -28,7 +29,7 @@ public abstract class AbstractOccurenceTest extends AbstractCheksAnalyser{
     }
 
     @Override
-    public void saveResult(Saver saver) {
+    public void saveResult(AbstractSaver saver) {
         saver.saveDistributionInTable(this.getSystemId(), this.getTableName(), distributions);
     }
 

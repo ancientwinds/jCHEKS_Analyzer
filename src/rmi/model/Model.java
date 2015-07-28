@@ -15,7 +15,7 @@ import cheksAnalyse.*;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
 import java.io.File;
 import java.util.*;
-import mainAnalyser.Saver;
+import mainAnalyser.SQLiteSaver;
 import rmi.AnalyserPackage;
 
 /**
@@ -26,14 +26,14 @@ public class Model extends ModelObservable{
     private final HashSet<AnalyserPackage> packagesToSend = new HashSet();
     private final HashMap<String, AnalyserPackage> packagesAnalysing = new HashMap();
     private HashSet<String> systems = new HashSet();
-    private final Saver saver;
+    private final SQLiteSaver saver;
     private final HashSet<AnalyserType> types;
     
     private int analyserGiven = 0;
        
     public Model(HashSet<AnalyserType> types) {
         this.types = types;
-        this.saver = new Saver();
+        this.saver = new SQLiteSaver();
         this.saver.initDatabase(this.types);
     }
     

@@ -20,7 +20,7 @@ import java.util.Date;
  */
 public class MainAnalyser {
 
-    private final Saver saver; 
+    private final AbstractSaver saver; 
     private HashSet<AbstractCheksAnalyser> analysers = new HashSet();
     private HashSet<AnalyserType> types = new HashSet();
     
@@ -37,7 +37,7 @@ public class MainAnalyser {
         }
         
         this.types = types;        
-        this.saver = new Saver();
+        this.saver = new MySQLSaver();
         saver.initDatabase(types);        
     }
 

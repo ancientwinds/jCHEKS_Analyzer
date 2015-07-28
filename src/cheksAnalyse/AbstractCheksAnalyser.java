@@ -14,7 +14,7 @@ import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
-import mainAnalyser.Saver;
+import mainAnalyser.AbstractSaver;
 
 /**
  *
@@ -59,7 +59,7 @@ public abstract class AbstractCheksAnalyser implements Serializable{
         this.systemId = chaoticSystem.getSystemId();
     }
     
-    public abstract void saveResult(Saver saver);
+    public abstract void saveResult(AbstractSaver saver);
     public abstract String getTableName();
     protected abstract void scan(AbstractChaoticSystem system);
     protected abstract void verify();

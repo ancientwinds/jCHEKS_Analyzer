@@ -7,7 +7,8 @@ import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
 import java.util.logging.*;
-import mainAnalyser.Saver;
+import mainAnalyser.AbstractSaver;
+import mainAnalyser.SQLiteSaver;
 
 /**
  *
@@ -64,7 +65,7 @@ public class TestButterflyEffect extends AbstractDistanceTest {
     }
 
     @Override
-    public void saveResult(Saver saver) {        
+    public void saveResult(AbstractSaver saver) {        
         saver.saveButterflyEffect(this.getSystemId(), this.distances);
     }
     
