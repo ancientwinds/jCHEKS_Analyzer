@@ -39,7 +39,8 @@ public class MainAnalyser {
     public void analyse() throws Exception {
         int count = 0;
         
-        HashSet<String> systemsName = this.getSystemsFileName("system");
+        //HashSet<String> systemsName = this.getSystemsFileName("system");
+        HashSet<String> systemsName = this.getSystemsFileName("system/TestRange/range_0-16");
         for(Iterator<String> system = systemsName.iterator(); system.hasNext();) {
             if(shouldContinueAnalyse()) {
                 String fileName = system.next();
