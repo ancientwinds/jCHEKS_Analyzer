@@ -13,6 +13,7 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     private int evolution;
     private int agentCount = 0;
     private final ArrayList<byte[]> keyList;
+    private boolean equalsReturnValue;
 
     /**
      *
@@ -23,6 +24,13 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
         this.evolution = 0;
         this.keyList = keyList;
         this.agentCount = agentCount;
+        this.equalsReturnValue = false;
+    }
+    
+    public FakeChaoticSystem() {
+        super(0);
+        keyList = null;
+        this.evolution = 0;
     }
 
     @Override
@@ -33,6 +41,7 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     @Override
     public void evolveSystem(int factor) {
         this.evolution++;
+        if(this.evolution > this.keyList.size()) this.evolution = 0;
     }
 
     @Override
@@ -54,13 +63,19 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     }
 
     @Override
+    public boolean isSameState(AbstractChaoticSystem system) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public void resetSystem() {
     }
 
     @Override
     public AbstractChaoticSystem cloneSystem() {
-        return new FakeChaoticSystem(this.keyList, this.agentCount);
-
+        FakeChaoticSystem clone = new FakeChaoticSystem(this.keyList, this.agentCount);
+        clone.setEvolution(this.evolution);
+        return clone;
     }
 
     @Override
@@ -74,5 +89,17 @@ public class FakeChaoticSystem extends AbstractChaoticSystem {
     
     @Override
     public int getAgentsCount() { return this.agentCount;}
-
+    
+    public void setEvolution(int evolution){
+        this.evolution = evolution;
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        return equalsReturnValue;
+    }
+    
+    public void setEqualsReturnValue(boolean value){
+        equalsReturnValue = value;
+    }
 }

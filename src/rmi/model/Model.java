@@ -13,6 +13,7 @@ import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import static cheksAnalyse.AbstractCheksAnalyser.AnalyserType.*;
 import cheksAnalyse.*;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
+import cheksAnalyse.evolutionTest.*;
 import java.io.File;
 import java.util.*;
 import mainAnalyser.SQLiteSaver;
@@ -55,6 +56,7 @@ public class Model extends ModelObservable{
             }
         } 
         this.systems = filesName;
+        System.out.println(this.systems.size());
     }
     
     public void loadPackages() {
@@ -76,6 +78,7 @@ public class Model extends ModelObservable{
             }
         }        
         notifyLoadingPackagesCompleted(this.packagesToSend);
+        System.out.println(this.packagesToSend.size());
     }
     
     private boolean shouldAnalyse(AnalyserType type, String systemId) {
@@ -120,6 +123,8 @@ public class Model extends ModelObservable{
                 return !this.saver.isTestRunnedForSystem(TestFrequencyMonobitNIST1.TABLE_NAME, systemId);
             case NIST_15:
                 return !this.saver.isTestRunnedForSystem(TestFrequencyMonobitNIST1.TABLE_NAME, systemId);
+            case KEY_REPETITION:
+                return !this.saver.isTestRunnedForSystem(TestKeyRepetition.TABLE_NAME, systemId);
         }
         return false;
     }

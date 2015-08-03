@@ -10,6 +10,7 @@ import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
 import cheksAnalyse.nistTest.TestRunsNIST3;
 import cheksAnalyse.nistTest.TestLongestRunNIST4;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
+import cheksAnalyse.evolutionTest.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -43,7 +44,9 @@ public abstract class AbstractCheksAnalyser implements Serializable{
         NIST_13,
         NIST_14,
         NIST_15,
-        DISTANCE_EVOLUTION
+        DISTANCE_EVOLUTION,
+        CYCLE,
+        KEY_REPETITION
     }
     
     protected final boolean logEnabled;
@@ -166,6 +169,12 @@ public abstract class AbstractCheksAnalyser implements Serializable{
                     break;
                 case DISTANCE_EVOLUTION:
                     analyserList.add(new TestDistanceBetweenEvolution(false, system));
+                    break;
+                case CYCLE:
+                    analyserList.add(new TestCycle(system));
+                    break;
+                case KEY_REPETITION:
+                    analyserList.add(new TestKeyRepetition(system));
                     break;
             }
         }

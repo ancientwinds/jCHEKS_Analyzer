@@ -11,6 +11,7 @@ import cheksAnalyse.evolutionTest.TestNbEvolutionsAllAgentLevels;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import cheksAnalyse.distanceTest.TestDistanceBetweenEvolution;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
+import cheksAnalyse.evolutionTest.*;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.logging.*;
@@ -96,6 +97,13 @@ public class SQLiteSaver extends AbstractSaver{
                     case DISTANCE_EVOLUTION:
                         this.createDistanceTable(TestDistanceBetweenEvolution.TABLE_NAME);
                         break;
+                    case CYCLE:
+                        this.createEvolutionTable(TestCycle.TABLE_NAME);
+                        break;
+                    case KEY_REPETITION:
+                        this.createEvolutionTable(TestCycle.TABLE_NAME);
+                        break;
+                        
                 }
             }
             
@@ -140,23 +148,6 @@ public class SQLiteSaver extends AbstractSaver{
         this.statement.close();
         return evolutions;
     }
-/*
-    public int[][][] getDistributionsOf(String tableName, int iterations) throws SQLException {
-        ResultSet ruleSet = statement.executeQuery("SELECT * FROM " + tableName + ";");
-        int[][][] systems = new int[iterations][numberOfAgent][numberOfAgent * Byte.SIZE];
-        for (int i = 0; i < iterations; i++) {
-            ruleSet.next();
-            int[][] system = systems[i];
-            for (int j = 0; j < numberOfAgent; j++) {
-                system[j] = ;
-                String[] stringValues = getArrayFromString(ruleSet.getString("agent" + j));
-                for (String stringValue : stringValues) {
-                    int value = Integer.parseInt(stringValue);                    
-                }
-            }
-        }
-        return systems;
-    }*/
 
     private String[] getArrayFromString(String serializedArray) {
         return serializedArray.replace("[", "").replace("]", "").split(", ");
@@ -243,6 +234,12 @@ public class SQLiteSaver extends AbstractSaver{
                     case DISTANCE_EVOLUTION:
                         this.deleteTable(TestDistanceBetweenEvolution.TABLE_NAME);                       
                         break;
+                    case CYCLE:
+                        this.deleteTable(TestCycle.TABLE_NAME);                       
+                        break;
+                    case KEY_REPETITION:
+                        this.deleteTable(TestCycle.TABLE_NAME);                       
+                        break;
                 }
             }
         this.closeDatabase();        
@@ -264,7 +261,7 @@ public class SQLiteSaver extends AbstractSaver{
             
             return count > 0;
         } catch (SQLException ex) {
-            System.err.println("Error while checking if test: " + tableName +" was run for system: " + systemId);
+            //System.err.println("Error while checking if test: " + tableName +" was run for system: " + systemId);
             return false;
         }
     }
@@ -273,16 +270,16 @@ public class SQLiteSaver extends AbstractSaver{
         SQLiteSaver saver = new SQLiteSaver();
         
         HashSet<AnalyserType> types = new HashSet();
-        
-        types.add(AnalyserType.BOOLEANS);
-        types.add(AnalyserType.BYTESPERBYTES);
-        types.add(AnalyserType.BUTTERFLY);
-        types.add(AnalyserType.OCCURENCE);
+        types.add(AnalyserType.KEY_REPETITION);
+        //types.add(AnalyserType.BOOLEANS);
+        //types.add(AnalyserType.BYTESPERBYTES);
+        //types.add(AnalyserType.BUTTERFLY);
+        //types.add(AnalyserType.OCCURENCE);
         //types.add(AnalyserType.VARIATION);
-        types.add(AnalyserType.NIST_1);
-        types.add(AnalyserType.NIST_2);
-        types.add(AnalyserType.NIST_3);
-        types.add(AnalyserType.NIST_4);
+        //types.add(AnalyserType.NIST_1);
+        //types.add(AnalyserType.NIST_2);
+        //types.add(AnalyserType.NIST_3);
+        //types.add(AnalyserType.NIST_4);
         //types.add(AnalyserType.DISTANCE_EVOLUTION);
         
         saver.cleanDataBase(types);

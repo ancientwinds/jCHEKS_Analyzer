@@ -59,7 +59,7 @@ public abstract class AbstractSaver {
             System.err.println("Error while creating table: " + tableName);
         }
     }
- 
+    
     protected void createOccurenceTable(String tableName){
         try {
             this.statement = connection.createStatement();

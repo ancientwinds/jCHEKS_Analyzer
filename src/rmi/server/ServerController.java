@@ -36,6 +36,7 @@ public class ServerController extends Server implements IServer{
     public final void loadPackages() {
         this.model.loadSystems("system");
         this.model.loadPackages();
+        
     }
     
     public final void startServerOnPort(int port) {
@@ -61,7 +62,7 @@ public class ServerController extends Server implements IServer{
     public static void main(String args[]) {
        
         HashSet<AnalyserType> types = new HashSet();
-        types.add(AnalyserType.BOOLEANS);
+        /*ypes.add(AnalyserType.BOOLEANS);
         types.add(AnalyserType.BYTESPERBYTES);
         types.add(AnalyserType.BUTTERFLY);
         //types.add(AnalyserType.OCCURENCE);
@@ -69,16 +70,15 @@ public class ServerController extends Server implements IServer{
         types.add(AnalyserType.NIST_1);
         types.add(AnalyserType.NIST_2);
         types.add(AnalyserType.NIST_3);
-        //types.add(AnalyserType.NIST_4);        
-       
+        //types.add(AnalyserType.NIST_4);  */     
+        types.add(AnalyserType.KEY_REPETITION);
         boolean showGui = args.length == 1 && args[0].equals("nogui");
-        new ServerController(types, showGui);
+        new ServerController(types, false);
         
     }    
     
     @Override
     public void saveAnalyser(AbstractCheksAnalyser analyser, String systemId, AnalyserType type) {
-        System.out.println("saving");
         this.model.saveAnalyser(analyser, systemId, type);
     }
 
