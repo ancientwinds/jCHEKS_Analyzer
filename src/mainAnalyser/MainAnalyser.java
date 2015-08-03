@@ -37,14 +37,15 @@ public class MainAnalyser {
         }
         
         this.types = types;        
-        this.saver = new MySQLSaver();
+        this.saver = new SQLiteSaver();
         saver.initDatabase(types);        
     }
 
     public void analyse() throws Exception {
         int count = 0;
         
-        HashSet<String> systemsName = this.getSystemsFileName("system");
+        //HashSet<String> systemsName = this.getSystemsFileName("system");
+        HashSet<String> systemsName = this.getSystemsFileName("system/TestRange/range_0-16");
         for(Iterator<String> system = systemsName.iterator(); system.hasNext();) {
             if(shouldContinueAnalyse()) {
                 String fileName = system.next();
@@ -186,15 +187,15 @@ public class MainAnalyser {
     public static void main(String[] args) throws Exception {
         HashSet<AnalyserType> types = new HashSet();
         
-        //types.add(AnalyserType.BOOLEANS);
-        //types.add(AnalyserType.BYTESPERBYTES);
-        //types.add(AnalyserType.BUTTERFLY);
-        //types.add(AnalyserType.OCCURENCE);
-        //types.add(AnalyserType.VARIATION);
-        //types.add(AnalyserType.NIST_1);
-        //types.add(AnalyserType.NIST_2);
-        //types.add(AnalyserType.NIST_3);
-        //types.add(AnalyserType.NIST_4);
+        types.add(AnalyserType.BOOLEANS);
+        types.add(AnalyserType.BYTESPERBYTES);
+        types.add(AnalyserType.BUTTERFLY);
+        types.add(AnalyserType.OCCURENCE);
+        types.add(AnalyserType.VARIATION);
+        types.add(AnalyserType.NIST_1);
+        types.add(AnalyserType.NIST_2);
+        types.add(AnalyserType.NIST_3);
+        types.add(AnalyserType.NIST_4);
         types.add(AnalyserType.DISTANCE_EVOLUTION);        
         
         MainAnalyser analyser = new MainAnalyser(types);

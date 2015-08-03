@@ -109,7 +109,7 @@ public class SQLiteSaver extends AbstractSaver{
     protected void openDatabase() {
         try {
             Class.forName("org.sqlite.JDBC");
-            this.connection = DriverManager.getConnection("jdbc:sqlite:keys.db");
+            this.connection = DriverManager.getConnection("jdbc:sqlite:complete.db");
             this.connection.setAutoCommit(false);
             this.statement = connection.createStatement();
         } catch (SQLException ex) {
@@ -184,7 +184,6 @@ public class SQLiteSaver extends AbstractSaver{
         }
     }
 
-    
     public double[] getEvolutionsOf(String tableName, int iterations) throws SQLException {
         this.statement = connection.createStatement();
         ResultSet ruleSet = statement.executeQuery("SELECT * FROM " + tableName + ";");
@@ -315,12 +314,14 @@ public class SQLiteSaver extends AbstractSaver{
                     this.closeDatabase();
                     System.out.println("error");
                     return false;
-                }   count = rs.getInt("rowcount");
+                }
+                count = rs.getInt("rowcount");
             }
             
             return count > 0;
         } catch (SQLException ex) {
-            System.err.println("Error while checking if test: " + tableName +" was run for system: " + systemId);
+            System.out.println(ex.getMessage());
+            //System.err.println("Error while checking if test: " + tableName +" was run for system: " + systemId);
             return false;
         }
     }

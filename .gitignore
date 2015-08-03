@@ -4,3 +4,6 @@
 /system/
 /system1/
 /system2/
+/TestRange/
+*.db
+complete.db

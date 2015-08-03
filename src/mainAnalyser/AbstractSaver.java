@@ -53,6 +53,7 @@ public abstract class AbstractSaver {
             }
 
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             System.err.println("Error while inserting evolutions count result for system: " + chaoticSystemId + " on table: " + tableName);
         }
     }
@@ -97,7 +98,7 @@ public abstract class AbstractSaver {
         }
     }
      
-    public void saveDistance(String systemId, String tableName, int[] distances) {
+    public void saveDistance(String systemId, String tableName, int[] distances) {       
         try {
             PreparedStatement insertStatement = this.connection.prepareStatement("INSERT INTO " + tableName + " (chaotic_system_id, evolution_count, distance) VALUES (?,?,?)");
             for (int i = 0; i < distances.length; i ++) {                

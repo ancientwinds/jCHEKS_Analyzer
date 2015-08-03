@@ -4,7 +4,6 @@ import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mainAnalyser.AbstractSaver;
-import mainAnalyser.SQLiteSaver;
 
 /**
  *

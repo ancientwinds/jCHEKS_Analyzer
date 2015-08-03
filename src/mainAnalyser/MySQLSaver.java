@@ -25,8 +25,8 @@ import java.util.logging.Logger;
  */
 public class MySQLSaver extends AbstractSaver{
     
-    private final String url = "jdbc:mysql://xo6.x10hosting.com:2083";
-    private final String username = "krakenx2_analyse";
+    private final String url = "jdbc:mysql://192.168.1.102:3306/chaoticanalyze";
+    private final String username = "test";
     private final String password = "135246TL";
     
     public MySQLSaver() {
@@ -304,7 +304,7 @@ public class MySQLSaver extends AbstractSaver{
             
             return count > 0;
         } catch (SQLException ex) {
-            System.err.println("Error while checking if test: " + tableName +" was run for system: " + systemId);
+            //System.err.println("Error while checking if test: " + tableName +" was run for system: " + systemId);
             return false;
         }
     }

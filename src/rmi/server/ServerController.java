@@ -64,15 +64,16 @@ public class ServerController extends Server implements IServer{
         types.add(AnalyserType.BOOLEANS);
         types.add(AnalyserType.BYTESPERBYTES);
         types.add(AnalyserType.BUTTERFLY);
-        //types.add(AnalyserType.OCCURENCE);
-        //types.add(AnalyserType.VARIATION);
+        types.add(AnalyserType.OCCURENCE);
+        types.add(AnalyserType.VARIATION);
         types.add(AnalyserType.NIST_1);
         types.add(AnalyserType.NIST_2);
         types.add(AnalyserType.NIST_3);
-        //types.add(AnalyserType.NIST_4);        
+        types.add(AnalyserType.NIST_4);
+        types.add(AnalyserType.DISTANCE_EVOLUTION);        
        
         boolean showGui = args.length == 1 && args[0].equals("nogui");
-        new ServerController(types, showGui);
+        new ServerController(types, true);
         
     }    
     
