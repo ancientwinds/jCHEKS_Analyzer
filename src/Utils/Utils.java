@@ -110,4 +110,76 @@ public class Utils {
         
         return matrices;
     }
+    
+    public static boolean[][] prepareMatrix(boolean[][] matrix) {
+        
+        matrix = Utils.doForwardTransformation(matrix);
+        matrix = Utils.doBackwardTransformation(matrix);
+        
+        return matrix;
+    }
+    
+    public static boolean[][] doForwardTransformation(boolean[][] matrix) {
+
+        for(int i = 0; i < matrix.length; i++) {
+            if(i + 1 < matrix.length) {
+                if(matrix[i][i] == false) {                    
+                    for(int j = i + 1; j < matrix.length; j++) {
+                        if(matrix[j][i] == true) {
+                            boolean[] current = matrix[i];
+                            matrix[i] = matrix[j];
+                            matrix[j] = current;
+                            break;
+                        }
+                    }                    
+                }
+                
+                if(matrix[i][i] == true) {
+                    for(int k = i + 1; k < matrix.length; k++) {
+                        if(matrix[k][i] == true) {
+                            matrix[k] = Utils.xoring(matrix[i], matrix[k]);
+                        }
+                    }
+                }
+            }
+        }
+        
+        return matrix;
+    }
+    
+    public static boolean[][] doBackwardTransformation(boolean[][] matrix) {
+        for(int i = matrix.length - 1; i >= 0; i--) {
+            if(i - 1 >= 0) {
+                if(matrix[i][i] == false) {
+                    for(int j = i -1; j >= 0; j--) {
+                        if(matrix[j][i] == true) {
+                            boolean[] current = matrix[i];
+                            matrix[i] = matrix[j];
+                            matrix[j] = current;
+                            break;
+                        }
+                    }
+                }
+                
+                if(matrix[i][i] == true) {
+                    for(int k = i - 1; k >= 0; k--) {
+                        if(matrix[k][i] == true) {
+                            matrix[k] = Utils.xoring(matrix[i], matrix[k]);
+                        }
+                    }
+                }
+            }
+        }
+        return matrix;
+    }
+    
+    public static boolean[] xoring(boolean[] bits, boolean[] bits2) {
+        boolean[] result = new boolean[bits.length];
+        
+        for(int i = 0; i < bits.length; i++) {
+            result[i] = bits[i] != bits2[i];
+        }
+        
+        return result;
+    }
 }
