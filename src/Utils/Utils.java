@@ -95,4 +95,19 @@ public class Utils {
 
         return blockBits;
     }    
+
+    public static boolean[][][] createMatrices(boolean[] bits, int rowsMatrix, int columnsMatrix) {
+        boolean[][][] matrices =  new boolean[bits.length / (rowsMatrix * columnsMatrix)][rowsMatrix][columnsMatrix];
+        
+        for(int i = 0; i < bits.length / (rowsMatrix * columnsMatrix); i++) {
+            for(int j = 0; j < rowsMatrix; j++) {
+                for(int k = 0; k < columnsMatrix; k++) {
+                    int pos = (i * rowsMatrix * columnsMatrix) + (j * rowsMatrix) + k;
+                    matrices[i][j][k] = bits[pos];
+                }
+            }
+        }
+        
+        return matrices;
+    }
 }

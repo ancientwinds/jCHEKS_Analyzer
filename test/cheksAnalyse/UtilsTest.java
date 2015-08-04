@@ -69,4 +69,39 @@ public class UtilsTest {
         }
     }
     
+    @Test
+    public void testCreateMatrices() {
+        boolean bits[] = {false, true, false, true, true, false, false, true, false, false, true, false, true, false, true, false, true, true, false, true};
+        
+        boolean[][][] matrices = Utils.createMatrices(bits, 3, 3);
+        
+        assertEquals(matrices.length, 2);
+        
+        assertFalse(matrices[0][0][0]);
+        assertTrue(matrices[0][0][1]);
+        assertFalse(matrices[0][0][2]);
+
+        assertTrue(matrices[0][1][0]);
+        assertTrue(matrices[0][1][1]);
+        assertFalse(matrices[0][1][2]);
+
+        assertFalse(matrices[0][2][0]);
+        assertTrue(matrices[0][2][1]);
+        assertFalse(matrices[0][2][2]);
+        
+        assertFalse(matrices[1][0][0]);
+        assertTrue(matrices[1][0][1]);
+        assertFalse(matrices[1][0][2]);
+
+        assertTrue(matrices[1][1][0]);
+        assertFalse(matrices[1][1][1]);
+        assertTrue(matrices[1][1][2]);
+
+        assertFalse(matrices[1][2][0]);
+        assertTrue(matrices[1][2][1]);
+        assertTrue(matrices[1][2][2]);
+
+        
+    }
+    
 }
