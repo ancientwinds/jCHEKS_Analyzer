@@ -12,6 +12,7 @@ import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import cheksAnalyse.distanceTest.TestDistanceBetweenEvolution;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
 import cheksAnalyse.evolutionTest.*;
+import cheksAnalyse.nistTest.TestBinaryMatrixRankNIST5;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.logging.*;
@@ -62,7 +63,7 @@ public class SQLiteSaver extends AbstractSaver{
                         this.createNistTable(TestLongestRunNIST4.TABLE_NAME);
                         break;
                     case NIST_5:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestBinaryMatrixRankNIST5.TABLE_NAME);
                         break;
                     case NIST_6:
                         this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
@@ -254,7 +255,7 @@ public class SQLiteSaver extends AbstractSaver{
                         this.deleteTable(TestLongestRunNIST4.TABLE_NAME);                        
                         break;
                     case NIST_5:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestBinaryMatrixRankNIST5.TABLE_NAME);                       
                         break;
                     case NIST_6:
                         this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       

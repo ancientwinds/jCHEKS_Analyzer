@@ -5,6 +5,7 @@ import cheksAnalyse.distanceTest.TestDistanceBetweenEvolution;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
 import cheksAnalyse.evolutionTest.TestNbEvolutionsAllAgentLevels;
 import cheksAnalyse.evolutionTest.TestNbEvolutionsAllKeyBits;
+import cheksAnalyse.nistTest.TestBinaryMatrixRankNIST5;
 import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
 import cheksAnalyse.nistTest.TestFrequencyMonobitNIST1;
 import cheksAnalyse.nistTest.TestLongestRunNIST4;
@@ -69,7 +70,7 @@ public class MySQLSaver extends AbstractSaver{
                         this.createNistTable(TestLongestRunNIST4.TABLE_NAME);
                         break;
                     case NIST_5:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestBinaryMatrixRankNIST5.TABLE_NAME);
                         break;
                     case NIST_6:
                         this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
@@ -248,7 +249,7 @@ public class MySQLSaver extends AbstractSaver{
                         this.deleteTable(TestLongestRunNIST4.TABLE_NAME);                        
                         break;
                     case NIST_5:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestBinaryMatrixRankNIST5.TABLE_NAME);                       
                         break;
                     case NIST_6:
                         this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       

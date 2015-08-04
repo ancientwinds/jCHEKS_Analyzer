@@ -121,6 +121,7 @@ public class MainAnalyser {
         //types.add(AnalyserType.NIST_2);
         //types.add(AnalyserType.NIST_3);
         //types.add(AnalyserType.NIST_4);
+        //types.add(AnalyserType.NIST_5);
         //types.add(AnalyserType.DISTANCE_EVOLUTION);
         types.add(AnalyserType.KEY_REPETITION);    
         
