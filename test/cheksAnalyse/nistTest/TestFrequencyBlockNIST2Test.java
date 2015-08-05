@@ -1,4 +1,4 @@
-package cheksAnalyse.NIST;
+package cheksAnalyse.nistTest;
 
 import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
 import Utils.Utils;

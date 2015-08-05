@@ -1,4 +1,4 @@
-package cheksAnalyse.NIST;
+package cheksAnalyse.nistTest;
 
 import cheksAnalyse.nistTest.TestRunsNIST3;
 import cheksAnalyse.FakeChaoticSystem;

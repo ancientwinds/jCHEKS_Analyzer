@@ -182,4 +182,12 @@ public class Utils {
         
         return result;
     }
+    
+    public static double logBase2(double a) {
+        return logB(a, 2);
+    }
+    
+    public static double logB(double a, double b) {
+        return Math.log(a) / Math.log(b);
+    }
 }

@@ -1,22 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package cheksAnalyse.NIST;
+package cheksAnalyse.nistTest;
 
 import Utils.Utils;
 import cheksAnalyse.FakeChaoticSystem;
 import cheksAnalyse.nistTest.TestBinaryMatrixRankNIST5;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.ArrayList;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  *
- * @author Thomas
+ * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
 public class TestBinaryMatrixRankNIST5Test {
     
@@ -27,11 +21,6 @@ public class TestBinaryMatrixRankNIST5Test {
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
         instance = new TestBinaryMatrixRankNIST5(sys, 20, 3, 3);
-    }
-
-    
-    @Before
-    public void setUp() {
     }
 
     /**

@@ -6,7 +6,7 @@ import mainAnalyser.AbstractSaver;
 
 /**
  *
- * @author Thomas
+ * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
 public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
 
@@ -91,12 +91,12 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
 
     @Override
     public void saveResult(AbstractSaver saver) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
 
     @Override
     public String getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return TABLE_NAME;
     }
     
 }

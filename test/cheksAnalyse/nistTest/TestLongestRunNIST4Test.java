@@ -1,4 +1,4 @@
-package cheksAnalyse.NIST;
+package cheksAnalyse.nistTest;
 
 import cheksAnalyse.nistTest.TestLongestRunNIST4;
 import Utils.Utils;
