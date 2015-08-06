@@ -225,4 +225,39 @@ public class Utils {
         
         return l;
     }
+
+    //TODO Verify if the implementation is correct.
+    public static double[] calculateDiscreteFourierTransformation(double[] sequence) {
+        int N = sequence.length;
+        
+        double twoPikOnN;
+        double twoPijkOnN;
+        
+        int n = N >> 1;
+        
+        double twoPiOnN = 2 * Math.PI / N;
+        
+        double r_data[] = new double[N];
+        double i_data[] = new double[N];
+        double psd[] = new double[N];
+        
+        for(int k = 0; k < N; k++) {
+            twoPikOnN = twoPiOnN * k;
+            
+            for(int j = 0; j < N; j++) {
+                twoPijkOnN = twoPikOnN * j;
+                r_data[k] += sequence[j] * Math.cos(twoPijkOnN);
+                i_data[k] -= sequence[j] * Math.sin(twoPijkOnN);
+            }
+            
+            r_data[k] /= N;
+            i_data[k] /= N;
+            
+            psd[k] = r_data[k] * r_data[k] + i_data[k] * i_data[k];
+        }
+        
+        return psd;
+    }
+
+
 }

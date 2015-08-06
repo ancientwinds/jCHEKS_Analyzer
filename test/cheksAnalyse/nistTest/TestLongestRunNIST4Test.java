@@ -23,7 +23,7 @@ public class TestLongestRunNIST4Test {
         instance = new TestLongestRunNIST4(sys, 128, 8);
     }
 
-    /*@Test
+    @Test
     public void testCalculateLongestRun() throws Exception {        
         boolean bits[] = new boolean[128];
 
@@ -149,7 +149,7 @@ public class TestLongestRunNIST4Test {
         instance.executeTest(bits);
         
         assertFalse(instance.isPassed());
-    } */
+    }
     
     @Test
     public void test() throws Exception {
@@ -177,7 +177,7 @@ public class TestLongestRunNIST4Test {
         
         double X2Obs = instance2.calculateX2Obs(instance2.calculateBucketContent(lengths));
         double pValue = instance2.calculatePValue(X2Obs);        
-        //assertFalse(instance.isPassed());
+        assertFalse(instance.isPassed());
     }   
     
     
