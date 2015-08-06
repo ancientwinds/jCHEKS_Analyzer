@@ -226,6 +226,17 @@ public class Utils {
         return l;
     }
 
+    public static int convertBooleanArrayToInt(boolean[] booleansArray) {        
+        int count = 0;
+        for(int i = 0; i < booleansArray.length; i++) {
+            if(booleansArray[i]) {
+                count += Math.pow(2, (booleansArray.length - 1) - i);
+            }
+        }
+        return count;
+    }
+    
+    
     //TODO Verify if the implementation is correct.
     public static double[] calculateDiscreteFourierTransformation(double[] sequence) {
         int N = sequence.length;
@@ -258,6 +269,8 @@ public class Utils {
         
         return psd;
     }
+    
+    
 
 
 }

@@ -198,4 +198,19 @@ public class UtilsTest {
         assertFalse(result[2][2]);
     }
     
+        /**
+     * Test of convertBooleanArrayToInt method, of class TestMaurersUniveralStatisticalNIST9.
+     */
+    @Test
+    public void testConvertBooleanArrayToInt() {
+        boolean bits[] = {false, true, false, true, true, false, false};
+        boolean bits2[] = {true, true, true, true, true, true, true};
+
+        int i = Utils.convertBooleanArrayToInt(bits);        
+        assertEquals(44, i);
+        
+        i = Utils.convertBooleanArrayToInt(bits2);
+        assertEquals(127, i);
+    }
+    
 }

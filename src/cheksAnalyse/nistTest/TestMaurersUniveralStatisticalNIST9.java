@@ -51,7 +51,7 @@ public class TestMaurersUniveralStatisticalNIST9 extends AbstractNistTest {
         int[] tableT = new int[(int)Math.pow(2, blockLength)];
         
         for(int i = 0; i < this.blockForInitialization; i++) {
-            tableT[convertBooleanArrayToInt(blocks[i])] = i + 1;
+            tableT[Utils.convertBooleanArrayToInt(blocks[i])] = i + 1;
         }        
         return tableT;
     }
@@ -60,20 +60,10 @@ public class TestMaurersUniveralStatisticalNIST9 extends AbstractNistTest {
         double[] sum = new double[this.bitsNeeded/this.blockLength];
         
         for(int i = this.blockForInitialization; i < this.bitsNeeded/this.blockLength; i++) {
-            sum[i] = sum[i - 1] + Utils.logBase2(i + 1 - tableT[convertBooleanArrayToInt(blocks[i])]);            
-            tableT[convertBooleanArrayToInt(blocks[i])] = i + 1;
+            sum[i] = sum[i - 1] + Utils.logBase2(i + 1 - tableT[Utils.convertBooleanArrayToInt(blocks[i])]);            
+            tableT[Utils.convertBooleanArrayToInt(blocks[i])] = i + 1;
         }        
         return sum;
-    }
-    
-    public int convertBooleanArrayToInt(boolean[] booleansArray) {        
-        int count = 0;
-        for(int i = 0; i < booleansArray.length; i++) {
-            if(booleansArray[i]) {
-                count += Math.pow(2, (booleansArray.length - 1) - i);
-            }
-        }
-        return count;
     }
     
     @Override

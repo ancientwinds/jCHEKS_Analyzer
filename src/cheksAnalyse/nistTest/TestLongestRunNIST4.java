@@ -3,7 +3,6 @@ package cheksAnalyse.nistTest;
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import mainAnalyser.AbstractSaver;
-import mainAnalyser.SQLiteSaver;
 import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
 /**
