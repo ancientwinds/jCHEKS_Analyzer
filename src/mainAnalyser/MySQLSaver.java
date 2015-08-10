@@ -3,19 +3,10 @@ package mainAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.distanceTest.TestDistanceBetweenEvolution;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
-import cheksAnalyse.evolutionTest.TestNbEvolutionsAllAgentLevels;
-import cheksAnalyse.evolutionTest.TestNbEvolutionsAllKeyBits;
-import cheksAnalyse.nistTest.TestBinaryMatrixRankNIST5;
-import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
-import cheksAnalyse.nistTest.TestFrequencyMonobitNIST1;
-import cheksAnalyse.nistTest.TestLongestRunNIST4;
-import cheksAnalyse.nistTest.TestRunsNIST3;
-import cheksAnalyse.occurenceTest.TestNbOccurrencesLevel;
-import cheksAnalyse.occurenceTest.TestNbOccurrencesLevelVariation;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import cheksAnalyse.evolutionTest.*;
+import cheksAnalyse.nistTest.*;
+import cheksAnalyse.occurenceTest.*;
+import java.sql.*;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -303,7 +294,7 @@ public class MySQLSaver extends AbstractSaver{
                 }   count = rs.getInt("rowcount");
             }
             
-            return count > 0;
+            return count > 1;
         } catch (SQLException ex) {
             //System.err.println("Error while checking if test: " + tableName +" was run for system: " + systemId);
             return false;

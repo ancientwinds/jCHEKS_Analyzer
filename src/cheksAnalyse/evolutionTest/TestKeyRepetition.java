@@ -1,8 +1,6 @@
 package cheksAnalyse.evolutionTest;
 
-import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
-import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.util.Arrays;

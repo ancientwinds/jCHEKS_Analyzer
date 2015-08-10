@@ -8,7 +8,6 @@ import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.util.*;
 import java.util.logging.*;
 import mainAnalyser.AbstractSaver;
-import mainAnalyser.SQLiteSaver;
 
 /**
  *
@@ -23,7 +22,8 @@ public class TestButterflyEffect extends AbstractDistanceTest {
     
     public TestButterflyEffect(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);
-        this.distances = new int[chaoticSystem.getAgentsCount()][this.iteration];               
+        this.iteration = 150;
+        this.distances = new int[chaoticSystem.getAgentsCount()][150];               
         this.generateClones(chaoticSystem); 
         this.type = AnalyserType.BUTTERFLY;
 
@@ -58,7 +58,7 @@ public class TestButterflyEffect extends AbstractDistanceTest {
 
     @Override
     protected void verify() {        
-        if(this.getEvolutionCount() == this.iteration - 1) {
+        if(this.getEvolutionCount() == 150 - 1) {
             this.complete();
             this.clones.clear();
         }

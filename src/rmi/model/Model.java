@@ -11,7 +11,6 @@ import cheksAnalyse.evolutionTest.TestNbEvolutionsAllAgentLevels;
 import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import static cheksAnalyse.AbstractCheksAnalyser.AnalyserType.*;
-import cheksAnalyse.*;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
 import cheksAnalyse.evolutionTest.*;
 import java.io.File;
@@ -82,7 +81,7 @@ public class Model extends ModelObservable{
     }
     
     private boolean shouldAnalyse(AnalyserType type, String systemId) {
-        switch (type) {
+        /*switch (type) {
             case BYTESPERBYTES:
                 return !this.saver.isTestRunnedForSystem(TestNbEvolutionsAllAgentLevels.TABLE_NAME, systemId);
             case BOOLEANS:
@@ -125,7 +124,7 @@ public class Model extends ModelObservable{
                 return !this.saver.isTestRunnedForSystem(TestFrequencyMonobitNIST1.TABLE_NAME, systemId);
             case KEY_REPETITION:
                 return !this.saver.isTestRunnedForSystem(TestKeyRepetition.TABLE_NAME, systemId);
-        }
+        }*/
         return false;
     }
 

@@ -5,7 +5,6 @@ import cheksAnalyse.occurenceTest.*;
 import cheksAnalyse.evolutionTest.*;
 import cheksAnalyse.nistTest.*;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
-import cheksAnalyse.evolutionTest.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.io.Serializable;
 import java.util.Arrays;

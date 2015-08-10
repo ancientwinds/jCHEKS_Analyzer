@@ -4,7 +4,6 @@ import cheksAnalyse.AbstractCheksAnalyser;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import mainAnalyser.AbstractSaver;
 import mainAnalyser.Distribution;
-import mainAnalyser.SQLiteSaver;
 
 /**
  *
@@ -38,6 +37,5 @@ public abstract class AbstractOccurenceTest extends AbstractCheksAnalyser{
         if(this.getEvolutionCount() == this.iterations + 1) {
             this.complete();
         }
-    }
-    
+    }    
 }
