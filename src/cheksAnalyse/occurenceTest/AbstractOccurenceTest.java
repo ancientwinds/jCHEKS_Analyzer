@@ -2,8 +2,7 @@ package cheksAnalyse.occurenceTest;
 
 import cheksAnalyse.AbstractCheksAnalyser;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.AbstractSaver;
-import mainAnalyser.Distribution;
+import mainAnalyser.*;
 
 /**
  *

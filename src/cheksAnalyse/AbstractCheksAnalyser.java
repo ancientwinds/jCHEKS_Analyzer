@@ -7,8 +7,7 @@ import cheksAnalyse.nistTest.*;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.*;
 import mainAnalyser.AbstractSaver;
 
 /**

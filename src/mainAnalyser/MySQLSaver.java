@@ -8,8 +8,7 @@ import cheksAnalyse.nistTest.*;
 import cheksAnalyse.occurenceTest.*;
 import java.sql.*;
 import java.util.HashSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  *

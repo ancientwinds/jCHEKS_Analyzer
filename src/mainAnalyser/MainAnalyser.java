@@ -36,10 +36,7 @@ public class MainAnalyser {
         saver.initDatabase(types);        
     }
 
-    public void analyse() throws Exception {
-        int count = 0;
-        
-        //HashSet<String> systemsName = this.getSystemsFileName("system");
+    public void analyse() throws Exception {      
         List<String> systemsName = this.getSystemsFileName("system");
         Collections.sort(systemsName);
         for(Iterator<String> system = systemsName.iterator(); system.hasNext();) {
@@ -56,8 +53,6 @@ public class MainAnalyser {
             } else {
                 return;
             }
-            count++;
-            
         }
 
     }
@@ -84,8 +79,6 @@ public class MainAnalyser {
                 if(this.analyseWithSystem(analyser, currentChaoticSystem)) {
                     iterator.remove();
                 }
-                
-                analyser = null;
             }                
             currentChaoticSystem.evolveSystem();
         }
@@ -95,8 +88,7 @@ public class MainAnalyser {
     private boolean shouldContinueAnalyse() {
         File f = new File(FILE_TO_STOP);
         return f.exists() && !f.isDirectory();
-    }
-    
+    }    
     
     private List<String> getSystemsFileName(String folderName) {
         File folder = new File(folderName);

@@ -1,8 +1,7 @@
 package cheksAnalyse.distanceTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import mainAnalyser.AbstractSaver;
 
 /**
