@@ -40,7 +40,8 @@ public class MainAnalyser {
         int count = 0;
         
         //HashSet<String> systemsName = this.getSystemsFileName("system");
-        HashSet<String> systemsName = this.getSystemsFileName("system/TestRange/range_0-16");
+        List<String> systemsName = this.getSystemsFileName("system");
+        Collections.sort(systemsName);
         for(Iterator<String> system = systemsName.iterator(); system.hasNext();) {
             if(shouldContinueAnalyse()) {
                 String fileName = system.next();
@@ -97,10 +98,10 @@ public class MainAnalyser {
     }
     
     
-    private HashSet<String> getSystemsFileName(String folderName) {
+    private List<String> getSystemsFileName(String folderName) {
         File folder = new File(folderName);
         File[] listOfFiles = folder.listFiles();
-        HashSet<String> filesName = new HashSet();
+        List<String> filesName = new ArrayList();
         for (File listOfFile : listOfFiles) {
             if (listOfFile.isFile()) {
                 filesName.add(listOfFile.getName());
@@ -114,15 +115,16 @@ public class MainAnalyser {
         
         //types.add(AnalyserType.BOOLEANS);
         //types.add(AnalyserType.BYTESPERBYTES);
-        //types.add(AnalyserType.BUTTERFLY);
+        types.add(AnalyserType.BUTTERFLY);
         //types.add(AnalyserType.OCCURENCE);
         //types.add(AnalyserType.VARIATION);
         //types.add(AnalyserType.NIST_1);
         //types.add(AnalyserType.NIST_2);
         //types.add(AnalyserType.NIST_3);
         //types.add(AnalyserType.NIST_4);
+        //types.add(AnalyserType.NIST_5);
         //types.add(AnalyserType.DISTANCE_EVOLUTION);
-        types.add(AnalyserType.KEY_REPETITION);    
+        //types.add(AnalyserType.KEY_REPETITION);    
         
         MainAnalyser analyser = new MainAnalyser(types);
         analyser.analyse();       

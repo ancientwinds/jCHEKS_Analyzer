@@ -10,7 +10,7 @@ import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
  */
 public abstract class AbstractDistanceTest extends AbstractCheksAnalyser{
 
-    protected final int iteration = 1000;
+    protected int iteration = 1000;
     
     public AbstractDistanceTest(boolean enableLog, AbstractChaoticSystem chaoticSystem) throws Exception {
         super(enableLog, chaoticSystem);

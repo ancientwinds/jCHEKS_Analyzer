@@ -18,19 +18,12 @@ import rmi.model.Model;
 public class ServerController extends Server implements IServer{
 
     private final Model model;
-    private ServerView view;
     
-    public ServerController(HashSet<AbstractCheksAnalyser.AnalyserType> types, boolean showGui) {
+    public ServerController(HashSet<AbstractCheksAnalyser.AnalyserType> types) {
         this.model = new Model(types);    
-        
-        if(showGui) {
-            this.view = new ServerView(this);
-            this.view.setVisible(true);
-            this.model.addObserver(this.view);
-        } else {
-            this.loadPackages();
-            this.startServerOnPort(10000);
-        }
+
+        this.loadPackages();
+        this.startServerOnPort(10000);
     }
     
     public final void loadPackages() {
@@ -72,8 +65,8 @@ public class ServerController extends Server implements IServer{
         types.add(AnalyserType.NIST_3);
         //types.add(AnalyserType.NIST_4);  */     
         types.add(AnalyserType.KEY_REPETITION);
-        boolean showGui = args.length == 1 && args[0].equals("nogui");
-        new ServerController(types, false);
+
+        new ServerController(types);
         
     }    
     

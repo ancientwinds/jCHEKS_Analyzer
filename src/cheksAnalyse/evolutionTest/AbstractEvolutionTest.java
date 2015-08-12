@@ -3,7 +3,6 @@ package cheksAnalyse.evolutionTest;
 import cheksAnalyse.AbstractCheksAnalyser;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import mainAnalyser.AbstractSaver;
-import mainAnalyser.SQLiteSaver;
 
 /**
  *
@@ -18,6 +17,5 @@ public abstract class AbstractEvolutionTest extends AbstractCheksAnalyser {
     @Override
     public void saveResult(AbstractSaver saver) {
         saver.saveEvolutionCount(this.getTableName(), this.getSystemId(), this.getEvolutionCount());
-    }
-    
+    }    
 }

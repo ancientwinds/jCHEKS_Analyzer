@@ -59,6 +59,5 @@ public class CheksAnalyserBytes extends AbstractCheksAnalyser{
     @Override
     public String getTableName() {
         return TABLE_NAME;
-    }
-    
+    }    
 }

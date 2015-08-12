@@ -8,7 +8,7 @@ import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
  *
  * @author Thomas Lepage thomas.lepage@hotmail.ca
  */
-public abstract class AbstractNistTest extends AbstractCheksAnalyser{
+public abstract class AbstractNistTest extends AbstractCheksAnalyser {
     
     protected boolean passed = false;
     protected int bitsNeeded = 0;

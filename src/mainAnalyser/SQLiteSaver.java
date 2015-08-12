@@ -1,17 +1,12 @@
 package mainAnalyser;
 
-import cheksAnalyse.nistTest.TestLongestRunNIST4;
-import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
-import cheksAnalyse.nistTest.TestRunsNIST3;
-import cheksAnalyse.nistTest.TestFrequencyMonobitNIST1;
-import cheksAnalyse.occurenceTest.TestNbOccurrencesLevelVariation;
-import cheksAnalyse.occurenceTest.TestNbOccurrencesLevel;
-import cheksAnalyse.evolutionTest.TestNbEvolutionsAllKeyBits;
-import cheksAnalyse.evolutionTest.TestNbEvolutionsAllAgentLevels;
+import cheksAnalyse.nistTest.*;
+import cheksAnalyse.occurenceTest.*;
+import cheksAnalyse.evolutionTest.*;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import cheksAnalyse.distanceTest.TestDistanceBetweenEvolution;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
-import cheksAnalyse.evolutionTest.*;
+import cheksAnalyse.nistTest.TestBinaryMatrixRankNIST5;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.logging.*;
@@ -62,7 +57,7 @@ public class SQLiteSaver extends AbstractSaver{
                         this.createNistTable(TestLongestRunNIST4.TABLE_NAME);
                         break;
                     case NIST_5:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestBinaryMatrixRankNIST5.TABLE_NAME);
                         break;
                     case NIST_6:
                         this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
@@ -204,10 +199,6 @@ public class SQLiteSaver extends AbstractSaver{
         return evolutions;
     }
 
-    private String[] getArrayFromString(String serializedArray) {
-        return serializedArray.replace("[", "").replace("]", "").split(", ");
-    }
-     
     @Override
     protected void deleteTable(String tableName) {
         try {
@@ -254,7 +245,7 @@ public class SQLiteSaver extends AbstractSaver{
                         this.deleteTable(TestLongestRunNIST4.TABLE_NAME);                        
                         break;
                     case NIST_5:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestBinaryMatrixRankNIST5.TABLE_NAME);                       
                         break;
                     case NIST_6:
                         this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
@@ -315,7 +306,7 @@ public class SQLiteSaver extends AbstractSaver{
                 count = rs.getInt("rowcount");
             }
             
-            return count > 0;
+            return count > 1;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             //System.err.println("Error while checking if test: " + tableName +" was run for system: " + systemId);

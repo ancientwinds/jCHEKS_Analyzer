@@ -1,19 +1,7 @@
 package rmi.model;
 
-import cheksAnalyse.nistTest.TestLongestRunNIST4;
-import cheksAnalyse.nistTest.TestFrequencyBlockNIST2;
-import cheksAnalyse.nistTest.TestRunsNIST3;
-import cheksAnalyse.nistTest.TestFrequencyMonobitNIST1;
-import cheksAnalyse.occurenceTest.TestNbOccurrencesLevelVariation;
-import cheksAnalyse.occurenceTest.TestNbOccurrencesLevel;
-import cheksAnalyse.evolutionTest.TestNbEvolutionsAllKeyBits;
-import cheksAnalyse.evolutionTest.TestNbEvolutionsAllAgentLevels;
 import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
-import static cheksAnalyse.AbstractCheksAnalyser.AnalyserType.*;
-import cheksAnalyse.*;
-import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
-import cheksAnalyse.evolutionTest.*;
 import java.io.File;
 import java.util.*;
 import mainAnalyser.SQLiteSaver;
@@ -82,7 +70,7 @@ public class Model extends ModelObservable{
     }
     
     private boolean shouldAnalyse(AnalyserType type, String systemId) {
-        switch (type) {
+        /*switch (type) {
             case BYTESPERBYTES:
                 return !this.saver.isTestRunnedForSystem(TestNbEvolutionsAllAgentLevels.TABLE_NAME, systemId);
             case BOOLEANS:
@@ -125,7 +113,7 @@ public class Model extends ModelObservable{
                 return !this.saver.isTestRunnedForSystem(TestFrequencyMonobitNIST1.TABLE_NAME, systemId);
             case KEY_REPETITION:
                 return !this.saver.isTestRunnedForSystem(TestKeyRepetition.TABLE_NAME, systemId);
-        }
+        }*/
         return false;
     }
 

@@ -45,5 +45,4 @@ public class TestDistanceBetweenEvolution extends AbstractDistanceTest{
     public String getTableName() {
         return TABLE_NAME;
     }
-    
 }

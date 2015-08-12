@@ -16,19 +16,18 @@ public abstract class AbstractSaver {
     protected Connection connection;
     protected Statement statement;    
 
-    public abstract void initDatabase(HashSet<AbstractCheksAnalyser.AnalyserType> types);    
-    protected abstract void openDatabase();
-    protected abstract void closeDatabase();
+    public abstract void initDatabase(HashSet<AbstractCheksAnalyser.AnalyserType> types);     
+    public abstract void cleanDataBase(HashSet<AbstractCheksAnalyser.AnalyserType> types);
+    public abstract boolean isTestRunnedForSystem(String tableName, String systemId);
     
-    protected abstract void createNistTable(String tableName);
- 
-    protected abstract void createEvolutionTable(String tableName);
-     
-    protected abstract void createButterflyEffectTable(String tableName);
-     
-    protected abstract void createDistanceTable(String tableName);
- 
+    protected abstract void openDatabase();
+    protected abstract void closeDatabase();    
+    protected abstract void createNistTable(String tableName); 
+    protected abstract void createEvolutionTable(String tableName);     
+    protected abstract void createButterflyEffectTable(String tableName);     
+    protected abstract void createDistanceTable(String tableName); 
     protected abstract void createOccurenceTable(String tableName);
+    protected abstract void deleteTable(String tableName);
 
     public void saveNistResults(String systemId, String tableName, double pValue) {
         try {
@@ -114,9 +113,5 @@ public abstract class AbstractSaver {
             System.err.println("Error while inserting " + tableName + " result for system: " + systemId);
         }
     }
-
-    protected abstract void deleteTable(String tableName);    
-    public abstract void cleanDataBase(HashSet<AbstractCheksAnalyser.AnalyserType> types);
-    public abstract boolean isTestRunnedForSystem(String tableName, String systemId);
     
 }

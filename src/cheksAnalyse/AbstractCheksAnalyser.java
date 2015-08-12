@@ -5,7 +5,6 @@ import cheksAnalyse.occurenceTest.*;
 import cheksAnalyse.evolutionTest.*;
 import cheksAnalyse.nistTest.*;
 import cheksAnalyse.distanceTest.butterflyEffect.TestButterflyEffect;
-import cheksAnalyse.evolutionTest.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -130,7 +129,7 @@ public abstract class AbstractCheksAnalyser implements Serializable{
                     analyserList.add(new TestLongestRunNIST4(system));
                     break;
                 case NIST_5:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestBinaryMatrixRankNIST5(system));
                     break;
                 case NIST_6:
                     analyserList.add(new TestFrequencyMonobitNIST1(system));

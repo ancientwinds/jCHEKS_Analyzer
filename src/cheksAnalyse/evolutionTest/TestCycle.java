@@ -1,7 +1,5 @@
 package cheksAnalyse.evolutionTest;
 
-import Utils.Utils;
-import com.archosResearch.jCHEKS.chaoticSystem.*;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.util.logging.*;
@@ -94,4 +92,5 @@ public class TestCycle extends AbstractEvolutionTest {
     public String getTableName() {
         return TABLE_NAME;
     }
+    
 }
