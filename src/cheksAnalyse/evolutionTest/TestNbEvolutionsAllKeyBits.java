@@ -14,6 +14,7 @@ public class TestNbEvolutionsAllKeyBits extends AbstractEvolutionTest{
     private boolean[] truesSaw;
     private int ammountOfBit;
     public static final String TABLE_NAME = "nbEvolutions_AllKeyBits";
+    private byte[] currentKey;
     
     public TestNbEvolutionsAllKeyBits(AbstractChaoticSystem chaoticSystem) throws Exception{
         super(false, chaoticSystem);
@@ -35,6 +36,7 @@ public class TestNbEvolutionsAllKeyBits extends AbstractEvolutionTest{
     @Override
     protected void scan(AbstractChaoticSystem chaoticSystem) {
         byte[] array = chaoticSystem.getKey();
+        currentKey = array;
         boolean[] booleans = Utils.bytesToBooleanArray(array);
         for (int i = 0; i < ammountOfBit; i++) {
             if(booleans[i]){
@@ -65,6 +67,7 @@ public class TestNbEvolutionsAllKeyBits extends AbstractEvolutionTest{
     protected void log(){
         super.log();
         if(logEnabled){
+            System.out.println(Arrays.toString(currentKey));
             System.out.println("Falses: " + Arrays.toString(falsesSaw));
             System.out.println("Trues: " + Arrays.toString(truesSaw));
         }

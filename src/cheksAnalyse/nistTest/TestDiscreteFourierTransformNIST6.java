@@ -14,10 +14,12 @@ public class TestDiscreteFourierTransformNIST6 extends AbstractNistTest {
 
     public TestDiscreteFourierTransformNIST6(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 100000);
+        throw new Exception("Not supported");
     }
     
     public TestDiscreteFourierTransformNIST6(AbstractChaoticSystem chaoticSystem, int bitsNeeded) throws Exception {
-        super(chaoticSystem, bitsNeeded);
+        super(chaoticSystem, bitsNeeded);        
+        throw new Exception("Not supported");
     }
 
     @Override

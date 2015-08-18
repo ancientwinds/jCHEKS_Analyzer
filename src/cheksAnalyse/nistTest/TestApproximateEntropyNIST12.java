@@ -13,7 +13,7 @@ public class TestApproximateEntropyNIST12 extends AbstractNistTest{
     
     public static String TABLE_NAME = "Approximate_Entropy_NIST_12";
 
-    private int blockLength = 2;
+    private int blockLength = 10;
     
     public TestApproximateEntropyNIST12(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 100000);
@@ -21,7 +21,7 @@ public class TestApproximateEntropyNIST12 extends AbstractNistTest{
     
     public TestApproximateEntropyNIST12(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
         super(chaoticSystem, bitsNeeded);
-        this.blockLength = blockLength;
+        this.blockLength = blockLength;       
     }
 
     @Override

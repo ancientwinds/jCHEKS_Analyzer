@@ -60,7 +60,8 @@ public abstract class AbstractNistTest extends AbstractCheksAnalyser {
             this.executeTest(bits);
             this.testExecuted = true;
         } else {
-            this.appendKey(system.getKey());
+            byte[] key = system.getKey();
+            this.appendKey(key);
         }
     }
 

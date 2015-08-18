@@ -104,7 +104,7 @@ public abstract class AbstractCheksAnalyser implements Serializable{
                     analyserList.add(new TestNbEvolutionsAllAgentLevels(false, system));
                     break;
                 case BOOLEANS:
-                    analyserList.add(new TestNbEvolutionsAllKeyBits(false, system));
+                    analyserList.add(new TestNbEvolutionsAllKeyBits(true, system));
                     break;
                 case BUTTERFLY:
                     analyserList.add(new TestButterflyEffect(false, system)); 

@@ -18,14 +18,14 @@ import static org.junit.Assert.*;
  */
 public class TestDiscreteFourierTransformNIST6Test {
     
-    private final TestDiscreteFourierTransformNIST6 instance;
+    /*private final TestDiscreteFourierTransformNIST6 instance;
     
     public TestDiscreteFourierTransformNIST6Test() throws Exception {
         ArrayList<byte[]> keys = new ArrayList();
         keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
         AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
         instance = new TestDiscreteFourierTransformNIST6(sys, 100);       
-    }
+    }*/
 
     /**
      * Test of executeTest method, of class TestDiscreteFourierTransformNIST6.
@@ -37,7 +37,7 @@ public class TestDiscreteFourierTransformNIST6Test {
     /**
      * Test of transformSequence method, of class TestDiscreteFourierTransformNIST6.
      */
-    @Test
+    /*@Test
     public void testTransformSequence() {
         boolean bits[] = {false, true, true, false, false, true, true, false, true, false};
         
@@ -112,5 +112,5 @@ public class TestDiscreteFourierTransformNIST6Test {
         assertEquals(17.308183, instance.calculateT(), 0.00001);
     }
     
-    
+    */
 }

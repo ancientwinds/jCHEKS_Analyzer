@@ -66,7 +66,7 @@ public class TestLinearComplexityNIST10Test {
         
         double vObs = instance.calculateVobs(buckets);
         
-        assertEquals(2.700348, vObs, 0.000001);
+        assertEquals(2.706147, vObs, 0.000001);
     }
     
     @Test
@@ -81,7 +81,7 @@ public class TestLinearComplexityNIST10Test {
         double vObs = instance.calculateVobs(buckets);
         double pValue = instance.calculatePValue(vObs);
         
-        assertEquals(0.845406, pValue, 0.000001);
+        assertEquals(0.844720, pValue, 0.000001);
     }
        
 }
