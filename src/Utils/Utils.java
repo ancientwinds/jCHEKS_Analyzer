@@ -170,7 +170,7 @@ public class Utils {
         for(int n = 0; n < N; n++) {
             int d = 0;
             for(int i = 0; i <= l; i++) {
-                d ^= c[i] * (block[n - 1]?1:0);
+                d ^= c[i] * (block[n - i]?1:0);
             }
             
             if(d == 1) {
