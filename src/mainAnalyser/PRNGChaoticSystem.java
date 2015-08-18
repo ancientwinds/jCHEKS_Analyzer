@@ -35,6 +35,7 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
     
     @Override
     public void evolveSystem(int factor) {
+        this.keyCount++;
         if(this.keyCount % keyPerLine == 0 && this.keyCount != 0) {
             try {
                 this.loadKey();
@@ -42,7 +43,6 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
                 Logger.getLogger(PRNGChaoticSystem.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        this.keyCount++; 
         this.lastGeneratedKey = this.keys.get(keyCount - (keyPerLine *(keyCount / keyPerLine)));
     }
     
