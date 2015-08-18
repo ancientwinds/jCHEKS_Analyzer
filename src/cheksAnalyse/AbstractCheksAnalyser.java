@@ -140,16 +140,16 @@ public abstract class AbstractCheksAnalyser implements Serializable{
                     analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_9:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestMaurersUniveralStatisticalNIST9(system));
                     break;
                 case NIST_10:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestLinearComplexityNIST10(system));
                     break;
                 case NIST_11:
                     analyserList.add(new TestFrequencyMonobitNIST1(system));
                     break;
                 case NIST_12:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestApproximateEntropyNIST12(system));
                     break;
                 case NIST_13:
                     analyserList.add(new TestFrequencyMonobitNIST1(system));

@@ -4,7 +4,6 @@ import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import java.io.*;
-import java.text.*;
 import java.util.*;
 
 /**

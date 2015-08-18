@@ -69,16 +69,16 @@ public class SQLiteSaver extends AbstractSaver{
                         this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_9:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestMaurersUniveralStatisticalNIST9.TABLE_NAME);
                         break;
                     case NIST_10:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestLinearComplexityNIST10.TABLE_NAME);
                         break;
                     case NIST_11:
                         this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
                         break;
                     case NIST_12:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestApproximateEntropyNIST12.TABLE_NAME);
                         break;
                     case NIST_13:
                         this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
