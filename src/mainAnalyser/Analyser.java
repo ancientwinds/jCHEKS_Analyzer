@@ -27,13 +27,13 @@ public class Analyser {
         types.add(AnalyserType.DISTANCE_EVOLUTION);*/
         //types.add(AnalyserType.KEY_REPETITION); 
         
-        //types.add(AnalyserType.NIST_9);
-        //types.add(AnalyserType.NIST_10);
-        //types.add(AnalyserType.NIST_12);
+        types.add(AnalyserType.NIST_9);
+        types.add(AnalyserType.NIST_10);
+        types.add(AnalyserType.NIST_12);
 
         
-        //AbstractMainAnalyser analyser = new MainAnalyser(types);
-        AbstractMainAnalyser analyser = new PRNGAnalyser(types);
+        AbstractMainAnalyser analyser = new MainAnalyser(types);
+        //AbstractMainAnalyser analyser = new PRNGAnalyser(types);
         
         try {       
             analyser.analyse();
