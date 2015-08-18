@@ -1,6 +1,5 @@
 package mainAnalyser;
 
-import com.archosResearch.jCHEKS.chaoticSystem.ChaoticSystem;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.io.*;
