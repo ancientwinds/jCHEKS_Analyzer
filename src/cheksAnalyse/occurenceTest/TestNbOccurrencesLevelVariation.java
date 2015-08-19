@@ -1,6 +1,9 @@
 package cheksAnalyse.occurenceTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,13 +28,21 @@ public class TestNbOccurrencesLevelVariation extends AbstractOccurenceTest{
     @Override
     protected void scan(AbstractChaoticSystem system) {
         if(this.lastKey == null) {
-            this.lastKey = system.getKey();
-        } else {
-            this.currentKey = system.getKey();
-            for(int i = 0; i < system.getAgentsCount(); i++) {
-                this.distributions[i].registerValue(getVariationByAgent(i));
+            try {
+                this.lastKey = system.getKey();
+            } catch (ChaoticSystemException ex) {
+                Logger.getLogger(TestNbOccurrencesLevelVariation.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.lastKey = currentKey;
+        } else {
+            try {
+                this.currentKey = system.getKey();
+                for(int i = 0; i < system.getAgentsCount(); i++) {
+                    this.distributions[i].registerValue(getVariationByAgent(i));
+                }
+                this.lastKey = currentKey;
+            } catch (ChaoticSystemException ex) {
+                Logger.getLogger(TestNbOccurrencesLevelVariation.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }  
     }    
       

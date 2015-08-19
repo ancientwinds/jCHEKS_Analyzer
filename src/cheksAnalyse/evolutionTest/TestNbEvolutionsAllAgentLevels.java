@@ -1,7 +1,10 @@
 package cheksAnalyse.evolutionTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,9 +37,13 @@ public class TestNbEvolutionsAllAgentLevels extends AbstractEvolutionTest{
     
     @Override
     protected void scan(AbstractChaoticSystem chaoticSystem) {
-        byte[] array = chaoticSystem.getKey();
-        for (int i = 0; i < ammountOfByte; i++) {
-            this.bytesSaw[i].add(array[i]);
+        try {
+            byte[] array = chaoticSystem.getKey();
+            for (int i = 0; i < ammountOfByte; i++) {
+                this.bytesSaw[i].add(array[i]);
+            }
+        } catch (ChaoticSystemException ex) {
+            complete();
         }
     }
     

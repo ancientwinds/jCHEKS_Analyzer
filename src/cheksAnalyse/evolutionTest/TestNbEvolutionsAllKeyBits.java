@@ -2,7 +2,10 @@ package cheksAnalyse.evolutionTest;
 
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,15 +38,19 @@ public class TestNbEvolutionsAllKeyBits extends AbstractEvolutionTest{
     
     @Override
     protected void scan(AbstractChaoticSystem chaoticSystem) {
-        byte[] array = chaoticSystem.getKey();
-        currentKey = array;
-        boolean[] booleans = Utils.bytesToBooleanArray(array);
-        for (int i = 0; i < ammountOfBit; i++) {
-            if(booleans[i]){
-                truesSaw[i] = true;
-            }else{
-                falsesSaw[i] = true;
+        try {
+            byte[] array = chaoticSystem.getKey();
+            currentKey = array;
+            boolean[] booleans = Utils.bytesToBooleanArray(array);
+            for (int i = 0; i < ammountOfBit; i++) {
+                if(booleans[i]){
+                    truesSaw[i] = true;
+                }else{
+                    falsesSaw[i] = true;
+                }
             }
+        } catch (ChaoticSystemException ex) {
+            complete();
         }
     }
     

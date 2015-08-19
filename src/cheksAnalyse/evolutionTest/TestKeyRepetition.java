@@ -70,12 +70,16 @@ public class TestKeyRepetition extends AbstractEvolutionTest {
     @Override
     protected void verify() {
         if(sleep)sleep = false;
-        else if (hare.getKey() == tortoise.getKey()) {
-            System.out.println("CYCLE FOUND");
-            System.out.println("STEPS " + lam);
-            System.out.println("HARE " + harePosition);
-            System.out.println("TORTOISE " + tortoisePosition);
-            complete();
+        else try {
+            if (hare.getKey() == tortoise.getKey()) {
+                System.out.println("CYCLE FOUND");
+                System.out.println("STEPS " + lam);
+                System.out.println("HARE " + harePosition);
+                System.out.println("TORTOISE " + tortoisePosition);
+                complete();
+            }
+        } catch (ChaoticSystemException ex) {
+            Logger.getLogger(TestKeyRepetition.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -83,8 +87,12 @@ public class TestKeyRepetition extends AbstractEvolutionTest {
     protected void log() {
         super.log();
         if (logEnabled) {
-            System.out.println("HARE " + Arrays.toString(hare.getKey()));
-            System.out.println("TORTOISE " + Arrays.toString(tortoise.getKey()));
+            try {
+                System.out.println("HARE " + Arrays.toString(hare.getKey()));
+                System.out.println("TORTOISE " + Arrays.toString(tortoise.getKey()));
+            } catch (ChaoticSystemException ex) {
+                Logger.getLogger(TestKeyRepetition.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

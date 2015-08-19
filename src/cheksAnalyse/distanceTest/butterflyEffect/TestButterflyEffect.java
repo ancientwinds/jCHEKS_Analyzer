@@ -52,7 +52,11 @@ public class TestButterflyEffect extends AbstractDistanceTest {
             } catch (Exception ex) {
                 Logger.getLogger(TestButterflyEffect.class.getName()).log(Level.SEVERE, null, ex);
             }
-            clone.evolveSystem();
+            try {
+                clone.evolveSystem();
+            } catch (Exception ex) {
+                Logger.getLogger(TestButterflyEffect.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

@@ -1,7 +1,10 @@
 package cheksAnalyse;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mainAnalyser.AbstractSaver;
 
 /**
@@ -31,10 +34,14 @@ public class CheksAnalyserBytes extends AbstractCheksAnalyser{
     
     @Override
     protected void scan(AbstractChaoticSystem chaoticSystem) {
-        byte[] array = chaoticSystem.getKey();
-        
-        for (int i = 0; i < ammountOfBytes; i++) {
-            this.bytesSaw.add(array[i]);
+        try {
+            byte[] array = chaoticSystem.getKey();
+            
+            for (int i = 0; i < ammountOfBytes; i++) {
+                this.bytesSaw.add(array[i]);
+            }
+        } catch (ChaoticSystemException ex) {
+            Logger.getLogger(CheksAnalyserBytes.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

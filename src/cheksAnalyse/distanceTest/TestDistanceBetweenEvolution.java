@@ -1,6 +1,7 @@
 package cheksAnalyse.distanceTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
 import java.util.logging.*;
 import mainAnalyser.AbstractSaver;
 
@@ -36,7 +37,11 @@ public class TestDistanceBetweenEvolution extends AbstractDistanceTest{
                 Logger.getLogger(TestDistanceBetweenEvolution.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            lastKey = system.getKey();
+            try {
+                lastKey = system.getKey();
+            } catch (ChaoticSystemException ex) {
+                Logger.getLogger(TestDistanceBetweenEvolution.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

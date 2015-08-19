@@ -3,6 +3,9 @@ package cheksAnalyse.nistTest;
 import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -60,8 +63,12 @@ public abstract class AbstractNistTest extends AbstractCheksAnalyser {
             this.executeTest(bits);
             this.testExecuted = true;
         } else {
-            byte[] key = system.getKey();
-            this.appendKey(key);
+            try {
+                byte[] key = system.getKey();
+                this.appendKey(key);
+            } catch (ChaoticSystemException ex) {
+                Logger.getLogger(AbstractNistTest.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

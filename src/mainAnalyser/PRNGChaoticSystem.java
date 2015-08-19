@@ -1,7 +1,8 @@
 package mainAnalyser;
 
+import com.archosResearch.jCHEKS.chaoticSystem.exception.NoKeyAvailableException;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
+import com.archosResearch.jCHEKS.concept.exception.*;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -34,7 +35,16 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
     }
     
     @Override
-    public void evolveSystem(int factor) {
+    public byte[] getKey() throws ChaoticSystemException {
+        if(this.keyCount < 1000000) {
+            return this.lastGeneratedKey;
+        } else {
+            throw new NoKeyAvailableException("No more key");
+        }
+    }
+    
+    @Override
+    public void evolveSystem(int factor) {        
         this.keyCount++;
         if(this.keyCount % keyPerLine == 0 && this.keyCount != 0) {
             try {
@@ -44,11 +54,7 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
             }
         }
         this.lastGeneratedKey = this.keys.get(keyCount - (keyPerLine *(keyCount / keyPerLine)));
-    }
-    
-    @Override
-    public void evolveSystem() {
-        this.evolveSystem(0);
+
     }
     
     private void loadKey() throws FileNotFoundException, IOException {        
@@ -113,16 +119,5 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
     protected void generateSystem(int keyLength, Random random) throws ChaoticSystemException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public static void main(String[] args) throws IOException {
-        PRNGChaoticSystem c = new PRNGChaoticSystem("PRNGSystem/mt19937_0.txt");
         
-        for(int i = 0; i <= 201; i++) {
-            System.out.println(i);
-            System.out.println(Arrays.toString(c.getKey()));
-            c.evolveSystem();
-            
-        }
-    }
-    
 }
