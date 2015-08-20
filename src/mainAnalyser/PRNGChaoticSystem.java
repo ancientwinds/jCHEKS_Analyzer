@@ -19,7 +19,7 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
     private int keyCount = 0;
     private final int keyPerLine = 100;
     
-    private static final int HEADER_LENGTH = 2;
+    private static final int HEADER_LENGTH = 4;
     
     private List<byte[]> keys;
     

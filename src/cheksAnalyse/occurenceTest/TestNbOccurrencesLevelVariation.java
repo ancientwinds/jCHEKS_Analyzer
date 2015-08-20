@@ -2,8 +2,6 @@ package cheksAnalyse.occurenceTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -31,7 +29,7 @@ public class TestNbOccurrencesLevelVariation extends AbstractOccurenceTest{
             try {
                 this.lastKey = system.getKey();
             } catch (ChaoticSystemException ex) {
-                Logger.getLogger(TestNbOccurrencesLevelVariation.class.getName()).log(Level.SEVERE, null, ex);
+                complete();
             }
         } else {
             try {
@@ -41,7 +39,7 @@ public class TestNbOccurrencesLevelVariation extends AbstractOccurenceTest{
                 }
                 this.lastKey = currentKey;
             } catch (ChaoticSystemException ex) {
-                Logger.getLogger(TestNbOccurrencesLevelVariation.class.getName()).log(Level.SEVERE, null, ex);
+                complete();
             }
         }  
     }    

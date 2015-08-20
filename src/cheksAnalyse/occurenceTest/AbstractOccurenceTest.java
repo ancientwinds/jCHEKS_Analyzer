@@ -33,7 +33,7 @@ public abstract class AbstractOccurenceTest extends AbstractCheksAnalyser{
 
     @Override
     protected void verify() {
-        if(this.getEvolutionCount() == this.iterations + 1) {
+        if(this.getEvolutionCount() == this.iterations) {
             this.complete();
         }
     }    

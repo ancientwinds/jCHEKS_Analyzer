@@ -29,7 +29,7 @@ public class TestNbOccurrencesLevel extends AbstractOccurenceTest{
             try {
                 this.distributions[i].registerValue(chaoticSystem.getKey()[i]);
             } catch (ChaoticSystemException ex) {
-                Logger.getLogger(TestNbOccurrencesLevel.class.getName()).log(Level.SEVERE, null, ex);
+                complete();
             }
         }
     }
