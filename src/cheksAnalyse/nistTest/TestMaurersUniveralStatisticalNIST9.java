@@ -40,7 +40,10 @@ public class TestMaurersUniveralStatisticalNIST9 extends AbstractNistTest {
     }
     
     public double calculatePValue(double f) {
-        return erfc(Math.abs((f - 6.1962507) / (Math.sqrt(2) * 3.125)));
+        int K = (int) (Math.floor(this.bitsNeeded / this.blockLength) - this.blockForInitialization);
+        double c = 0.7 - 0.8 / (double) this.blockLength + (4.0 + 32.0 / (double) this.blockLength) * Math.pow(K, -3.0 / (double) this.blockLength) / 15;
+        double sigma = c * Math.sqrt(3.125 / (double) K);
+        return erfc(Math.abs((f - 6.1962507) / (Math.sqrt(2) * sigma)));
     }
     
     public double calculateF(double[] sums) {

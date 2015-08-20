@@ -6,4 +6,5 @@
 /system2/
 /TestRange/
 *.db
+*.sre
 complete.db
