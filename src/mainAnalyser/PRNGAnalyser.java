@@ -3,9 +3,13 @@ package mainAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -54,4 +58,21 @@ public class PRNGAnalyser extends AbstractMainAnalyser{
         }
         this.analysers.clear();
     }    
+    
+    public static void main(String[] args) throws IOException {
+        
+        PRNGChaoticSystem s = new PRNGChaoticSystem("secure_0.txt");
+        
+        for(int i = 0; i < 1000003; i++) {
+            if(i % 1000 == 0) {
+                System.out.println(i);
+            }
+            try {
+                s.getKey();
+                s.evolveSystem();
+            } catch (ChaoticSystemException ex) {
+                System.out.println("Exception at: " + i);
+            }
+        }
+    }
 }

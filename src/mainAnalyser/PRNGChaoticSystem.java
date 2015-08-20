@@ -1,6 +1,6 @@
 package mainAnalyser;
 
-import com.archosResearch.jCHEKS.chaoticSystem.exception.NoKeyAvailableException;
+import com.archosResearch.jCHEKS.concept.exception.NoKeyAvailableException;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.*;
 import java.io.*;

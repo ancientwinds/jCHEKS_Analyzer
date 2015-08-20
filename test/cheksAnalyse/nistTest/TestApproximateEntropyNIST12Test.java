@@ -257,6 +257,44 @@ public class TestApproximateEntropyNIST12Test {
         assertEquals(0.261961, pValue, 0.000001); 
     }
     
+    @Test
+    public void testCalculatePValue2() throws Exception {
+        
+        ArrayList<byte[]> keys = new ArrayList();
+        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
+        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
+        TestApproximateEntropyNIST12 instance2 = new TestApproximateEntropyNIST12(sys, 100, 2);
+        
+        boolean bits[] = new boolean[100];
+
+        String bitsString = "1100100100001111110110101010001000100001011010001100001000110100110001001100011001100010100010111000";
+        for(int i = 0; i < bitsString.length(); i++) {
+            bits[i] = bitsString.substring(i, i + 1).equals("1");
+        }
+        
+        boolean[] augemented1 = instance2.augmentBits(bits, 1);
+        boolean[] augemented2 = instance2.augmentBits(bits, 3);
+        
+        boolean[][] blocks1 = instance2.createOverlappingBlocks(augemented1, 2);
+        boolean[][] blocks2 = instance2.createOverlappingBlocks(augemented2, 3);
+        
+        int[] occurences1 = instance2.countOccurence(blocks1, 2);
+        int[] occurences2 = instance2.countOccurence(blocks2, 3);
+        
+        double[] c1 = instance2.computeC(occurences1);
+        double[] c2 = instance2.computeC(occurences2);
+        
+        double q1 = instance2.computeQ(c1);
+        double q2 = instance2.computeQ(c2);
+        
+        double obs = instance2.calculateObs(q1, q2);
+        
+        double pValue = instance2.calculatePValue(obs);
+        
+        assertEquals(0.235301, pValue, 0.000001); 
+    }
+    
+    
     public void assertBooleanArray(boolean[] array1, boolean[] array2) {
         assertEquals(array1.length, array2.length);
         
