@@ -43,9 +43,11 @@ public class TestApproximateEntropyNIST12 extends AbstractNistTest{
         
         double obs = this.calculateObs(q1, q2);
         
-        this.pValue = this.calculatePValue(obs);
+        System.out.println(obs);
+        double p = this.calculatePValue(obs);
+        this.pValue = p;
         this.passed = this.pValue > 0.01;
-       }
+    }
     
     public boolean[] augmentBits(boolean[] bits, int m) {
         boolean[] augmented = new boolean[bits.length + m];
