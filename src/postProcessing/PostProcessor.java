@@ -1,7 +1,6 @@
 package postProcessing;
 
 import java.sql.*;
-import java.util.HashSet;
 
 /**
  *
@@ -18,14 +17,14 @@ public class PostProcessor {
     
     public PostProcessor() throws ClassNotFoundException, SQLException{
         connectToDatabase();
-        //overallButterfly();
+        overallButterfly();
         overallOccurenceLevelAgent();
         overallOccurenceVariation();
     }
     
     private void connectToDatabase() throws ClassNotFoundException, SQLException{
         Class.forName("org.sqlite.JDBC");
-        connection = DriverManager.getConnection("jdbc:sqlite:complete-128.db");
+        connection = DriverManager.getConnection("jdbc:sqlite:complete.db");
         connection.setAutoCommit(false);
     }
     
@@ -38,7 +37,7 @@ public class PostProcessor {
         while (resultSet.next()) {
             PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO overall_butterfly (chaotic_system_id, groupIndex, overallSum) VALUES (?,?,?)");
             insertStatement.setString(1, resultSet.getString("chaotic_system_id"));
-            insertStatement.setDouble(2, resultSet.getInt("distance"));
+            insertStatement.setDouble(2, resultSet.getInt("evolution_count"));
             insertStatement.setDouble(3, resultSet.getInt("evolution_sum"));
             insertStatement.executeUpdate();
         }   

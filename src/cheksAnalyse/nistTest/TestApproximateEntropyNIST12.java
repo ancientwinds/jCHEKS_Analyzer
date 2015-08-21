@@ -26,83 +26,50 @@ public class TestApproximateEntropyNIST12 extends AbstractNistTest{
 
     @Override
     public void executeTest(boolean[] bits) {
-        boolean[] augmented1 = this.augmentBits(bits, this.blockLength - 1);
-        boolean[] augmented2 = this.augmentBits(bits, this.blockLength + 1);
-        
-        boolean[][] blocks1 = Utils.partitionBitsInBlocks(augmented1, blockLength);
-        boolean[][] blocks2 = Utils.partitionBitsInBlocks(augmented2, blockLength + 1);
-        
-        int[] occurences1 = this.countOccurence(blocks1, blockLength);
-        int[] occurences2 = this.countOccurence(blocks2, blockLength + 1);
-        
-        double[] c1 = this.computeC(occurences1);
-        double[] c2 = this.computeC(occurences2);
-        
-        double q1 = this.computeQ(c1);
-        double q2 = this.computeQ(c2);
+        double q1 = this.computeQ(bits, blockLength);
+        double q2 = this.computeQ(bits, blockLength + 1);
         
         double obs = this.calculateObs(q1, q2);
         
-        System.out.println(obs);
-        double p = this.calculatePValue(obs);
-        this.pValue = p;
+        this.pValue = this.calculatePValue(obs);
         this.passed = this.pValue > 0.01;
     }
     
-    public boolean[] augmentBits(boolean[] bits, int m) {
-        boolean[] augmented = new boolean[bits.length + m];
-        
-        System.arraycopy(bits, 0, augmented, 0, bits.length);
-        System.arraycopy(bits, 0, augmented, bits.length, m);   
-        
-        return augmented;
-    }
-    
-    public boolean[][] createOverlappingBlocks(boolean[] bits, int m) {
-        boolean[][] blocks = new boolean[this.bitsNeeded][m];
-        
-        for(int i = 0; i < blocks.length; i++) {
-            System.arraycopy(bits, i, blocks[i], 0, m);
+     public double computeQ(boolean bits[], int m) {
+        double numOfBlocks = (double) this.bitsNeeded;
+        int powLen = (int) Math.pow(2, m + 1) - 1;
+        int p[] = new int[powLen];
+
+        for(int i = 1; i < powLen - 1; i++) {
+            p[i] = 0;
         }
-        
-        return blocks;
-    }
-    
-    public int[] countOccurence(boolean[][] blocks, int m) {
-        int[] occurence = new int[(int)Math.pow(2, m)];
-        
-        for(int i = 0; i < blocks.length; i++) {
-            occurence[Utils.convertBooleanArrayToInt(blocks[i])]++;
-        }
-        
-        return occurence;
-    }
-    
-    public double[] computeC(int[] occurences) {
-        double[] c = new double[occurences.length];
-        
-        for(int i = 0; i < c.length; i++) {
-            c[i] = (double)occurences[i] / this.bitsNeeded;
-        }
-        
-        return c;
-    }
-    
-    public double computeQ(double[] c) {
-        double result = 0;
-        
-        for(int i = 0; i < c.length; i++) {
-            double log = Math.log(c[i]);
-            if(Double.isFinite(log)) {
-                result += (double)c[i] * log;
+        for(int i = 0; i < numOfBlocks; i++) {
+            int k = 1;
+            for(int j = 0; j < m; j++){
+                k <<= 1;
+                if(bits[(i + j) % this.bitsNeeded]) {
+                    k++;
+                }
             }
+            p[k - 1]++;
         }
+
+        double sum = 0.0;
+        int index = (int) Math.pow(2, m) - 1;
+        for(int i = 0; i < (int)Math.pow(2, m); i++) {
+            if(p[index] > 0) {
+                sum += (double)p[index] * Math.log(p[index] / numOfBlocks);
+            }
+            index++;
+        }
+
+        sum /= numOfBlocks;
         
-        return result;
+        return sum;
     }
     
     public double calculateObs(double q1, double q2) {
-        return 2 * this.bitsNeeded * (Math.log(2) - (q1 - q2));
+        return 2.0 * this.bitsNeeded * (Math.log(2) - (q1 - q2));
     }
     
     public double calculatePValue(double obs) {
