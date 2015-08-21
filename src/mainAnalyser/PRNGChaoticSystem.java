@@ -13,38 +13,60 @@ import java.util.logging.*;
  */
 public class PRNGChaoticSystem extends AbstractChaoticSystem {
     
-    private String fileName;
-    private int keyCount = 0;
-    private int keyPerLine = 100;
+    public enum Encoding {
+        TEXT_BASE64,
+        TEXT_BINARY
+    }
     
-    private static  int HEADER_LENGTH = 5;
+    private final String fileName;
+    private int keyCount = 0;
+    private int keyPerLine;
+    
+    private static final int HEADER_LENGTH = 5;
+    private static final int ENCODING_LINE = 2;
     
     private List<byte[]> keys;
     
     boolean isNistData;
     
-    public PRNGChaoticSystem(String fileName) throws IOException {
-        this.isNistData = false;
-        this.init(fileName);
-    }
+    private Encoding encodingType;
     
-    public PRNGChaoticSystem(String fileName, boolean nistData) throws IOException {
-        this.isNistData = nistData;
-        this.init(fileName);
- 
-    }
-    
-    private void init(String fileName) throws IOException {
+    public PRNGChaoticSystem(String fileName) throws Exception {
+        this.readEncodingForFile(fileName);
         this.fileName = fileName;
         this.systemId = fileName;
-        if(this.isNistData) {
-            this.keyPerLine = 10;
-            HEADER_LENGTH = 0;
-        }
         this.loadKey();
         this.lastGeneratedKey = this.keys.get(0);
     }
     
+    private void readEncodingForFile(String fileName) throws Exception{
+        FileInputStream fstream = new FileInputStream(fileName);
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(fstream))) {
+            String line;
+            int count = 0;
+            while ((line = br.readLine()) != null)   {
+                if(count == ENCODING_LINE) {
+                    if(line.toLowerCase().contains("Encoding: ".toLowerCase())) {
+                        String encoding = line.split(" ")[1];
+                        if(encoding.toLowerCase().equals("text_base64".toLowerCase())) {
+                            this.encodingType = Encoding.TEXT_BASE64;
+                            this.keyPerLine = 100;
+                        } else if(encoding.toLowerCase().equals("text_binary".toLowerCase())) {
+                            this.encodingType = Encoding.TEXT_BINARY;
+                            this.keyPerLine = 10;
+                        }
+                        break;
+                    } else {
+                        throw new Exception("Could not find the encoding");
+                    }
+                }
+                count++;
+            }
+            br.close();
+        }
+        fstream.close();
+    }
+
     @Override
     public int getAgentsCount() {
         return this.lastGeneratedKey.length;
@@ -81,16 +103,22 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
             
             while ((line = br.readLine()) != null)   {
                 if(HEADER_LENGTH + (keyCount / keyPerLine) == count) {
-                    if(this.isNistData) {
-                        this.readNistKeys(line);
-                    } else {
-                        this.readKeys(line);
+                    switch (this.encodingType) {
+                        case TEXT_BASE64:
+                            this.readKeys(line);
+                            break;
+                        case TEXT_BINARY:
+                            this.readNistKeys(line);
+                            break;
                     }
                     break;
                 }
                 count++;
             }
+        
+            br.close();
         }
+        fstream.close();
         
         this.keys.get(keyCount - (keyPerLine *(keyCount / keyPerLine)));
     }

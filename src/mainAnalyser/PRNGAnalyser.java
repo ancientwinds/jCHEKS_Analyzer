@@ -4,7 +4,6 @@ import cheksAnalyse.AbstractCheksAnalyser;
 import cheksAnalyse.AbstractCheksAnalyser.AnalyserType;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -42,7 +41,7 @@ public class PRNGAnalyser extends AbstractMainAnalyser{
     
     @Override
     protected void analyseSystem(String systemName) throws Exception {
-        AbstractChaoticSystem currentChaoticSystem = new PRNGChaoticSystem("PRNGSystem/" + systemName, true);
+        AbstractChaoticSystem currentChaoticSystem = new PRNGChaoticSystem("PRNGSystem/" + systemName);
         this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
         
         while(!this.analysers.isEmpty()) {                
@@ -57,9 +56,9 @@ public class PRNGAnalyser extends AbstractMainAnalyser{
         this.analysers.clear();
     }    
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         
-        PRNGChaoticSystem s = new PRNGChaoticSystem("PRNGSystem/cleaned.e", true);
+        PRNGChaoticSystem s = new PRNGChaoticSystem("PRNGSystem/cleaned.e");
         
         for(int i = 0; i < 10; i++) {
             if(i % 1000 == 0) {
