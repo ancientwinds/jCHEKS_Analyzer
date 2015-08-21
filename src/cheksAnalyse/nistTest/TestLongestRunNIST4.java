@@ -16,7 +16,7 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
     private int blockLength = 128;
 
     public static String TABLE_NAME = "LongestRun_NIST_4";
-    private final double ratios[] = {0.1174, 0.2430, 0.2493, 0.1752, 0.1027, 0.1124};
+    private final double ratios[] = {0.1174035788, 0.242955959, 0.249363483, 0.17517706, 0.102701071, 0.112398847};
 
     public TestLongestRunNIST4(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 6272);

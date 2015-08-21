@@ -39,15 +39,28 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
         this.passed = pValue > 0.01;
     }
     
+    private double calculatePWithR(int r) {
+        double product = 1;
+        for(int i = 0; i <= r - 1; i++) {
+            product *= ((1.e0-Math.pow(2, i-32.0))*(1.e0-Math.pow(2, i-32.0)))/(1.e0-Math.pow(2, i-(double)r));
+        }
+        
+        return Math.pow(2, (double)r * (32.0 + 32.0 - (double)r) - 32.0 * 32.0) * product;
+    }
+    
     public double calculateXobs(int[] ranks) {
         int k = this.bitsNeeded / (this.rowsMatrix * this.columnsMatrix);
         int Fm = this.countMatrixWithRank(ranks, this.rowsMatrix);
         int Fm1 = this.countMatrixWithRank(ranks, this.rowsMatrix - 1);
         int remaining = ranks.length - Fm - Fm1;
         
-        double xObs = (Math.pow(((double)Fm - (0.2888 * (double)k)), 2) / (0.2888 * (double)k));
-        xObs += (Math.pow(((double)Fm1 - (0.5776 * (double)k)), 2) / (0.5776 * (double)k)); 
-        xObs += (Math.pow(((double)remaining - (0.1336 * (double)k)), 2) / (0.1336 * (double)k));
+        double p1 = this.calculatePWithR(32);
+        double p2 = this.calculatePWithR(31);
+        double p3 = 1.0 - (p1 + p2);
+        
+        double xObs = (Math.pow(((double)Fm - (p1 * (double)k)), 2) / (p1 * (double)k));
+        xObs += (Math.pow(((double)Fm1 - (p2 * (double)k)), 2) / (p2 * (double)k)); 
+        xObs += (Math.pow(((double)remaining - (p3 * (double)k)), 2) / (p3 * (double)k));
         return xObs;
     }
     

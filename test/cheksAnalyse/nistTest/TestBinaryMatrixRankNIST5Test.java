@@ -68,7 +68,7 @@ public class TestBinaryMatrixRankNIST5Test {
         
         double xObs = instance.calculateXobs(ranks);
         
-        assertEquals(0.596953, xObs, 0.000001);
+        assertEquals(0.597059, xObs, 0.000001);
     }
     
     @Test
@@ -80,7 +80,7 @@ public class TestBinaryMatrixRankNIST5Test {
         
         double xObs = instance.calculateXobs(ranks);
         double pValue = instance.calculatePValue(xObs);
-        assertEquals(0.741948, pValue, 0.000001);
+        assertEquals(0.741908, pValue, 0.000001);
     }
 
     

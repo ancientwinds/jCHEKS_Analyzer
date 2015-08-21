@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -44,7 +42,7 @@ public class PRNGAnalyser extends AbstractMainAnalyser{
     
     @Override
     protected void analyseSystem(String systemName) throws Exception {
-        AbstractChaoticSystem currentChaoticSystem = new PRNGChaoticSystem("PRNGSystem/" + systemName);
+        AbstractChaoticSystem currentChaoticSystem = new PRNGChaoticSystem("PRNGSystem/" + systemName, true);
         this.analysers = AbstractCheksAnalyser.createAnalyser(types, currentChaoticSystem);
         
         while(!this.analysers.isEmpty()) {                
@@ -61,14 +59,14 @@ public class PRNGAnalyser extends AbstractMainAnalyser{
     
     public static void main(String[] args) throws IOException {
         
-        PRNGChaoticSystem s = new PRNGChaoticSystem("secure_0.txt");
+        PRNGChaoticSystem s = new PRNGChaoticSystem("PRNGSystem/cleaned.e", true);
         
-        for(int i = 0; i < 1000003; i++) {
+        for(int i = 0; i < 10; i++) {
             if(i % 1000 == 0) {
                 System.out.println(i);
             }
             try {
-                s.getKey();
+                System.out.println(Arrays.toString(s.getKey()));
                 s.evolveSystem();
             } catch (ChaoticSystemException ex) {
                 System.out.println("Exception at: " + i);

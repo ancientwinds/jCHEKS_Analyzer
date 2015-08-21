@@ -91,6 +91,7 @@ public class TestMaurersUniveralStatisticalNIST9Test {
         assertEquals(1.1949875, f, 0.000000001);
     }   
     
+    //TODO It's ok if it fail because of some hardcoded variable.
     @Test
     public void testCalculatePValue() {
         boolean bits[] = {false, true, false, true, true, false, true, false, false, true, true, true, false, true, false, true, false, true, true, true};

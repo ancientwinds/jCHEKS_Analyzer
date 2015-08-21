@@ -13,16 +13,34 @@ import java.util.logging.*;
  */
 public class PRNGChaoticSystem extends AbstractChaoticSystem {
     
-    private final String fileName;
+    private String fileName;
     private int keyCount = 0;
-    private final int keyPerLine = 100;
+    private int keyPerLine = 100;
     
-    private static final int HEADER_LENGTH = 4;
+    private static  int HEADER_LENGTH = 5;
     
     private List<byte[]> keys;
     
+    boolean isNistData;
+    
     public PRNGChaoticSystem(String fileName) throws IOException {
+        this.isNistData = false;
+        this.init(fileName);
+    }
+    
+    public PRNGChaoticSystem(String fileName, boolean nistData) throws IOException {
+        this.isNistData = nistData;
+        this.init(fileName);
+ 
+    }
+    
+    private void init(String fileName) throws IOException {
         this.fileName = fileName;
+        this.systemId = fileName;
+        if(this.isNistData) {
+            this.keyPerLine = 10;
+            HEADER_LENGTH = 0;
+        }
         this.loadKey();
         this.lastGeneratedKey = this.keys.get(0);
     }
@@ -44,6 +62,7 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
     @Override
     public void evolveSystem(int factor) {        
         this.keyCount++;
+
         if(this.keyCount % keyPerLine == 0 && this.keyCount != 0) {
             try {
                 this.loadKey();
@@ -51,8 +70,7 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
                 Logger.getLogger(PRNGChaoticSystem.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        this.lastGeneratedKey = this.keys.get(keyCount - (keyPerLine *(keyCount / keyPerLine)));
-
+        this.lastGeneratedKey = this.keys.get(keyCount - (keyPerLine *(keyCount / keyPerLine)));       
     }
     
     private void loadKey() throws FileNotFoundException, IOException {        
@@ -63,7 +81,11 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
             
             while ((line = br.readLine()) != null)   {
                 if(HEADER_LENGTH + (keyCount / keyPerLine) == count) {
-                    this.readKeys(line);
+                    if(this.isNistData) {
+                        this.readNistKeys(line);
+                    } else {
+                        this.readKeys(line);
+                    }
                     break;
                 }
                 count++;
@@ -71,6 +93,30 @@ public class PRNGChaoticSystem extends AbstractChaoticSystem {
         }
         
         this.keys.get(keyCount - (keyPerLine *(keyCount / keyPerLine)));
+    }
+    
+    private void readNistKeys(String line) {
+        this.keys = new ArrayList();
+
+        int length = (line.length() / keyPerLine);
+        for(int i = 0; i < keyPerLine; i++) {
+            String key = line.substring(i * length, length + (i * length)); 
+            
+            boolean bits[] = new boolean[256];
+            for(int j = 0; j < key.length(); j++) {
+                bits[j] = (key.charAt(j) == '1');
+            }
+            
+            byte[] toReturn = new byte[bits.length / 8];
+            for (int entry = 0; entry < toReturn.length; entry++) {
+                for (int bit = 0; bit < 8; bit++) {
+                    if (bits[entry * 8 + bit]) {
+                        toReturn[entry] |= (128 >> bit);
+                    }
+                }
+            }
+            this.keys.add(toReturn);
+        }
     }
     
     private void readKeys(String line) {

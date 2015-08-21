@@ -116,7 +116,7 @@ public class TestLongestRunNIST4Test {
         
         double X2Obs = instance.calculateX2Obs(instance.calculateBucketContent(lengths));
         
-        assertEquals(61.5016, X2Obs, 0.0001);
+        assertEquals(61.5002, X2Obs, 0.0001);
     }
     
     @Test

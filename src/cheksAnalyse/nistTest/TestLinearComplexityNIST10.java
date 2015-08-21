@@ -15,7 +15,7 @@ public class TestLinearComplexityNIST10 extends AbstractNistTest{
 
     private int blockLength = 1000;
     
-    private final double[] ratios = {0.010417, 0.03125, 0.125, 0.5, 0.25, 0.0625, 0.020833};
+    private final double[] ratios = {0.01047, 0.03125, 0.12500, 0.50000, 0.25000, 0.06250, 0.020833};
     
     public TestLinearComplexityNIST10(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 1000000);
@@ -53,7 +53,7 @@ public class TestLinearComplexityNIST10 extends AbstractNistTest{
         double[] t = new double[complexities.length];
         double u = this.calculateU();
         for(int i = 0; i < complexities.length; i++) {
-            t[i] = Math.pow(-1, this.blockLength) * (complexities[i] - u) + 2/9;
+            t[i] = Math.pow(-1, this.blockLength) * (complexities[i] - u) + 2.0/9.0;
         }
         
         return t;
