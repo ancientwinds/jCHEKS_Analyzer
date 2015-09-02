@@ -131,7 +131,7 @@ public abstract class AbstractCheksAnalyser implements Serializable{
                     analyserList.add(new TestBinaryMatrixRankNIST5(system));
                     break;
                 case NIST_6:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestDiscreteFourierTransformNIST6(system));
                     break;
                 case NIST_7:
                     analyserList.add(new TestFrequencyMonobitNIST1(system));
