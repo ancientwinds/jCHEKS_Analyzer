@@ -10,12 +10,12 @@ import mainAnalyser.AbstractSaver;
 public class TestOverlappingTemplateMatchingNIST8 extends AbstractNistTest{
 
     
-    public static final int BITS_NEEDED = 0;
+    public static final int BITS_NEEDED = 0; 
     public static final String TABLE_NAME = "overlapping_template_matching_NIST_8";
     
     public TestOverlappingTemplateMatchingNIST8(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, BITS_NEEDED);
-        this.type = AnalyserType.NIST_7;
+        this.type = AnalyserType.NIST_8;
     }
     
     @Override
