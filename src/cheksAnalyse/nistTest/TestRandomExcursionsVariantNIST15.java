@@ -29,7 +29,7 @@ public class TestRandomExcursionsVariantNIST15 extends AbstractNistTest{
 
     @Override
     public String getTableName() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return TABLE_NAME;
     }
     
 }
