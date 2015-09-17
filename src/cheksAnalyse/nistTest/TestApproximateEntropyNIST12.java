@@ -76,11 +76,6 @@ public class TestApproximateEntropyNIST12 extends AbstractNistTest{
     }
 
     @Override
-    public void saveResult(AbstractSaver saver) {
-        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
-    }
-    
-    @Override
     public String getTableName() {
         return TABLE_NAME;
     }

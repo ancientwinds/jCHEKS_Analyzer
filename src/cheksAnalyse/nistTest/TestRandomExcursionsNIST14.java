@@ -23,11 +23,6 @@ public class TestRandomExcursionsNIST14 extends AbstractNistTest{
     }
 
     @Override
-    public void saveResult(AbstractSaver saver) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public String getTableName() {
         return TABLE_NAME;
     }

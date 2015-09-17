@@ -112,11 +112,6 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
     public double calculatePValue(double X2Obs) {
         return regularizedGammaQ((double)5/(double)2, X2Obs/(double)2);
     }
-        
-    @Override
-    public void saveResult(AbstractSaver saver) {
-        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
-    }
     
     @Override
     public String getTableName() {

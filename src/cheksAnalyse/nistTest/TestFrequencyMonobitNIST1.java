@@ -56,11 +56,6 @@ public class TestFrequencyMonobitNIST1 extends AbstractNistTest{
     public double calculatePValue(double Sobs, int Sn) {
         return erfc(Sobs / Math.sqrt(2));
     }
-
-    @Override
-    public void saveResult(AbstractSaver saver) {
-        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
-    }
     
     @Override
     public String getTableName() {

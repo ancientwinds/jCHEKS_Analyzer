@@ -20,12 +20,7 @@ public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
     public void executeTest(boolean[] bits) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void saveResult(AbstractSaver saver) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     @Override
     public String getTableName() {
         return TABLE_NAME;
