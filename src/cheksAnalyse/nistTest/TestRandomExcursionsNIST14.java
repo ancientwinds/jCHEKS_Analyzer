@@ -14,7 +14,7 @@ public class TestRandomExcursionsNIST14 extends AbstractNistTest{
     
     public TestRandomExcursionsNIST14(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, BITS_NEEDED);
-        this.type = AnalyserType.NIST_7;
+        this.type = AnalyserType.NIST_14;
     }
     
     @Override
