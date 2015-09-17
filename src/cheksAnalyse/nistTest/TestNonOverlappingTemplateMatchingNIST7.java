@@ -9,7 +9,7 @@ import mainAnalyser.AbstractSaver;
  */
 public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
 
-    public static final int BITS_NEEDED = 100000;
+    public static final int BITS_NEEDED = 0; //TODO Set this value
     public static final String TABLE_NAME = "non_overlapping_template_matching_NIST_7";
     public TestNonOverlappingTemplateMatchingNIST7(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, BITS_NEEDED);
