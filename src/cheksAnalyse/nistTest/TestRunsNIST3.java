@@ -13,9 +13,10 @@ import static org.apache.commons.math3.special.Erf.erfc;
 public class TestRunsNIST3 extends AbstractNistTest{
     
     public static String TABLE_NAME = "Runs_NIST_3";
-
+    public static final int BITS_NEEDED = 100000;
+    
     public TestRunsNIST3(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_3;
 
     }

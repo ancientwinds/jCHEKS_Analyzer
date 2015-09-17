@@ -13,9 +13,10 @@ import static org.apache.commons.math3.special.Erf.erfc;
 public class TestFrequencyMonobitNIST1 extends AbstractNistTest{
     
     public static String TABLE_NAME = "FrequencyMonobit_NIST_1";
+    public static final int BITS_NEEDED = 100000;
     
     public TestFrequencyMonobitNIST1(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_1;
 
     }

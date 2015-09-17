@@ -11,9 +11,10 @@ import static org.apache.commons.math3.special.Erf.erfc;
 public class TestDiscreteFourierTransformNIST6 extends AbstractNistTest {
     
     public static String TABLE_NAME = "Discrete_Fourier_Transform_NIST_6";
-
+    public static final int BITS_NEEDED = 100000;
+    
     public TestDiscreteFourierTransformNIST6(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
         throw new Exception("Not supported");
     }
     

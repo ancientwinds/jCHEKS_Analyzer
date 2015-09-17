@@ -16,9 +16,9 @@ public class TestLinearComplexityNIST10 extends AbstractNistTest{
     private int blockLength = 1000;
     
     private final double[] ratios = {0.01047, 0.03125, 0.12500, 0.50000, 0.25000, 0.06250, 0.020833};
-    
+    public static final int BITS_NEEDED = 1000000;
     public TestLinearComplexityNIST10(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 1000000);
+        super(chaoticSystem, BITS_NEEDED);
     }
     
     public TestLinearComplexityNIST10(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {

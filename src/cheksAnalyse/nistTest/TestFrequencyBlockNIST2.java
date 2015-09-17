@@ -16,10 +16,10 @@ public class TestFrequencyBlockNIST2 extends AbstractNistTest{
 
     private int blockLength = 2000;
     public static String TABLE_NAME = "FrequencyBlock_NIST_2";
-
+    public static final int BITS_NEEDED = 100000;
     
     public TestFrequencyBlockNIST2(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_2;
     }
     

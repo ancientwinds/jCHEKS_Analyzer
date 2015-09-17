@@ -17,10 +17,10 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
 
     public static String TABLE_NAME = "LongestRun_NIST_4";
     private final double ratios[] = {0.1174035788, 0.242955959, 0.249363483, 0.17517706, 0.102701071, 0.112398847};
-
+    public static final int BITS_NEEDED = 6272;
     public TestLongestRunNIST4(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 6272);
-        this.bitsNeeded = 6272;
+        super(chaoticSystem, BITS_NEEDED);
+        this.bitsNeeded = BITS_NEEDED;
         this.type = AnalyserType.NIST_4; 
     }
     

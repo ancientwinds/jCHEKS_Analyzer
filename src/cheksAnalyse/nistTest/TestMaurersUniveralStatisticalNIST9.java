@@ -15,7 +15,7 @@ public class TestMaurersUniveralStatisticalNIST9 extends AbstractNistTest {
     private int blockForInitialization = 1280;
     
     public static String TABLE_NAME = "Maurers_Universal_Statistical_NIST_9";
-
+    
     public TestMaurersUniveralStatisticalNIST9(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 1000000);
     }

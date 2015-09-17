@@ -14,9 +14,10 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
     
     private int rowsMatrix = 32;
     private int columnsMatrix = 32;
+    public static final int BITS_NEEDED = 100000;
     
     public TestBinaryMatrixRankNIST5(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_5;
     }
     
