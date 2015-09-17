@@ -2,7 +2,6 @@ package cheksAnalyse.nistTest;
 
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.AbstractSaver;
 import static org.apache.commons.math3.special.Erf.erfc;
 
 /**
