@@ -60,13 +60,13 @@ public class SQLiteSaver extends AbstractSaver{
                         this.createNistTable(TestBinaryMatrixRankNIST5.TABLE_NAME);
                         break;
                     case NIST_6:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestDiscreteFourierTransformNIST6.TABLE_NAME);
                         break;
                     case NIST_7:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestNonOverlappingTemplateMatchingNIST7.TABLE_NAME);
                         break;
                     case NIST_8:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestOverlappingTemplateMatchingNIST8.TABLE_NAME);
                         break;
                     case NIST_9:
                         this.createNistTable(TestMaurersUniveralStatisticalNIST9.TABLE_NAME);
@@ -75,19 +75,19 @@ public class SQLiteSaver extends AbstractSaver{
                         this.createNistTable(TestLinearComplexityNIST10.TABLE_NAME);
                         break;
                     case NIST_11:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestSerialNIST11.TABLE_NAME);
                         break;
                     case NIST_12:
                         this.createNistTable(TestApproximateEntropyNIST12.TABLE_NAME);
                         break;
                     case NIST_13:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestCumulativeSumsNIST13.TABLE_NAME);
                         break;
                     case NIST_14:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestRandomExcursionsNIST14.TABLE_NAME);
                         break;
                     case NIST_15:
-                        this.createNistTable(TestFrequencyMonobitNIST1.TABLE_NAME);
+                        this.createNistTable(TestRandomExcursionsVariantNIST15.TABLE_NAME);
                         break;
                     case DISTANCE_EVOLUTION:
                         this.createDistanceTable(TestDistanceBetweenEvolution.TABLE_NAME);
@@ -248,34 +248,34 @@ public class SQLiteSaver extends AbstractSaver{
                         this.deleteTable(TestBinaryMatrixRankNIST5.TABLE_NAME);                       
                         break;
                     case NIST_6:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestDiscreteFourierTransformNIST6.TABLE_NAME);                       
                         break;
                     case NIST_7:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestNonOverlappingTemplateMatchingNIST7.TABLE_NAME);                       
                         break;
                     case NIST_8:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestOverlappingTemplateMatchingNIST8.TABLE_NAME);                       
                         break;
                     case NIST_9:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestMaurersUniveralStatisticalNIST9.TABLE_NAME);                       
                         break;
                     case NIST_10:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestLinearComplexityNIST10.TABLE_NAME);                       
                         break;
                     case NIST_11:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestSerialNIST11.TABLE_NAME);                       
                         break;
                     case NIST_12:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestApproximateEntropyNIST12.TABLE_NAME);                       
                         break;
                     case NIST_13:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestCumulativeSumsNIST13.TABLE_NAME);                       
                         break;
                     case NIST_14:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestRandomExcursionsNIST14.TABLE_NAME);                       
                         break;
                     case NIST_15:
-                        this.deleteTable(TestFrequencyMonobitNIST1.TABLE_NAME);                       
+                        this.deleteTable(TestRandomExcursionsVariantNIST15.TABLE_NAME);                       
                         break;
                     case DISTANCE_EVOLUTION:
                         this.deleteTable(TestDistanceBetweenEvolution.TABLE_NAME);                       
