@@ -134,10 +134,10 @@ public abstract class AbstractCheksAnalyser implements Serializable{
                     analyserList.add(new TestDiscreteFourierTransformNIST6(system));
                     break;
                 case NIST_7:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestNonOverlappingTemplateMatchingNIST7(system));
                     break;
                 case NIST_8:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestOverlappingTemplateMatchingNIST8(system));
                     break;
                 case NIST_9:
                     analyserList.add(new TestMaurersUniveralStatisticalNIST9(system));
@@ -146,19 +146,19 @@ public abstract class AbstractCheksAnalyser implements Serializable{
                     analyserList.add(new TestLinearComplexityNIST10(system));
                     break;
                 case NIST_11:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestSerialNIST11(system));
                     break;
                 case NIST_12:
                     analyserList.add(new TestApproximateEntropyNIST12(system));
                     break;
                 case NIST_13:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestCumulativeSumsNIST13(system));
                     break;
                 case NIST_14:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestRandomExcursionsNIST14(system));
                     break;
                 case NIST_15:
-                    analyserList.add(new TestFrequencyMonobitNIST1(system));
+                    analyserList.add(new TestRandomExcursionsVariantNIST15(system));
                     break;
                 case DISTANCE_EVOLUTION:
                     analyserList.add(new TestDistanceBetweenEvolution(false, system));
