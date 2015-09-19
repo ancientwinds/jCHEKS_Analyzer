@@ -19,7 +19,8 @@ public class Analyser {
         types.add(AnalyserType.BYTESPERBYTES);
         types.add(AnalyserType.OCCURENCE);
         types.add(AnalyserType.VARIATION);
-        */types.add(AnalyserType.NIST_1);
+        */
+        types.add(AnalyserType.NIST_7);
         /*types.add(AnalyserType.NIST_2);
         types.add(AnalyserType.NIST_3);
         types.add(AnalyserType.NIST_4);
