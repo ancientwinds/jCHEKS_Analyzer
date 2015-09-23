@@ -48,21 +48,21 @@ public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
             }
         }
         
-        double mean = (blockSize - patternLength + 1) / squared(patternLength);
+        double mean = (blockSize - patternLength + 1) / Math.pow(2, patternLength);
         int doublePatternLength = 2 * patternLength;
-        double variance = blockSize * ((1.0 / squared(patternLength)) - ((doublePatternLength - 1) / (squared(doublePatternLength))));
+        double variance = blockSize * ((1.0 / squared(patternLength)) - ((doublePatternLength - 1) / Math.pow(2, doublePatternLength)));
         
         double chiSquared = 0;
         for(int i = 0; i < blockCount; i++){
-            System.out.println(patternCountsInBits[i] - mean);
-            chiSquared += Math.pow(patternCountsInBits[i] - mean, 2.0) / variance;
+            chiSquared += squared(patternCountsInBits[i] - mean) / variance;
         }
         
         this.pValue = regularizedGammaQ(blockCount/2, chiSquared/2);
+        System.out.println(this.pValue);
     }
     
-    public static double squared(int value){
-        return Math.pow(2, value);
+    public static double squared(double value){
+        return value*value;
     }
     
     @Override
