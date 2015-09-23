@@ -10,7 +10,7 @@ import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
  */
 public class TestSerialNIST11  extends AbstractNistTest{
 
-    public static final int BITS_NEEDED = 0; //TODO Set this value
+    public static final int BITS_NEEDED = 1000000; //TODO Set this value
     public static final String TABLE_NAME = "serial_NIST_11";
     
     public TestSerialNIST11(AbstractChaoticSystem chaoticSystem) throws Exception {
