@@ -86,14 +86,18 @@ public class TestOverlappingTemplateMatchingNIST8 extends AbstractNistTest{
         }
         System.out.println("patternsFound: " + Arrays.toString(patternCounts));
         System.out.println(Arrays.toString(patternCounts));
-        double chi_squared = 0;
+        Double chi_squared = 0.0;
         System.out.println(blocksCount);
         for(int i = 0; i < patternCounts.length; i++){
             System.out.println(i + "a: " + (blocksCount * piks[i]));
             System.out.println(i + "b: " + Math.pow(patternCounts[i] - blocksCount * piks[i], 2.0));
-            chi_squared += Math.pow(patternCounts[i] - blocksCount * piks[i], 2.0) / (blocksCount * piks[i]);
+            double divisor = (blocksCount * piks[i]);
+            if(divisor!=0){
+                chi_squared += (Double)Math.pow(patternCounts[i] - blocksCount * piks[i], 2.0) / divisor;
+            }
+            System.out.println("chi2: " + chi_squared);
         }
-        System.out.println(chi_squared);
+        System.out.println("chi2: " + chi_squared);
         System.out.println(regularizedGammaQ(5.0/2.0, chi_squared/2));
         this.pValue = regularizedGammaQ(5.0/2.0, chi_squared/2);
     }
@@ -104,9 +108,9 @@ public class TestOverlappingTemplateMatchingNIST8 extends AbstractNistTest{
     
     private double getProb(double u, double x){
         double out = 1.0 * Math.exp(-x);
-        if (u != 0){
+        /*if (u != 0){
             out = 1.0 * x * Math.exp(2 * -x) * squared(-u) * Hypergeometric.eval1f1(u + 1, 2, x);
-        }
+        }*/
         return out;
     }
     
