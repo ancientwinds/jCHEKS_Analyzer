@@ -20,7 +20,7 @@ public class Analyser {
         types.add(AnalyserType.OCCURENCE);
         types.add(AnalyserType.VARIATION);
         */
-        types.add(AnalyserType.NIST_8);
+        types.add(AnalyserType.NIST_9);
         /*types.add(AnalyserType.NIST_2);
         types.add(AnalyserType.NIST_3);
         types.add(AnalyserType.NIST_4);
