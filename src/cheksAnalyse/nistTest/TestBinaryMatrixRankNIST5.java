@@ -2,7 +2,6 @@ package cheksAnalyse.nistTest;
 
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.AbstractSaver;
 
 /**
  *
@@ -14,9 +13,10 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
     
     private int rowsMatrix = 32;
     private int columnsMatrix = 32;
+    public static final int BITS_NEEDED = 100000;
     
     public TestBinaryMatrixRankNIST5(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_5;
     }
     
@@ -100,11 +100,6 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
         }
         
         return ranks;
-    }
-
-    @Override
-    public void saveResult(AbstractSaver saver) {
-        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
 
     @Override

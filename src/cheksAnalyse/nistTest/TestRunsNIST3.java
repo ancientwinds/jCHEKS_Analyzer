@@ -1,7 +1,6 @@
 package cheksAnalyse.nistTest;
 
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.AbstractSaver;
 import static org.apache.commons.math3.special.Erf.erfc;
 
 /**
@@ -13,9 +12,10 @@ import static org.apache.commons.math3.special.Erf.erfc;
 public class TestRunsNIST3 extends AbstractNistTest{
     
     public static String TABLE_NAME = "Runs_NIST_3";
-
+    public static final int BITS_NEEDED = 100000;
+    
     public TestRunsNIST3(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_3;
 
     }
@@ -86,11 +86,6 @@ public class TestRunsNIST3 extends AbstractNistTest{
         return erfc(abs / div);
     }
 
-    @Override
-    public void saveResult(AbstractSaver saver) {
-        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
-    }
-    
     @Override
     public String getTableName() {
         return TABLE_NAME;

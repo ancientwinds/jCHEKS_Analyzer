@@ -4,8 +4,8 @@ import Utils.Utils;
 import cheksAnalyse.AbstractCheksAnalyser;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
 import com.archosResearch.jCHEKS.concept.exception.ChaoticSystemException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
+import mainAnalyser.AbstractSaver;
 
 /**
  *
@@ -71,7 +71,11 @@ public abstract class AbstractNistTest extends AbstractCheksAnalyser {
             }
         }
     }
-
+    @Override
+    public void saveResult(AbstractSaver saver) {
+        saver.saveNistResults(this.getSystemId(), this.getTableName(), pValue);
+    }
+    
     @Override
     protected void verify() {
         if(this.testExecuted) {

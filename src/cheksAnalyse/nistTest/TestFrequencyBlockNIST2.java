@@ -2,7 +2,6 @@ package cheksAnalyse.nistTest;
 
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.AbstractSaver;
 import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
 /**
@@ -16,10 +15,10 @@ public class TestFrequencyBlockNIST2 extends AbstractNistTest{
 
     private int blockLength = 2000;
     public static String TABLE_NAME = "FrequencyBlock_NIST_2";
-
+    public static final int BITS_NEEDED = 100000;
     
     public TestFrequencyBlockNIST2(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_2;
     }
     
@@ -84,11 +83,6 @@ public class TestFrequencyBlockNIST2 extends AbstractNistTest{
         int blockCount = this.bitsNeeded/this.blockLength;
        
         return regularizedGammaQ((double)blockCount/2, xObs/2);
-    }
-    
-    @Override
-    public void saveResult(AbstractSaver saver) {
-        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
     }
     
     @Override

@@ -2,7 +2,6 @@ package cheksAnalyse.nistTest;
 
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.AbstractSaver;
 import static org.apache.commons.math3.special.Erf.erfc;
 /**
  *
@@ -11,9 +10,10 @@ import static org.apache.commons.math3.special.Erf.erfc;
 public class TestDiscreteFourierTransformNIST6 extends AbstractNistTest {
     
     public static String TABLE_NAME = "Discrete_Fourier_Transform_NIST_6";
-
+    public static final int BITS_NEEDED = 100000;
+    
     public TestDiscreteFourierTransformNIST6(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
         throw new Exception("Not supported");
     }
     
@@ -97,11 +97,6 @@ public class TestDiscreteFourierTransformNIST6 extends AbstractNistTest {
         return erfc(Math.abs(d) / Math.sqrt(2));
     }
 
-    @Override
-    public void saveResult(AbstractSaver saver) {
-        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
-    }
-    
     @Override
     public String getTableName() {
         return TABLE_NAME;

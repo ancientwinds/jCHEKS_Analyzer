@@ -2,7 +2,6 @@ package cheksAnalyse.nistTest;
 
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.AbstractSaver;
 import static org.apache.commons.math3.special.Erf.erfc;
 
 /**
@@ -15,7 +14,7 @@ public class TestMaurersUniveralStatisticalNIST9 extends AbstractNistTest {
     private int blockForInitialization = 1280;
     
     public static String TABLE_NAME = "Maurers_Universal_Statistical_NIST_9";
-
+    
     public TestMaurersUniveralStatisticalNIST9(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, 1000000);
     }
@@ -69,11 +68,6 @@ public class TestMaurersUniveralStatisticalNIST9 extends AbstractNistTest {
         return sum;
     }
     
-    @Override
-    public void saveResult(AbstractSaver saver) {
-        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
-    }
-
     @Override
     public String getTableName() {
         return TABLE_NAME;

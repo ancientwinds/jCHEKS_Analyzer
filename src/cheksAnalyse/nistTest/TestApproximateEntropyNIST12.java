@@ -1,8 +1,6 @@
 package cheksAnalyse.nistTest;
 
-import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import mainAnalyser.AbstractSaver;
 import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
 /**
@@ -12,11 +10,11 @@ import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 public class TestApproximateEntropyNIST12 extends AbstractNistTest{
     
     public static String TABLE_NAME = "Approximate_Entropy_NIST_12";
-
+    public static final int BITS_NEEDED = 100000;
     private int blockLength = 10;
     
     public TestApproximateEntropyNIST12(AbstractChaoticSystem chaoticSystem) throws Exception {
-        super(chaoticSystem, 100000);
+        super(chaoticSystem, BITS_NEEDED);
     }
     
     public TestApproximateEntropyNIST12(AbstractChaoticSystem chaoticSystem, int bitsNeeded, int blockLength) throws Exception {
@@ -76,11 +74,6 @@ public class TestApproximateEntropyNIST12 extends AbstractNistTest{
         return regularizedGammaQ(Math.pow(2, this.blockLength - 1), obs / 2);
     }
 
-    @Override
-    public void saveResult(AbstractSaver saver) {
-        saver.saveNistResults(this.getSystemId(), TABLE_NAME, pValue);
-    }
-    
     @Override
     public String getTableName() {
         return TABLE_NAME;
