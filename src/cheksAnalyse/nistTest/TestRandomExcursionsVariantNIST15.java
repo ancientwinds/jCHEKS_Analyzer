@@ -35,7 +35,7 @@ public class TestRandomExcursionsVariantNIST15 extends AbstractNistTest{
         sk[n + 1] = 0;
         
         for (int i = 1; i < bits.length + 1; i++) {
-            sk[i] = bits[i] ? 1 : -1;
+            sk[i] = sk[i-1] + (bits[i] ? 1 : -1);
             if (sk[i] == 0) j++;
         }
         if (sk[n-1] != 0) j++;
@@ -49,7 +49,7 @@ public class TestRandomExcursionsVariantNIST15 extends AbstractNistTest{
         
         double[] pValues = new double[18];
         
-        for (int p = 0; p <= 17; p++) {
+        for (int p = 0; p < stateX.length; p++) {
             int x = stateX[p];
             int count = 0;
             for (int i = 0; i < n; i++) {
