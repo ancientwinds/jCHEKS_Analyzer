@@ -1,7 +1,7 @@
 package cheksAnalyse.nistTest;
 
+import Utils.Hypergeometric;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import edu.missouristate.mote.statistics.Hypergeometric;
 import java.util.Arrays;
 import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
