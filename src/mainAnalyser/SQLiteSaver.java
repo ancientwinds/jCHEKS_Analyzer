@@ -112,7 +112,7 @@ public class SQLiteSaver extends AbstractSaver{
     protected void openDatabase() {
         try {
             Class.forName("org.sqlite.JDBC");
-            this.connection = DriverManager.getConnection("jdbc:sqlite:complete.db");
+            this.connection = DriverManager.getConnection("jdbc:sqlite:0-256.db");
             this.connection.setAutoCommit(false);
             this.statement = connection.createStatement();
         } catch (SQLException ex) {
