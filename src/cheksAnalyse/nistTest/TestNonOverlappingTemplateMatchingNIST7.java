@@ -61,7 +61,7 @@ public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
         System.out.println(this.pValue);
     }
     
-    public static double squared(double value){
+    private static double squared(double value){
         return value*value;
     }
     
