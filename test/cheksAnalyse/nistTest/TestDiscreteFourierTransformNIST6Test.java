@@ -11,7 +11,7 @@ import utils.TestDataLoader;
 public class TestDiscreteFourierTransformNIST6Test {
     
    /* 
-    *    Testing Monobit Test
+    *    Testing Monobit Test - Results from C implementation (sts-2.1.2)
     *    pi              p expected =  0.855090 (1004882 bits)
     *    e               p expected =  0.086839 (1004882 bits)
     *    sqrt2           p expected =  0.830204 (1004883 bits)
@@ -20,7 +20,7 @@ public class TestDiscreteFourierTransformNIST6Test {
     
     private AbstractNistTest nistTester;
     private MockNISTSaver saver;
-    public static double DOUBLE_PRECISION = 0.00001;
+    public static double DOUBLE_PRECISION = 0.000001;
     
     @Before
     public void setup() throws Exception{
