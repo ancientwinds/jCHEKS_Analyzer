@@ -29,7 +29,7 @@ public class TestFrequencyMonobitNIST1 extends AbstractNistTest{
     public void executeTest(boolean[] bits) {
         int Sn = this.calculateSn(bits);
         double Sobs = this.calculateSobs(bits, Math.abs(Sn));
-
+        
         this.pValue = this.calculatePValue(Sobs, Sn);
         this.passed = this.pValue > 0.01;        
     }

@@ -12,10 +12,10 @@ public class TestFrequencyMonobitNIST1Test {
     
    /* 
     *    Testing Monobit Test
-    *    pi              p expected =  0.578211
-    *    e               p expected =  0.953749
-    *    sqrt2           p expected =  0.811881
-    *    sqrt3           p expected =  0.610051
+    *    pi              p expected =  0.613721 (1004882 bits)
+    *    e               p expected =  0.926876 (1004882 bits)
+    *    sqrt2           p expected =  0.818526 (1004882 bits)
+    *    sqrt3           p expected =  0.545494 (1004882 bits)
     */
     
     private AbstractNistTest nistTester;
@@ -33,7 +33,7 @@ public class TestFrequencyMonobitNIST1Test {
         TestDataLoader loader = new TestDataLoader("TestData/pi");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.578211, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.613721, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
@@ -41,7 +41,7 @@ public class TestFrequencyMonobitNIST1Test {
         TestDataLoader loader = new TestDataLoader("TestData/e");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.953749, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.926876, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
@@ -49,7 +49,7 @@ public class TestFrequencyMonobitNIST1Test {
         TestDataLoader loader = new TestDataLoader("TestData/sqrt2");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.811881, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.817751, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
@@ -57,7 +57,7 @@ public class TestFrequencyMonobitNIST1Test {
         TestDataLoader loader = new TestDataLoader("TestData/sqrt3");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.610051, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.546157, saver.getPValue(), DOUBLE_PRECISION);
     }
 
 }
