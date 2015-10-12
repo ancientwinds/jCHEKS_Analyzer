@@ -28,7 +28,7 @@ public class TestSerialNIST11  extends AbstractNistTest{
         // Add first m-1 bits to the end
         boolean[] bin_data2 = new boolean[n + pattern_length-1];
         System.arraycopy(bits, 0, bin_data2, 0, n);
-        System.arraycopy(bits, 0, bin_data2, n-1, pattern_length);
+        System.arraycopy(bits, 0, bin_data2, n, pattern_length-1);
 
         int[] vobs_one = new int[MAX_SIZE_PATTERN_ONE];
         for (int i = 0; i < vobs_one.length; i++) {
@@ -65,7 +65,6 @@ public class TestSerialNIST11  extends AbstractNistTest{
         double p_val_one = regularizedGammaQ(Math.pow(2, pattern_length - 1) / 2, del1 / 2.0);
         double p_val_two = regularizedGammaQ(Math.pow(2, pattern_length - 2) / 2, del2 / 2.0);
         this.pValue = Math.min(p_val_one, p_val_two);
-        System.out.println(this.pValue);
     }
 
     public static String boolArrayToString(boolean[] array){
