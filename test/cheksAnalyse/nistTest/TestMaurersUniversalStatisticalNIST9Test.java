@@ -11,7 +11,7 @@ import utils.TestDataLoader;
 public class TestMaurersUniversalStatisticalNIST9Test {
     
    /* 
-    *    Testing Binary Matrix Rank Test  - Results from C implementation (sts-2.1.2)
+    *    Testing Maurers Universal Statistical Test  - Results from C implementation (sts-2.1.2)
     *    pi              p expected =  0.657411 (1004882 bits)
     *    e               p expected =  0.273105 (1004882 bits)
     *    sqrt2           p expected =  0.123736 (1004883 bits)
