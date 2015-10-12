@@ -69,7 +69,7 @@ public class SQLiteSaver extends AbstractSaver{
                         this.createNistTable(TestOverlappingTemplateMatchingNIST8.TABLE_NAME);
                         break;
                     case NIST_9:
-                        this.createNistTable(TestMaurersUniveralStatisticalNIST9.TABLE_NAME);
+                        this.createNistTable(TestMaurersUniversalStatisticalNIST9.TABLE_NAME);
                         break;
                     case NIST_10:
                         this.createNistTable(TestLinearComplexityNIST10.TABLE_NAME);
@@ -257,7 +257,7 @@ public class SQLiteSaver extends AbstractSaver{
                         this.deleteTable(TestOverlappingTemplateMatchingNIST8.TABLE_NAME);                       
                         break;
                     case NIST_9:
-                        this.deleteTable(TestMaurersUniveralStatisticalNIST9.TABLE_NAME);                       
+                        this.deleteTable(TestMaurersUniversalStatisticalNIST9.TABLE_NAME);                       
                         break;
                     case NIST_10:
                         this.deleteTable(TestLinearComplexityNIST10.TABLE_NAME);                       
