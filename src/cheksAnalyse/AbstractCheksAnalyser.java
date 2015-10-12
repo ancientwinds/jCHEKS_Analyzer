@@ -140,7 +140,7 @@ public abstract class AbstractCheksAnalyser implements Serializable{
                     analyserList.add(new TestOverlappingTemplateMatchingNIST8(system));
                     break;
                 case NIST_9:
-                    analyserList.add(new TestMaurersUniveralStatisticalNIST9(system));
+                    analyserList.add(new TestMaurersUniversalStatisticalNIST9(system));
                     break;
                 case NIST_10:
                     analyserList.add(new TestLinearComplexityNIST10(system));
