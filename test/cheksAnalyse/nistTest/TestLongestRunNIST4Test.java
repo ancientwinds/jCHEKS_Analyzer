@@ -13,10 +13,10 @@ public class TestLongestRunNIST4Test {
     
    /* 
     *    Testing Longest Run Test  - Results from C implementation (sts-2.1.2)
-    *    pi              p expected =  0.706760 (1004882 bits)
-    *    e               p expected =  0.675270 (1004882 bits)
-    *    sqrt2           p expected =  0.028628 (1004883 bits)
-    *    sqrt3           p expected =  0.006781 (1004883 bits)
+    *    pi              p expected =  0.706760 (6272 bits)
+    *    e               p expected =  0.675270 (6272 bits)
+    *    sqrt2           p expected =  0.028628 (6272 bits)
+    *    sqrt3           p expected =  0.006781 (6272 bits)
     */
     
     private AbstractNistTest nistTester;
