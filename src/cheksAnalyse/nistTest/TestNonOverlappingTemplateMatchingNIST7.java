@@ -6,7 +6,7 @@ import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
 /**
  *
- * @author Michael Roussel rousselm4@gmail.com
+ * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
 
@@ -26,7 +26,7 @@ public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
         int patternLength = pattern.length;
         int blockCount = 8;
         int[] patternCountsInBits = new int[blockCount];
-        int blockSize = sequenceLength/blockCount;;
+        int blockSize = sequenceLength/blockCount;
         boolean[][] blocks = new boolean[blockCount][blockSize];
         
         for(int i = 0; i < blockCount; i++){
@@ -47,21 +47,18 @@ public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
                 }
             }
         }
-        
         double mean = (blockSize - patternLength + 1) / Math.pow(2, patternLength);
         int doublePatternLength = 2 * patternLength;
-        double variance = blockSize * ((1.0 / squared(patternLength)) - ((doublePatternLength - 1) / Math.pow(2, doublePatternLength)));
+        double variance = blockSize * (((1.0 / Math.pow(2, patternLength))) - ((doublePatternLength - 1) / Math.pow(2, doublePatternLength)));
         
         double chiSquared = 0;
         for(int i = 0; i < blockCount; i++){
             chiSquared += squared(patternCountsInBits[i] - mean) / variance;
         }
-        
         this.pValue = regularizedGammaQ(blockCount/2, chiSquared/2);
-        System.out.println(this.pValue);
     }
     
-    public static double squared(double value){
+    private static double squared(double value){
         return value*value;
     }
     

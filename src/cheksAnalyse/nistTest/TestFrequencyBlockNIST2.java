@@ -16,7 +16,7 @@ public class TestFrequencyBlockNIST2 extends AbstractNistTest{
     private int blockLength = 2000;
     public static String TABLE_NAME = "FrequencyBlock_NIST_2";
     public static final int BITS_NEEDED = 100000;
-    
+    private int bitsLength;
     public TestFrequencyBlockNIST2(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_2;
@@ -29,7 +29,8 @@ public class TestFrequencyBlockNIST2 extends AbstractNistTest{
     }
     
     @Override
-    public void executeTest(boolean[] bits) {
+    public void executeTest(boolean[] bits){
+        this.bitsLength = bits.length;
         boolean[][] blocks = Utils.partitionBitsInBlocks(bits, this.blockLength);//this.partitionBits(bits);
         double[] proportions = this.calculateProportion(blocks);
         double[] ratios = this.calculateRatio(proportions);
@@ -39,7 +40,7 @@ public class TestFrequencyBlockNIST2 extends AbstractNistTest{
         this.passed = pValue > 0.01;
     }
     
-    public double[] calculateProportion(boolean[][] blocks) {
+    private double[] calculateProportion(boolean[][] blocks) {
         double proportions[] = new double[blocks.length];
         
         for(int i = 0; i < blocks.length; i++) {
@@ -56,7 +57,7 @@ public class TestFrequencyBlockNIST2 extends AbstractNistTest{
         return proportions;
     }
     
-    public double[] calculateRatio(double[] proportions) {
+    private double[] calculateRatio(double[] proportions) {
         double ratios[] = new double[proportions.length];
         
         for(int i = 0; i < proportions.length; i++) {
@@ -66,21 +67,19 @@ public class TestFrequencyBlockNIST2 extends AbstractNistTest{
         return ratios;
     }
     
-    public double calculateXobs(double[] ratios) {
-        double xObs = 0;
-        
+    private double calculateXobs(double[] ratios) {
         double totalRatios = 0;
         for(int i = 0; i < ratios.length; i++) {
             totalRatios += ratios[i];
         }
         
-        xObs = 4 * this.blockLength * totalRatios;
+        double xObs = 4 * this.blockLength * totalRatios;
         
         return xObs;
     }
     
-    public double calculatePValue(double xObs) {
-        int blockCount = this.bitsNeeded/this.blockLength;
+    private double calculatePValue(double xObs) {
+        int blockCount = this.bitsLength/this.blockLength;
        
         return regularizedGammaQ((double)blockCount/2, xObs/2);
     }

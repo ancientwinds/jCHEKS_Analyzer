@@ -1,124 +1,63 @@
 package cheksAnalyse.nistTest;
 
-import cheksAnalyse.nistTest.TestRunsNIST3;
-import cheksAnalyse.FakeChaoticSystem;
-import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import java.util.ArrayList;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.*;
+import utils.TestDataLoader;
 
 /**
  *
- * @author Thomas Lepage thomas.lepage@hotmail.ca
+ * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class TestRunsNIST3Test {
     
-    private final TestRunsNIST3 instance;
+   /* 
+    *    Testing Runs Test  - Results from C implementation (sts-2.1.2)
+    *    pi              p expected =  0.422674 (1004882 bits)
+    *    e               p expected =  0.610927 (1004882 bits)
+    *    sqrt2           p expected =  0.279069 (1004883 bits)
+    *    sqrt3           p expected =  0.229478 (1004883 bits)
+    */
     
-    public TestRunsNIST3Test() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        instance = new TestRunsNIST3(sys, 10);
+    private AbstractNistTest nistTester;
+    private MockNISTSaver saver;
+    public static double DOUBLE_PRECISION = 0.000001;
+    
+    @Before
+    public void setup() throws Exception{
+        nistTester = new TestRunsNIST3(new ChaoticSystemStub());
+        saver = new MockNISTSaver();
     }
     
     @Test
-    public void testCalculateP() throws Exception {
-        boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
-        
-        double p = instance.calculateP(bits);
-        
-        assertEquals(0.6, p, 0.1);
+    public void checkWithPiInput() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/pi");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.422674, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
-    public void testCalculateT() throws Exception {
-        assertEquals(0.632455532, instance.calculateT(), 0.0001);
+    public void checkWithEInput() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/e");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.610927, saver.getPValue(), DOUBLE_PRECISION);
+    }
+    
+    @Test
+    public void checkWithSqrt2Input() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/sqrt2");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.279069, saver.getPValue(), DOUBLE_PRECISION);
+    }
+    
+    @Test
+    public void checkWithSqrt3Input() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/sqrt3");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.229478, saver.getPValue(), DOUBLE_PRECISION);
+    }
 
-    }
-    
-    @Test
-    public void testShouldContinue_should_return_true() throws Exception {
-        boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
-        
-        double p = instance.calculateP(bits);
-
-        assertTrue(instance.shouldContinue(p));
-    }
-    
-    @Test
-    public void testShouldContinue_should_return_false() throws Exception {
-        assertFalse(instance.shouldContinue(2.7));
-    }
-    
-    @Test
-    public void testCalculateSi() throws Exception {
-        boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
-        
-        int[] result = instance.calculateSi(bits);
-        
-        assertEquals(9, result.length);
-        
-        assertEquals(1, result[0]);
-        assertEquals(0, result[1]);
-        assertEquals(1, result[2]);
-        assertEquals(0, result[3]);
-        assertEquals(1, result[4]);
-        assertEquals(1, result[5]);
-        assertEquals(1, result[6]);
-        assertEquals(1, result[7]);
-        assertEquals(0, result[8]);
-    }
-    
-    @Test
-    public void testCalculateVobs() throws Exception {
-        boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
-        
-        int[] Si = instance.calculateSi(bits);
-        
-        int vObs = instance.calculateVobs(Si);
-        
-        assertEquals(7, vObs);
-    }
-    
-    @Test
-    public void testCalculatePValue() throws Exception {
-        boolean bits[] = {true, false, false, true, true, false, true, false, true, true};      
-        int[] Si = instance.calculateSi(bits); 
-        double p = instance.calculateP(bits);
-        int vObs = instance.calculateVobs(Si);
-        
-        double pValue = instance.calculatePValue(vObs, p);
-        
-        assertEquals(0.1472, pValue, 0.0001);
-    }
-    
-    @Test
-    public void testExecuteShouldPass() throws Exception {
-        boolean bits[] = {true, false, false, true, true, false, true, false, true, true};
-        
-        instance.executeTest(bits);
-        
-        assertTrue(instance.isPassed());
-    }
-    
-    @Test
-    public void test() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        TestRunsNIST3 instance2 = new TestRunsNIST3(sys, 128);
-        
-        boolean bits[] = new boolean[100];
-
-        String bitsString = "1100100100001111110110101010001000100001011010001100001000110100110001001100011001100010100010111000";
-        for(int i = 0; i < bitsString.length(); i++) {
-            bits[i] = bitsString.substring(i, i + 1).equals("1");
-        }
-        
-        instance2.executeTest(bits);
-
-        assertTrue(instance2.isPassed());
-    }
-    
 }

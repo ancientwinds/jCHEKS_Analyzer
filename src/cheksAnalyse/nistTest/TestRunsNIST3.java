@@ -13,7 +13,7 @@ public class TestRunsNIST3 extends AbstractNistTest{
     
     public static String TABLE_NAME = "Runs_NIST_3";
     public static final int BITS_NEEDED = 100000;
-    
+    private int bitsLength;
     public TestRunsNIST3(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_3;
@@ -27,6 +27,7 @@ public class TestRunsNIST3 extends AbstractNistTest{
     
     @Override
     public void executeTest(boolean[] bits) {
+        bitsLength = bits.length;
         double p = this.calculateP(bits);
         if(this.shouldContinue(p)) {
             int[] Si = this.calculateSi(bits);
@@ -44,11 +45,11 @@ public class TestRunsNIST3 extends AbstractNistTest{
                 ones++;
             }
         }        
-        return ones / (double) this.bitsNeeded;        
+        return ones / (double) bitsLength;        
     }
     
     public double calculateT() {
-        return (double) 2 / Math.sqrt(this.bitsNeeded);
+        return (double) 2 / Math.sqrt(bitsLength);
     }
     
     public boolean shouldContinue(double p) {
@@ -80,8 +81,8 @@ public class TestRunsNIST3 extends AbstractNistTest{
     }
     
     public double calculatePValue(double vObs, double p) {
-        double abs = Math.abs(vObs - 2 * this.bitsNeeded * p * (1 - p));
-        double div = 2 * Math.sqrt(2 * this.bitsNeeded) * p * (1 - p);
+        double abs = Math.abs(vObs - 2 * bitsLength * p * (1 - p));
+        double div = 2 * Math.sqrt(2 * bitsLength) * p * (1 - p);
         
         return erfc(abs / div);
     }

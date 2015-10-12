@@ -1,8 +1,10 @@
-package edu.missouristate.mote.statistics;
-
-/**
- * Gamma function.
+/*
+ * File imported from edu.missouristate.mote.statistics
+ * GitHub: https://github.com/larmer01/Mote/blob/master/src/edu/missouristate/mote/statistics/Gamma.java
  */
+
+package Utils;
+
 public final class Gamma {
 
     // *************************************************************************

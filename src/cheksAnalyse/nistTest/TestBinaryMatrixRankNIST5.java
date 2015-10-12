@@ -14,7 +14,7 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
     private int rowsMatrix = 32;
     private int columnsMatrix = 32;
     public static final int BITS_NEEDED = 100000;
-    
+    private int bitsLength;
     public TestBinaryMatrixRankNIST5(AbstractChaoticSystem chaoticSystem) throws Exception {
         super(chaoticSystem, BITS_NEEDED);
         this.type = AnalyserType.NIST_5;
@@ -30,6 +30,7 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
 
     @Override
     public void executeTest(boolean[] bits) {
+        bitsLength = bits.length;
         boolean[][][] matrices = Utils.createMatrices(bits, rowsMatrix, columnsMatrix);
         
         int[] ranks = this.calculteRanks(matrices);
@@ -48,8 +49,8 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
         return Math.pow(2, (double)r * (32.0 + 32.0 - (double)r) - 32.0 * 32.0) * product;
     }
     
-    public double calculateXobs(int[] ranks) {
-        int k = this.bitsNeeded / (this.rowsMatrix * this.columnsMatrix);
+    private double calculateXobs(int[] ranks) {
+        int k = bitsLength / (this.rowsMatrix * this.columnsMatrix);
         int Fm = this.countMatrixWithRank(ranks, this.rowsMatrix);
         int Fm1 = this.countMatrixWithRank(ranks, this.rowsMatrix - 1);
         int remaining = ranks.length - Fm - Fm1;
@@ -64,11 +65,11 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
         return xObs;
     }
     
-    public double calculatePValue(double xObs) {
+    private double calculatePValue(double xObs) {
         return Math.pow(Math.E, (-xObs/(double)2));
     }
     
-    public int countMatrixWithRank(int[] ranks, int rank) {
+    private int countMatrixWithRank(int[] ranks, int rank) {
         int count = 0;
         for(int i = 0; i < ranks.length; i++) {
             if(ranks[i] == rank) {
@@ -79,7 +80,7 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
         return count;
     }
     
-    public int calculateRank(boolean[][] matrix) {
+    private int calculateRank(boolean[][] matrix) {
         boolean[][] prepared = Utils.prepareMatrix(matrix);
         int rank = 0;
         
@@ -92,7 +93,7 @@ public class TestBinaryMatrixRankNIST5 extends AbstractNistTest{
         return rank;
     }
     
-    public int[] calculteRanks(boolean[][][] matrices) {
+    private int[] calculteRanks(boolean[][][] matrices) {
         int ranks[] = new int[matrices.length];
         
         for(int i = 0; i < matrices.length; i++) {

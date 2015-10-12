@@ -11,7 +11,7 @@ import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 public class TestLinearComplexityNIST10 extends AbstractNistTest{
     
     public static String TABLE_NAME = "Linear_Complexity_NIST_10";
-
+    private int bitsLength;
     private int blockLength = 1000;
     
     private final double[] ratios = {0.01047, 0.03125, 0.12500, 0.50000, 0.25000, 0.06250, 0.020833};
@@ -27,7 +27,7 @@ public class TestLinearComplexityNIST10 extends AbstractNistTest{
 
     @Override
     public void executeTest(boolean[] bits) {
-        
+        bitsLength = bits.length;
         boolean[][] blocks = Utils.partitionBitsInBlocks(bits, blockLength);
         int[] complexities = this.calculateLinearComplixtyForBlocks(blocks);
         double[] tableT = this.createTableT(complexities);
@@ -83,7 +83,7 @@ public class TestLinearComplexityNIST10 extends AbstractNistTest{
     
     public double calculateVobs(int[] buckets) {
         double vObs = 0;
-        double N = this.bitsNeeded / this.blockLength;
+        double N = bitsLength / this.blockLength;
         
         for(int i = 0; i < buckets.length; i++) {
             vObs += Math.pow(buckets[i] - N * this.ratios[i], 2) / (N * this.ratios[i]);

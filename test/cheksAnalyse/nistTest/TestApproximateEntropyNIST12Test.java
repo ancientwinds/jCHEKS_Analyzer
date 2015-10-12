@@ -1,49 +1,63 @@
 package cheksAnalyse.nistTest;
 
-import cheksAnalyse.FakeChaoticSystem;
-import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import java.util.ArrayList;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.*;
+import utils.TestDataLoader;
 
 /**
  *
- * @author Thomas Lepage thomas.lepage@hotmail.ca
+ * @author Michael Roussel <rousselm4@gmail.com>
  */
-public class TestApproximateEntropyNIST12Test {    
+public class TestApproximateEntropyNIST12Test {
     
-    private final TestApproximateEntropyNIST12 instance;
+   /* 
+    *    Testing Approximate Entropy Test  - Results from C implementation (sts-2.1.2) (m = 10) 
+    *    pi              p expected =  0.397176 (1004882 bits)
+    *    e               p expected =  0.679065 (1004882 bits)
+    *    sqrt2           p expected =  0.908288 (1004883 bits)
+    *    sqrt3           p expected =  0.152652 (1004883 bits)
+    */
     
-    public TestApproximateEntropyNIST12Test() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        instance = new TestApproximateEntropyNIST12(sys, 10, 3);       
+    private AbstractNistTest nistTester;
+    private MockNISTSaver saver;
+    public static double DOUBLE_PRECISION = 0.000001;
+    
+    @Before
+    public void setup() throws Exception{
+        nistTester = new TestApproximateEntropyNIST12(new ChaoticSystemStub());
+        saver = new MockNISTSaver();
     }
-    /**
-     * Test of executeTest method, of class TestApproximateEntropyNIST12.
-     */
+    
     @Test
-    public void testExecuteTest() {
-        boolean bits[] = new boolean[10];
-
-        String bitsString = "0100110101";
-        for(int i = 0; i < bitsString.length(); i++) {
-            bits[i] = bitsString.substring(i, i + 1).equals("1");
-        }
-        
-        instance.executeTest(bits);
-        
-        assertTrue(instance.isPassed());
-    }
-
-    public void assertBooleanArray(boolean[] array1, boolean[] array2) {
-        assertEquals(array1.length, array2.length);
-        
-        for(int i = 0; i < array1.length; i++) {
-            assertEquals(array1[i], array2[i]);
-        }
+    public void checkWithPiInput() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/pi");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.397176, saver.getPValue(), DOUBLE_PRECISION);
     }
     
+    @Test
+    public void checkWithEInput() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/e");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.679065, saver.getPValue(), DOUBLE_PRECISION);
+    }
     
+    @Test
+    public void checkWithSqrt2Input() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/sqrt2");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.908288, saver.getPValue(), DOUBLE_PRECISION);
+    }
+    
+    @Test
+    public void checkWithSqrt3Input() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/sqrt3");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.152652, saver.getPValue(), DOUBLE_PRECISION);
+    }
+
 }

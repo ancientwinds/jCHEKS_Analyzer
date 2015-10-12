@@ -2,6 +2,7 @@ package cheksAnalyse.nistTest;
 
 import Utils.Utils;
 import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
+import java.util.Arrays;
 import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
 /**
@@ -36,14 +37,13 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
         int[] buckets = this.calculateBucketContent(runsLength);
         double x2Obs = this.calculateX2Obs(buckets);
         this.pValue = this.calculatePValue(x2Obs);
-
+                
         this.passed = this.pValue > 0.01;        
     }
     
-    public int[] calculateBucketContent(int[] runsLength) {
+    private int[] calculateBucketContent(int[] runsLength) {
         int[] buckets = new int[6];
         for(int i = 0; i < runsLength.length; i++) {
-            //System.out.println("Length " + i + ": " + runsLength[i]);
             switch(runsLength[i]) {
                 case 0:
                 case 1:
@@ -72,7 +72,7 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
         return buckets;
     }
     
-    public int[] calculateBlocksLongestRun(boolean[][] blocks) {
+    private int[] calculateBlocksLongestRun(boolean[][] blocks) {
         int[] lengths = new int[blocks.length];
         for(int i = 0; i < blocks.length; i++) {
             lengths[i] = this.calculateLongestRun(blocks[i]);
@@ -81,7 +81,7 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
         return lengths;
     }
     
-    public int calculateLongestRun(boolean[] block) {
+    private int calculateLongestRun(boolean[] block) {
         int runLength = 0;
         int longestRun = runLength;
         for(int i = 0; i < block.length; i++) {
@@ -97,7 +97,7 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
         return longestRun;
     }
     
-    public double calculateX2Obs(int[] buckets) {
+    private double calculateX2Obs(int[] buckets) {
         double X2Obs = 0.0;
         
         for(int i = 0; i < buckets.length; i++) {
@@ -108,7 +108,7 @@ public class TestLongestRunNIST4 extends AbstractNistTest{
         return X2Obs;
     }
     
-    public double calculatePValue(double X2Obs) {
+    private double calculatePValue(double X2Obs) {
         return regularizedGammaQ((double)5/(double)2, X2Obs/(double)2);
     }
     

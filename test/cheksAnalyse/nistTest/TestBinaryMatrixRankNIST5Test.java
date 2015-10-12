@@ -1,88 +1,64 @@
 package cheksAnalyse.nistTest;
 
-import Utils.Utils;
-import cheksAnalyse.FakeChaoticSystem;
-import cheksAnalyse.nistTest.TestBinaryMatrixRankNIST5;
-import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import java.util.ArrayList;
-import org.junit.Test;
+import java.util.Arrays;
 import static org.junit.Assert.*;
+import org.junit.*;
+import utils.TestDataLoader;
 
 /**
  *
- * @author Thomas Lepage thomas.lepage@hotmail.ca
+ * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class TestBinaryMatrixRankNIST5Test {
     
-    private final TestBinaryMatrixRankNIST5 instance;
+   /* 
+    *    Testing Binary Matrix Rank Test  - Results from C implementation (sts-2.1.2)
+    *    pi              p expected =  0.091795 (1004882 bits)
+    *    e               p expected =  0.284137 (1004882 bits)
+    *    sqrt2           p expected =  0.815348 (1004883 bits)
+    *    sqrt3           p expected =  0.348786 (1004883 bits)
+    */
     
-    public TestBinaryMatrixRankNIST5Test() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        instance = new TestBinaryMatrixRankNIST5(sys, 20, 3, 3);
+    private AbstractNistTest nistTester;
+    private MockNISTSaver saver;
+    public static double DOUBLE_PRECISION = 0.000001;
+    
+    @Before
+    public void setup() throws Exception{
+        nistTester = new TestBinaryMatrixRankNIST5(new ChaoticSystemStub());
+        saver = new MockNISTSaver();
+    }
+    
+    @Test
+    public void checkWithPiInput() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/pi");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.091795, saver.getPValue(), DOUBLE_PRECISION);
+    }
+    
+    @Test
+    public void checkWithEInput() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/e");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.284137, saver.getPValue(), DOUBLE_PRECISION);
+    }
+    
+    @Test
+    public void checkWithSqrt2Input() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/sqrt2");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.815348, saver.getPValue(), DOUBLE_PRECISION);
+    }
+    
+    @Test
+    public void checkWithSqrt3Input() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/sqrt3");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.348786, saver.getPValue(), DOUBLE_PRECISION);
     }
 
-    /**
-     * Test of executeTest method, of class TestBinaryMatrixRankNIST5.
-     */
-    @Test
-    public void testExecuteTest() {
-         boolean bits[] = {false, true, false, true, true, false, false, true, false, false, true, false, true, false, true, false, true, true, false, true};
-
-         instance.executeTest(bits);
-         
-         assertTrue(instance.isPassed());
-    }
-
-    @Test
-    public void testCalculateRank() {
-        boolean bits[] = {false, true, false, true, true, false, false, true, false, false, true, false, true, false, true, false, true, true, false, true};
-        
-        boolean[][][] matrices = Utils.createMatrices(bits, 3, 3);
-        
-        boolean[][] result1 = Utils.prepareMatrix(matrices[0]);
-        boolean[][] result2 = Utils.prepareMatrix(matrices[1]);
-        
-        assertEquals(2, instance.calculateRank(result1));
-        assertEquals(3, instance.calculateRank(result2));        
-    }
-    
-    @Test
-    public void testCalculateRanks() {
-        boolean bits[] = {false, true, false, true, true, false, false, true, false, false, true, false, true, false, true, false, true, true, false, true};
-        
-        boolean[][][] matrices = Utils.createMatrices(bits, 3, 3);        
-        int[] ranks = instance.calculteRanks(matrices);
-        
-        assertEquals(2, ranks[0]);
-        assertEquals(3, ranks[1]);        
-    }
-    
-    @Test
-    public void testCalculateXobs() {
-        boolean bits[] = {false, true, false, true, true, false, false, true, false, false, true, false, true, false, true, false, true, true, false, true};
-        
-        boolean[][][] matrices = Utils.createMatrices(bits, 3, 3);
-        int[] ranks = instance.calculteRanks(matrices);
-        
-        double xObs = instance.calculateXobs(ranks);
-        
-        assertEquals(0.597059, xObs, 0.000001);
-    }
-    
-    @Test
-    public void testCalculatePValue() {
-        boolean bits[] = {false, true, false, true, true, false, false, true, false, false, true, false, true, false, true, false, true, true, false, true};
-        
-        boolean[][][] matrices = Utils.createMatrices(bits, 3, 3);
-        int[] ranks = instance.calculteRanks(matrices);
-        
-        double xObs = instance.calculateXobs(ranks);
-        double pValue = instance.calculatePValue(xObs);
-        assertEquals(0.741908, pValue, 0.000001);
-    }
-
-    
-    
 }

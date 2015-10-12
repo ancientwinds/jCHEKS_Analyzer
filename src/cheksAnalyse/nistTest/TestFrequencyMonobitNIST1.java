@@ -29,12 +29,12 @@ public class TestFrequencyMonobitNIST1 extends AbstractNistTest{
     public void executeTest(boolean[] bits) {
         int Sn = this.calculateSn(bits);
         double Sobs = this.calculateSobs(bits, Math.abs(Sn));
-
+        
         this.pValue = this.calculatePValue(Sobs, Sn);
         this.passed = this.pValue > 0.01;        
     }
     
-    public int calculateSn(boolean[] bits) {
+    private int calculateSn(boolean[] bits) {
         int count = 0;
                 
         for(int i = 0; i < bits.length; i++) {
@@ -48,11 +48,11 @@ public class TestFrequencyMonobitNIST1 extends AbstractNistTest{
         return count;
     }
     
-    public double calculateSobs(boolean[] bit, int Sn) {
+    private double calculateSobs(boolean[] bit, int Sn) {
         return Math.abs(Sn) / Math.sqrt(bit.length);
     }
     
-    public double calculatePValue(double Sobs, int Sn) {
+    private double calculatePValue(double Sobs, int Sn) {
         return erfc(Sobs / Math.sqrt(2));
     }
     

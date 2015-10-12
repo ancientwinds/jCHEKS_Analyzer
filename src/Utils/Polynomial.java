@@ -1,8 +1,10 @@
-package edu.missouristate.mote.statistics;
-
-/**
- * Methods for evaluating polynomials.
+/*
+ * File imported from edu.missouristate.mote.statistics
+ * GitHub: https://github.com/larmer01/Mote/blob/master/src/edu/missouristate/mote/statistics/Polynomial.java
  */
+
+package Utils;
+
 public final class Polynomial {
 
     // *************************************************************************

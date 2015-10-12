@@ -1,91 +1,63 @@
 package cheksAnalyse.nistTest;
 
-import Utils.Utils;
-import cheksAnalyse.FakeChaoticSystem;
-import com.archosResearch.jCHEKS.concept.chaoticSystem.AbstractChaoticSystem;
-import java.util.ArrayList;
-import org.junit.Test;
-
 import static org.junit.Assert.*;
+import org.junit.*;
+import utils.TestDataLoader;
 
 /**
  *
- * @author Thomas Lepage thomas.lepage@hotmail.ca
+ * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class TestFrequencyBlockNIST2Test {
     
+   /* 
+    *    Testing Frequency Block Test  - Results from C implementation (sts-2.1.2) (M = 2000)
+    *    pi              p expected =  0.460550 (1004882 bits)
+    *    e               p expected =  0.846172 (1004882 bits)
+    *    sqrt2           p expected =  0.199374 (1004883 bits)
+    *    sqrt3           p expected =  0.403986 (1004883 bits)
+    */
     
-    private final TestFrequencyBlockNIST2 instance;
+    private AbstractNistTest nistTester;
+    private MockNISTSaver saver;
+    public static double DOUBLE_PRECISION = 0.000001;
     
-    public TestFrequencyBlockNIST2Test() throws Exception {
-        ArrayList<byte[]> keys = new ArrayList();
-        keys.add(new byte[]{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1});        
-        AbstractChaoticSystem sys = new FakeChaoticSystem(keys, 16);        
-        instance = new TestFrequencyBlockNIST2(sys, 10, 3);       
+    @Before
+    public void setup() throws Exception{
+        nistTester = new TestFrequencyBlockNIST2(new ChaoticSystemStub());
+        saver = new MockNISTSaver();
+    }
+    
+    @Test
+    public void checkWithPiInput() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/pi");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.460550, saver.getPValue(), DOUBLE_PRECISION);
+    }
+    
+    @Test
+    public void checkWithEInput() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/e");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.846172, saver.getPValue(), DOUBLE_PRECISION);
+    }
+    
+    @Test
+    public void checkWithSqrt2Input() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/sqrt2");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.199374, saver.getPValue(), DOUBLE_PRECISION);
+    }
+    
+    @Test
+    public void checkWithSqrt3Input() throws Exception {
+        TestDataLoader loader = new TestDataLoader("TestData/sqrt3");
+        nistTester.executeTest(loader.getDataAsBooleanArray());
+        nistTester.saveResult(saver);
+        assertEquals(0.403986, saver.getPValue(), DOUBLE_PRECISION);
     }
 
-    @Test
-    public void testCalculateProportion() throws Exception {
-        boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
-              
-        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
-        
-        double[] proportions = instance.calculateProportion(blocks);
-        
-        assertEquals((double)2/(double)3, proportions[0], 0.00001);
-        assertEquals((double)1/(double)3, proportions[1], 0.00001);
-        assertEquals((double)2/(double)3, proportions[2], 0.00001);
-
-    }
-    
-    @Test
-    public void testCalculateRation() throws Exception {
-        boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
-              
-        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
-        
-        double[] proportions = instance.calculateProportion(blocks);
-        
-        double[] ratios = instance.calculateRatio(proportions);
-        
-        assertEquals(0.028, ratios[0], 0.001);
-        assertEquals(0.028, ratios[1], 0.001);
-        assertEquals(0.028, ratios[2], 0.001);
-    }
-    
-    @Test
-    public void testCalculateXobs() throws Exception {
-        boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
-              
-        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
-        
-        double[] proportions = instance.calculateProportion(blocks);
-        
-        double[] ratios = instance.calculateRatio(proportions);
-        
-        assertEquals(1, instance.calculateXobs(ratios), 0.0001);
-    }
-    
-    @Test
-    public void testCalculatePValue() throws Exception {
-        boolean bits[] = {false, true, true, false, false, true, true, false, true, false};        
-              
-        boolean[][] blocks = Utils.partitionBitsInBlocks(bits, 3);
-        
-        double[] proportions = instance.calculateProportion(blocks);
-        
-        double[] ratios = instance.calculateRatio(proportions);
-        double xObs = instance.calculateXobs(ratios);
-        
-        assertEquals(0.8013, instance.calculatePValue(xObs), 0.0001);
-    }
-    
-    @Test
-    public void testExecuteTestShouldPass() throws Exception {
-        boolean bits[] = {false, true, true, false, false, true, true, false, true, false};
-        instance.executeTest(bits);
-                
-        assertTrue(instance.isPassed());
-    }
-    
 }
