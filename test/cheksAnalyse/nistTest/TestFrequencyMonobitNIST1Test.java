@@ -11,7 +11,7 @@ import utils.TestDataLoader;
 public class TestFrequencyMonobitNIST1Test {
     
    /* 
-    *    Testing Monobit Test  - Results from C implementation (sts-2.1.2)
+    *    Testing Frequency Monobit Test  - Results from C implementation (sts-2.1.2)
     *    pi              p expected =  0.613721 (1004882 bits)
     *    e               p expected =  0.926876 (1004882 bits)
     *    sqrt2           p expected =  0.817751 (1004883 bits)
