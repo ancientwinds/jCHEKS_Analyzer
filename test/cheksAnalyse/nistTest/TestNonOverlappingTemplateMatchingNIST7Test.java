@@ -12,7 +12,7 @@ public class TestNonOverlappingTemplateMatchingNIST7Test {
     
 
    /* 
-    *    Check Non Overlapping Patterns Test - Results from C implementation (sts-2.1.2) For pattern "000000001" (m = 9)
+    *    Check Non Overlapping Template Matching Test - Results from C implementation (sts-2.1.2) For pattern "000000001" (m = 9)
     *    pi              p expected =  0.167042  (1004882 bits)
     *    e               p expected =  0.138094  (1004882 bits)
     *    sqrt2           p expected =  0.560931  (1004883 bits)
@@ -21,7 +21,7 @@ public class TestNonOverlappingTemplateMatchingNIST7Test {
     
     private AbstractNistTest nistTester;
     private MockNISTSaver saver;
-    public static double DOUBLE_PRECISION = 0.00001;
+    public static double DOUBLE_PRECISION = 0.000001;
     
     @Before
     public void setup() throws Exception{

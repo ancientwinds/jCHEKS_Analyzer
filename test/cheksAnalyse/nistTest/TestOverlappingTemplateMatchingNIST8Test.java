@@ -11,16 +11,16 @@ import utils.TestDataLoader;
 public class TestOverlappingTemplateMatchingNIST8Test {
     
    /* 
-    *    Check Overlapping Patterns Test
-    *    pi              p expected =  0.296897  p computed = 0.296897
-    *    e               p expected =  0.110434  p computed = 0.110434
-    *    sqrt2           p expected =  0.791982  p computed = 0.791982
-    *    sqrt3           p expected =  0.082716  p computed = 0.082716
+    *    Check Overlapping Template Matching Test - Results from C implementation (sts-2.1.2) For pattern "111111111" (m = 9)
+    *    pi              p expected =  0.271303  (1004882 bits)
+    *    e               p expected =  0.102187  (1004882 bits)
+    *    sqrt2           p expected =  0.760528  (1004883 bits)
+    *    sqrt3           p expected =  0.070981  (1004883 bits)
     */
     
     private AbstractNistTest nistTester;
     private MockNISTSaver saver;
-    public static double DOUBLE_PRECISION = 0.00001;
+    public static double DOUBLE_PRECISION = 0.000001;
     
     @Before
     public void setup() throws Exception{
@@ -33,7 +33,7 @@ public class TestOverlappingTemplateMatchingNIST8Test {
         TestDataLoader loader = new TestDataLoader("TestData/pi");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.296897, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.271303, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
@@ -41,7 +41,7 @@ public class TestOverlappingTemplateMatchingNIST8Test {
         TestDataLoader loader = new TestDataLoader("TestData/e");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.110434, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.102187, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
@@ -49,7 +49,7 @@ public class TestOverlappingTemplateMatchingNIST8Test {
         TestDataLoader loader = new TestDataLoader("TestData/sqrt2");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.791982, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.760528, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
@@ -57,7 +57,7 @@ public class TestOverlappingTemplateMatchingNIST8Test {
         TestDataLoader loader = new TestDataLoader("TestData/sqrt3");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.082716, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.070981, saver.getPValue(), DOUBLE_PRECISION);
     }
 
 }

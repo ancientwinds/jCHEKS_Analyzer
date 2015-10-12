@@ -6,7 +6,7 @@ import static org.apache.commons.math3.special.Gamma.regularizedGammaQ;
 
 /**
  *
- * @author Michael Roussel rousselm4@gmail.com
+ * @author Michael Roussel <rousselm4@gmail.com>
  */
 public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
 
@@ -47,7 +47,6 @@ public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
                 }
             }
         }
-        System.out.println("Counts :" + Arrays.toString(patternCountsInBits));
         double mean = (blockSize - patternLength + 1) / Math.pow(2, patternLength);
         int doublePatternLength = 2 * patternLength;
         double variance = blockSize * (((1.0 / Math.pow(2, patternLength))) - ((doublePatternLength - 1) / Math.pow(2, doublePatternLength)));
@@ -56,9 +55,7 @@ public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
         for(int i = 0; i < blockCount; i++){
             chiSquared += squared(patternCountsInBits[i] - mean) / variance;
         }
-        System.out.println("chi " + chiSquared);
         this.pValue = regularizedGammaQ(blockCount/2, chiSquared/2);
-        System.out.println("p-value" + this.pValue);
     }
     
     private static double squared(double value){
