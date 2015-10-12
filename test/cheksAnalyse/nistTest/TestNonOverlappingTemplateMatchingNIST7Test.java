@@ -12,11 +12,11 @@ public class TestNonOverlappingTemplateMatchingNIST7Test {
     
 
    /* 
-    *    Check Non Overlapping Patterns Test from python implementation
-    *    pi              p expected =  0.165757  p computed = 0.165757
-    *    e               p expected =  0.07879   p computed = 0.078790
-    *    sqrt2           p expected =  0.569461  p computed = 0.569461
-    *    sqrt3           p expected =  0.532235  p computed = 0.532235
+    *    Check Non Overlapping Patterns Test - Results from C implementation (sts-2.1.2) For pattern "000000001" (m = 9)
+    *    pi              p expected =  0.167042  (1004882 bits)
+    *    e               p expected =  0.138094  (1004882 bits)
+    *    sqrt2           p expected =  0.560931  (1004883 bits)
+    *    sqrt3           p expected =  0.424530  (1004883 bits)
     */
     
     private AbstractNistTest nistTester;
@@ -25,7 +25,7 @@ public class TestNonOverlappingTemplateMatchingNIST7Test {
     
     @Before
     public void setup() throws Exception{
-        nistTester = new TestOverlappingTemplateMatchingNIST8(new ChaoticSystemStub());
+        nistTester = new TestNonOverlappingTemplateMatchingNIST7(new ChaoticSystemStub());
         saver = new MockNISTSaver();
     }
     
@@ -34,7 +34,7 @@ public class TestNonOverlappingTemplateMatchingNIST7Test {
         TestDataLoader loader = new TestDataLoader("TestData/pi");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.165757, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.167042, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
@@ -42,7 +42,7 @@ public class TestNonOverlappingTemplateMatchingNIST7Test {
         TestDataLoader loader = new TestDataLoader("TestData/e");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.07879, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.138094, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
@@ -50,7 +50,7 @@ public class TestNonOverlappingTemplateMatchingNIST7Test {
         TestDataLoader loader = new TestDataLoader("TestData/sqrt2");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.569461, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.560931, saver.getPValue(), DOUBLE_PRECISION);
     }
     
     @Test
@@ -58,7 +58,7 @@ public class TestNonOverlappingTemplateMatchingNIST7Test {
         TestDataLoader loader = new TestDataLoader("TestData/sqrt3");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        assertEquals(0.532235, saver.getPValue(), DOUBLE_PRECISION);
+        assertEquals(0.424530, saver.getPValue(), DOUBLE_PRECISION);
     }
 
 }

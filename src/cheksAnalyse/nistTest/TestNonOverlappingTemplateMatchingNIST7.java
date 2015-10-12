@@ -26,7 +26,7 @@ public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
         int patternLength = pattern.length;
         int blockCount = 8;
         int[] patternCountsInBits = new int[blockCount];
-        int blockSize = sequenceLength/blockCount;;
+        int blockSize = sequenceLength/blockCount;
         boolean[][] blocks = new boolean[blockCount][blockSize];
         
         for(int i = 0; i < blockCount; i++){
@@ -47,18 +47,18 @@ public class TestNonOverlappingTemplateMatchingNIST7 extends AbstractNistTest{
                 }
             }
         }
-        
+        System.out.println("Counts :" + Arrays.toString(patternCountsInBits));
         double mean = (blockSize - patternLength + 1) / Math.pow(2, patternLength);
         int doublePatternLength = 2 * patternLength;
-        double variance = blockSize * ((1.0 / squared(patternLength)) - ((doublePatternLength - 1) / Math.pow(2, doublePatternLength)));
+        double variance = blockSize * (((1.0 / Math.pow(2, patternLength))) - ((doublePatternLength - 1) / Math.pow(2, doublePatternLength)));
         
         double chiSquared = 0;
         for(int i = 0; i < blockCount; i++){
             chiSquared += squared(patternCountsInBits[i] - mean) / variance;
         }
-        
+        System.out.println("chi " + chiSquared);
         this.pValue = regularizedGammaQ(blockCount/2, chiSquared/2);
-        System.out.println(this.pValue);
+        System.out.println("p-value" + this.pValue);
     }
     
     private static double squared(double value){

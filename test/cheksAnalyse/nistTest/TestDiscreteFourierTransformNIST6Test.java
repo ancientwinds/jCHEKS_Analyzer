@@ -33,7 +33,6 @@ public class TestDiscreteFourierTransformNIST6Test {
         TestDataLoader loader = new TestDataLoader("TestData/pi");
         nistTester.executeTest(loader.getDataAsBooleanArray());
         nistTester.saveResult(saver);
-        System.out.println("PI");
         assertEquals(0.855090, saver.getPValue(), DOUBLE_PRECISION);
     }
     
